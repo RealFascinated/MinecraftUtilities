@@ -12,6 +12,7 @@ public class HomeController {
     /**
      * The example UUID.
      */
+    @SuppressWarnings("FieldCanBeLocal")
     private final String exampleUuid = "eeab5f8a-18dd-4d58-af78-2b3c4543da48";
 
     @RequestMapping(value = "/")
