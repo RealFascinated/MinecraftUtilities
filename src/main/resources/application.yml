@@ -1,0 +1,7 @@
+server:
+  address: 0.0.0.0
+  port: 7500
+
+mojang:
+  session-server: https://sessionserver.mojang.com
+  api: https://api.mojang.com
