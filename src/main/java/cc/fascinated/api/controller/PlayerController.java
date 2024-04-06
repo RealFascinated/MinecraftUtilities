@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping(value = "/")
 public class PlayerController {
 
+    private final CacheControl cacheControl = CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic();
     @NonNull private final SkinPart defaultHead = Objects.requireNonNull(Skin.getDefaultHead(), "Default head is null");
     private final PlayerManagerService playerManagerService;
 
@@ -34,7 +35,10 @@ public class PlayerController {
         if (player == null) {
             return new ResponseEntity<>(Map.of("error", "Player not found"), HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(player);
+        return ResponseEntity.ok()
+                .cacheControl(cacheControl)
+                .body(player);
+
     }
 
     @GetMapping(value = "/avatar/{id}")
@@ -49,7 +53,7 @@ public class PlayerController {
             headBytes = head.getPartData();
         }
         return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
+                .cacheControl(cacheControl)
                 .contentType(MediaType.IMAGE_PNG)
                 .body(headBytes);
     }
