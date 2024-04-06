@@ -1,7 +1,6 @@
 FROM fascinated/docker-images:java_17
 
-RUN apt-get update && apt-get install -y \
-    maven \
+RUN sudo apt install maven -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mvn clean package
