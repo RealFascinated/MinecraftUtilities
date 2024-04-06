@@ -7,7 +7,6 @@ import cc.fascinated.mojang.types.MojangSessionServerProfileProperties;
 import cc.fascinated.util.UUIDUtils;
 import com.google.gson.JsonObject;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.UUID;
 
