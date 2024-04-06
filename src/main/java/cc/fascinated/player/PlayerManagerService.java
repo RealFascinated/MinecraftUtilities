@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 @Service @Log4j2
 public class PlayerManagerService {
 
-    private static final Logger log = LoggerFactory.getLogger(PlayerManagerService.class);
     /**
      * The cache of players.
      */
