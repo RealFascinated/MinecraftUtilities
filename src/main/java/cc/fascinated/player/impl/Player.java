@@ -1,11 +1,13 @@
 package cc.fascinated.player.impl;
 
+import cc.fascinated.Consts;
 import cc.fascinated.Main;
 import cc.fascinated.mojang.types.MojangSessionServerProfile;
 import cc.fascinated.mojang.types.MojangSessionServerProfileProperties;
 import cc.fascinated.util.UUIDUtils;
 import com.google.gson.JsonObject;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.UUID;
 
@@ -21,6 +23,11 @@ public class Player {
      * The name of the player
      */
     private final String name;
+
+    /**
+     * The avatar URL of the player
+     */
+    private final String avatarUrl;
 
     /**
      * The skin of the player
@@ -41,6 +48,7 @@ public class Player {
     public Player(MojangSessionServerProfile profile) {
         this.uuid = UUID.fromString(UUIDUtils.addUUIDDashes(profile.getId()));
         this.name = profile.getName();
+        this.avatarUrl = Consts.getSITE_URL() + "/avatar/" + this.uuid;
 
         MojangSessionServerProfileProperties textureProperty = profile.getTextureProperty();
         if (textureProperty == null) {

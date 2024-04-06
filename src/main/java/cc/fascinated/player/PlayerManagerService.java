@@ -5,17 +5,21 @@ import cc.fascinated.mojang.types.MojangApiProfile;
 import cc.fascinated.mojang.types.MojangSessionServerProfile;
 import cc.fascinated.player.impl.Player;
 import cc.fascinated.util.UUIDUtils;
+import lombok.extern.log4j.Log4j2;
 import net.jodah.expiringmap.ExpirationPolicy;
 import net.jodah.expiringmap.ExpiringMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-@Service
+@Service @Log4j2
 public class PlayerManagerService {
 
+    private static final Logger log = LoggerFactory.getLogger(PlayerManagerService.class);
     /**
      * The cache of players.
      */
@@ -59,12 +63,13 @@ public class PlayerManagerService {
         MojangSessionServerProfile profile = uuid == null ? null : mojangAPIService.getSessionServerProfile(uuid.toString());
         if (profile == null) {
             MojangApiProfile apiProfile = mojangAPIService.getApiProfile(id);
-            if (apiProfile == null) {
+            if (apiProfile == null || !apiProfile.isValid()) {
                 return null;
             }
             profile = mojangAPIService.getSessionServerProfile(apiProfile.getId().length() == 32 ? UUIDUtils.addUUIDDashes(apiProfile.getId()) : apiProfile.getId());
         }
         if (profile == null) { // The player cannot be found using their name or UUID
+            log.info("Player with id {} could not be found", id);
             return null;
         }
         Player player = new Player(profile);

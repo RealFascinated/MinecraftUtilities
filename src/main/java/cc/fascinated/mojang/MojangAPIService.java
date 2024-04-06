@@ -3,6 +3,7 @@ package cc.fascinated.mojang;
 import cc.fascinated.Main;
 import cc.fascinated.mojang.types.MojangApiProfile;
 import cc.fascinated.mojang.types.MojangSessionServerProfile;
+import com.google.gson.reflect.TypeToken;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class MojangAPIService {
                 .build();
 
         HttpResponse<String> response = Main.getCLIENT().send(request, HttpResponse.BodyHandlers.ofString());
-        return Main.getGSON().fromJson(response.body(), MojangSessionServerProfile.class);
+        return Main.getGSON().fromJson(response.body(), new TypeToken<MojangSessionServerProfile>(){}.getType());
     }
 
     /**
@@ -52,6 +53,6 @@ public class MojangAPIService {
                 .build();
 
         HttpResponse<String> response = Main.getCLIENT().send(request, HttpResponse.BodyHandlers.ofString());
-        return Main.getGSON().fromJson(response.body(), MojangApiProfile.class);
+        return Main.getGSON().fromJson(response.body(), new TypeToken<MojangApiProfile>(){}.getType());
     }
 }
