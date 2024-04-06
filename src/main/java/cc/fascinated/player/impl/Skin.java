@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import java.io.InputStream;
 import java.net.URI;

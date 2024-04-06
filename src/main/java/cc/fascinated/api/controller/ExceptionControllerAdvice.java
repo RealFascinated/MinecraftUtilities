@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public final class ExceptionControllerAdvice {
+
     /**
      * Handle a raised exception.
      *

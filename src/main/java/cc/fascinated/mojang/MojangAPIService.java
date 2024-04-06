@@ -1,18 +1,13 @@
 package cc.fascinated.mojang;
 
-import cc.fascinated.Main;
 import cc.fascinated.mojang.types.MojangApiProfile;
 import cc.fascinated.mojang.types.MojangSessionServerProfile;
-import com.google.gson.reflect.TypeToken;
-import lombok.SneakyThrows;
+import cc.fascinated.util.WebRequest;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
-@Service
+@Service @Log4j2
 public class MojangAPIService {
 
     @Value("${mojang.session-server}")
@@ -27,18 +22,8 @@ public class MojangAPIService {
      * @param id the uuid or name of the player
      * @return the profile
      */
-    @SneakyThrows
     public MojangSessionServerProfile getSessionServerProfile(String id) {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(mojangSessionServerUrl + "/session/minecraft/profile/" + id))
-                .GET()
-                .build();
-
-        HttpResponse<String> response = Main.getCLIENT().send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() != 200) {
-            return null;
-        }
-        return Main.getGSON().fromJson(response.body(), new TypeToken<MojangSessionServerProfile>(){}.getType());
+        return WebRequest.get(mojangSessionServerUrl + "/session/minecraft/profile/" + id);
     }
 
     /**
@@ -47,17 +32,7 @@ public class MojangAPIService {
      * @param id the name of the player
      * @return the profile
      */
-    @SneakyThrows
     public MojangApiProfile getApiProfile(String id) {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(mojangApiUrl + "/users/profiles/minecraft/" + id))
-                .GET()
-                .build();
-
-        HttpResponse<String> response = Main.getCLIENT().send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() != 200) {
-            return null;
-        }
-        return Main.getGSON().fromJson(response.body(), new TypeToken<MojangApiProfile>(){}.getType());
+        return WebRequest.get(mojangApiUrl + "/users/profiles/minecraft/" + id);
     }
 }
