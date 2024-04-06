@@ -5,14 +5,13 @@ import cc.fascinated.player.impl.Player;
 import cc.fascinated.player.impl.Skin;
 import cc.fascinated.player.impl.SkinPart;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.CacheControl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -27,10 +26,10 @@ public class PlayerController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE) @ResponseBody
-    public ResponseEntity<Player> getPlayer(@PathVariable String id) {
+    public ResponseEntity<?> getPlayer(@PathVariable String id) {
         Player player = playerManagerService.getPlayer(id);
         if (player == null) {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>(Map.of("error", "Player not found"), HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(player);
     }

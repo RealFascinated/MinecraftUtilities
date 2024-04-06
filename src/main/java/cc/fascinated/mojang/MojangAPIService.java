@@ -35,6 +35,9 @@ public class MojangAPIService {
                 .build();
 
         HttpResponse<String> response = Main.getCLIENT().send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() != 200) {
+            return null;
+        }
         return Main.getGSON().fromJson(response.body(), new TypeToken<MojangSessionServerProfile>(){}.getType());
     }
 
@@ -52,6 +55,9 @@ public class MojangAPIService {
                 .build();
 
         HttpResponse<String> response = Main.getCLIENT().send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() != 200) {
+            return null;
+        }
         return Main.getGSON().fromJson(response.body(), new TypeToken<MojangApiProfile>(){}.getType());
     }
 }

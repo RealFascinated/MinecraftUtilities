@@ -46,14 +46,16 @@ public class PlayerManagerService {
      * @return the player or null if the player does not exist
      */
     public Player getPlayer(String id) {
-        UUID uuid;
+        UUID uuid = null;
         if (id.length() == 32 || id.length() == 36) {
-            uuid = UUID.fromString(id.length() == 32 ? UUIDUtils.addUUIDDashes(id) : id);
+            try {
+                uuid = UUID.fromString(id.length() == 32 ? UUIDUtils.addUUIDDashes(id) : id);
+            } catch (Exception ignored) {}
         } else {
             uuid = playerNameToUUIDCache.get(id.toUpperCase());
         }
 
-        if (players.containsKey(uuid)) {
+        if (uuid != null && players.containsKey(uuid)) {
             return players.get(uuid);
         }
 
