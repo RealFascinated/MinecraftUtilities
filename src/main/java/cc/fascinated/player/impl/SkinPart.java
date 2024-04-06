@@ -47,13 +47,13 @@ public class SkinPart {
      */
     private byte[] partBytes;
 
-    public SkinPart(byte[] data, int x, int y, int width, int height, int scale) {
+    public SkinPart(byte[] data, SkinPartEnum skinPartEnum) {
         this.data = data;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.scale = scale;
+        this.x = skinPartEnum.getX();
+        this.y = skinPartEnum.getY();
+        this.width = skinPartEnum.getWidth();
+        this.height = skinPartEnum.getHeight();
+        this.scale = skinPartEnum.getScale();
     }
 
     /**

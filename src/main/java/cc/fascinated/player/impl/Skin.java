@@ -4,12 +4,15 @@ import cc.fascinated.Main;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-@Getter
+@Getter @Log4j2
 public class Skin {
 
     /**
@@ -40,7 +43,7 @@ public class Skin {
         this.skinBytes = this.getSkinData();
 
         // The skin parts
-        this.head = new SkinPart(this.skinBytes, 8, 8, 8, 8, 20);
+        this.head = new SkinPart(this.skinBytes, SkinPartEnum.HEAD);
     }
 
     /**
@@ -56,5 +59,23 @@ public class Skin {
                 .build();
 
         return Main.getCLIENT().send(request, HttpResponse.BodyHandlers.ofByteArray()).body();
+    }
+
+    /**
+     * Gets the default/fallback head.
+     *
+     * @return the default head
+     */
+    public static SkinPart getDefaultHead() {
+        try (InputStream stream = Main.class.getClassLoader().getResourceAsStream("images/default_head.png")) {
+            if (stream == null) {
+                return null;
+            }
+            byte[] bytes = stream.readAllBytes();
+            return new SkinPart(bytes, SkinPartEnum.HEAD);
+        } catch (Exception ex) {
+            log.warn("Failed to load default head", ex);
+            return null;
+        }
     }
 }

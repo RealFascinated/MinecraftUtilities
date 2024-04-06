@@ -67,5 +67,4 @@ public class Player {
         this.skin = new Skin(skinJson.get("url").getAsString(), SkinType.fromString(metadataJson.get("model").getAsString()));
         this.cape = new Cape(capeJson.get("url").getAsString());
     }
-
 }
