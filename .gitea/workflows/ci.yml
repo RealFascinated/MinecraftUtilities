@@ -17,5 +17,5 @@ jobs:
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
-          git_remote_url: "ssh://dokku@10.0.50.65:22/minecraft-helper"
+          git_remote_url: "ssh://dokku@10.0.50.137:22/minecraft-helper"
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
