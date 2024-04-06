@@ -71,6 +71,7 @@ public class SkinPart {
             if (image == null) {
                 return null;
             }
+            // Get the part of the image (e.g. the head)
             BufferedImage partImage = image.getSubimage(this.x, this.y, this.width, this.height);
 
             // Scale the image

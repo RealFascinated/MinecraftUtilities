@@ -5,9 +5,15 @@ import cc.fascinated.player.impl.Player;
 import cc.fascinated.player.impl.Skin;
 import cc.fascinated.player.impl.SkinPart;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(value = "/")
@@ -35,9 +41,11 @@ public class PlayerController {
         if (player == null) {
             return null;
         }
+
         Skin skin = player.getSkin();
         SkinPart head = skin.getHead();
         return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
                 .contentType(MediaType.IMAGE_PNG)
                 .body(head.getPartData());
     }
