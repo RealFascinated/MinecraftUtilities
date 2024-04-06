@@ -15,8 +15,6 @@ import java.net.http.HttpResponse;
 @Service
 public class MojangAPIService {
 
-    private static final HttpClient CLIENT = HttpClient.newHttpClient();
-
     @Value("${mojang.session-server}")
     private String mojangSessionServerUrl;
 
@@ -36,7 +34,7 @@ public class MojangAPIService {
                 .GET()
                 .build();
 
-        HttpResponse<String> response = CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = Main.getCLIENT().send(request, HttpResponse.BodyHandlers.ofString());
         return Main.getGSON().fromJson(response.body(), MojangSessionServerProfile.class);
     }
 
@@ -53,7 +51,7 @@ public class MojangAPIService {
                 .GET()
                 .build();
 
-        HttpResponse<String> response = CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = Main.getCLIENT().send(request, HttpResponse.BodyHandlers.ofString());
         return Main.getGSON().fromJson(response.body(), MojangApiProfile.class);
     }
 }

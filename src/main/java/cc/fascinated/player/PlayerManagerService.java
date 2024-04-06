@@ -64,6 +64,9 @@ public class PlayerManagerService {
             }
             profile = mojangAPIService.getSessionServerProfile(apiProfile.getId().length() == 32 ? UUIDUtils.addUUIDDashes(apiProfile.getId()) : apiProfile.getId());
         }
+        if (profile == null) { // The player cannot be found using their name or UUID
+            return null;
+        }
         Player player = new Player(profile);
         players.put(player.getUuid(), player);
         playerNameToUUIDCache.put(player.getName().toUpperCase(), player.getUuid());

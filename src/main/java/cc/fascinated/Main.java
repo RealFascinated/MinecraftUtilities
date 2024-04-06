@@ -3,11 +3,13 @@ package cc.fascinated;
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import lombok.experimental.Helper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
+import java.net.http.HttpClient;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
@@ -17,6 +19,9 @@ public class Main {
 
     @Getter
     private static final Gson GSON = new Gson();
+
+    @Getter
+    private static final HttpClient CLIENT = HttpClient.newHttpClient();
 
     @SneakyThrows
     public static void main(String[] args) {

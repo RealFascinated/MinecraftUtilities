@@ -30,6 +30,14 @@ public class Player {
      */
     private Skin skin;
 
+    /**
+     * The cape of the player
+     * <p>
+     *     This will be null if the player does not have a cape.
+     * </p>
+     */
+    private Cape cape;
+
     public Player(MojangSessionServerProfile profile) {
         this.uuid = UUID.fromString(UUIDUtils.addUUIDDashes(profile.getId()));
         this.name = profile.getName();
@@ -44,14 +52,13 @@ public class Player {
 
         // Parse the decoded JSON
         JsonObject json = Main.getGSON().fromJson(decoded, JsonObject.class);
-        JsonObject textures = json.getAsJsonObject("textures");
-        JsonObject skin = textures.getAsJsonObject("SKIN");
-        JsonObject metadata = skin.get("metadata").getAsJsonObject();
+        JsonObject texturesJson = json.getAsJsonObject("textures");
+        JsonObject skinJson = texturesJson.getAsJsonObject("SKIN");
+        JsonObject capeJson = texturesJson.getAsJsonObject("CAPE");
+        JsonObject metadataJson = skinJson.get("metadata").getAsJsonObject();
 
-        String url = skin.get("url").getAsString();
-        SkinType model = SkinType.fromString(metadata.get("model").getAsString());
-
-        this.skin = new Skin(url, model);
+        this.skin = new Skin(skinJson.get("url").getAsString(), SkinType.fromString(metadataJson.get("model").getAsString()));
+        this.cape = new Cape(capeJson.get("url").getAsString());
     }
 
 }
