@@ -23,7 +23,7 @@ public class MojangAPIService {
      * @return the profile
      */
     public MojangSessionServerProfile getSessionServerProfile(String id) {
-        return WebRequest.get(mojangSessionServerUrl + "/session/minecraft/profile/" + id);
+        return WebRequest.get(mojangSessionServerUrl + "/session/minecraft/profile/" + id, MojangSessionServerProfile.class);
     }
 
     /**
@@ -33,6 +33,6 @@ public class MojangAPIService {
      * @return the profile
      */
     public MojangApiProfile getApiProfile(String id) {
-        return WebRequest.get(mojangApiUrl + "/users/profiles/minecraft/" + id);
+        return WebRequest.get(mojangApiUrl + "/users/profiles/minecraft/" + id, MojangApiProfile.class);
     }
 }
