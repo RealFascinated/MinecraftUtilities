@@ -5,7 +5,7 @@ server:
     whitelabel:
       enabled: false
 
-site-url: http://localhost:80
+public-url: http://localhost:80
 
 mojang:
   session-server: https://sessionserver.mojang.com

@@ -1,6 +1,6 @@
-package cc.fascinated.api.controller;
+package cc.fascinated.exception;
 
-import cc.fascinated.api.model.ErrorResponse;
+import cc.fascinated.model.ErrorResponse;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

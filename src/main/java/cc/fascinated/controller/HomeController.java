@@ -1,6 +1,6 @@
-package cc.fascinated.api.controller;
+package cc.fascinated.controller;
 
-import cc.fascinated.Consts;
+import cc.fascinated.config.Config;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +17,8 @@ public class HomeController {
 
     @RequestMapping(value = "/")
     public String home(Model model) {
-        model.addAttribute("url", Consts.getSITE_URL() + "/player/" + exampleUuid);
-        model.addAttribute("avatar_url", Consts.getSITE_URL() + "/player/avatar/" + exampleUuid);
+        model.addAttribute("url", Config.INSTANCE.getWebPublicUrl() + "/player/" + exampleUuid);
+        model.addAttribute("avatar_url", Config.INSTANCE.getWebPublicUrl() + "/player/avatar/" + exampleUuid);
         return "index";
     }
 }
