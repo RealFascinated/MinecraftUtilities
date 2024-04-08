@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: 'eclipse-temurin'
+          distribution: 'adopt'
 
       - name: Run Tests
         run: mvn --batch-mode test
