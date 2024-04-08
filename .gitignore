@@ -27,3 +27,4 @@ crashlytics-build.properties
 fabric.properties
 git.properties
 pom.xml.versionsBackup
+application.yml
