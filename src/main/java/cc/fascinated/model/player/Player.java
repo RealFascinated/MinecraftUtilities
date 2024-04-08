@@ -1,6 +1,6 @@
-package cc.fascinated.service.player.model;
+package cc.fascinated.model.player;
 
-import cc.fascinated.service.mojang.model.MojangProfile;
+import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.util.Tuple;
 import cc.fascinated.util.UUIDUtils;
 import lombok.Getter;

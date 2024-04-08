@@ -1,4 +1,4 @@
-package cc.fascinated.service.player.model;
+package cc.fascinated.model.player;
 
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;

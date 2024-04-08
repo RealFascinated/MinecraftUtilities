@@ -1,4 +1,4 @@
-package cc.fascinated.service.player.model;
+package cc.fascinated.model.player;
 
 import cc.fascinated.config.Config;
 import com.fasterxml.jackson.annotation.JsonProperty;
