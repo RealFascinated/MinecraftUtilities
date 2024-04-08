@@ -105,6 +105,15 @@ public class Skin {
         private final int defaultSize;
 
         /**
+         * Gets the name of the part.
+         *
+         * @return the name of the part
+         */
+        public String getName() {
+            return this.name().toLowerCase();
+        }
+
+        /**
          * Gets the skin part from its name.
          *
          * @param name the name of the part

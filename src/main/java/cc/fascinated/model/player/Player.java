@@ -3,6 +3,7 @@ package cc.fascinated.model.player;
 import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.util.Tuple;
 import cc.fascinated.util.UUIDUtils;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import java.util.UUID;
@@ -16,8 +17,9 @@ public class Player {
     private final UUID uuid;
 
     /**
-     * The name of the player
+     * The username of the player
      */
+    @JsonProperty("username")
     private final String name;
 
     /**
