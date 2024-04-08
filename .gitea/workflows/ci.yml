@@ -12,7 +12,7 @@ jobs:
       - name: Cloning repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: full
+          fetch-depth: 2
 
       - name: Set up JDK 17 and Maven
         uses: s4u/setup-maven-action@v1.7.0
