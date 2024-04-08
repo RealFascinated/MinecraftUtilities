@@ -1,6 +1,7 @@
 package cc.fascinated.model.player;
 
 import cc.fascinated.config.Config;
+import cc.fascinated.util.PlayerUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,11 @@ public class Skin {
     private final Model model;
 
     /**
+     * The skin data of the skin
+     */
+    private final byte[] skinData;
+
+    /**
      * The part URLs of the skin
      */
     @JsonProperty("parts")
@@ -37,6 +43,8 @@ public class Skin {
     public Skin(String url, Model model) {
         this.url = url;
         this.model = model;
+
+        this.skinData = PlayerUtils.getSkinData(url);
     }
 
     /**

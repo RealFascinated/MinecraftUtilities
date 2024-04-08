@@ -46,7 +46,7 @@ public class PlayerUtils {
         }
 
         try {
-            BufferedImage image = ImageIO.read(new ByteArrayInputStream(PlayerUtils.getSkinData(skin.getUrl())));
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(skin.getSkinData()));
             if (image == null) {
                 return null;
             }
