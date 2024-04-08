@@ -1,8 +1,8 @@
 package cc.fascinated.controller;
 
-import cc.fascinated.service.PlayerService;
 import cc.fascinated.model.player.Player;
 import cc.fascinated.model.player.Skin;
+import cc.fascinated.service.PlayerService;
 import cc.fascinated.util.PlayerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;

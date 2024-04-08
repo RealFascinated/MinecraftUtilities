@@ -1,9 +1,9 @@
 package cc.fascinated.service;
 
+import cc.fascinated.model.player.Player;
 import cc.fascinated.service.mojang.MojangAPIService;
 import cc.fascinated.service.mojang.model.MojangProfile;
 import cc.fascinated.service.mojang.model.MojangUsernameToUuid;
-import cc.fascinated.model.player.Player;
 import cc.fascinated.util.UUIDUtils;
 import lombok.extern.log4j.Log4j2;
 import net.jodah.expiringmap.ExpirationPolicy;
