@@ -2,7 +2,7 @@ FROM fascinated/docker-images:java_17
 
 COPY . .
 
-RUN mvn clean package -q
+RUN mvn package -q
 
 EXPOSE 80
 ENV PORT=80
