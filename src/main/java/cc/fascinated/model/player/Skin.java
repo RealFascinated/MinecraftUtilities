@@ -2,6 +2,7 @@ package cc.fascinated.model.player;
 
 import cc.fascinated.config.Config;
 import cc.fascinated.util.PlayerUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public class Skin {
     /**
      * The skin image for the skin
      */
+    @JsonIgnore
     private final BufferedImage skinImage;
 
     /**

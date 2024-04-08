@@ -1,6 +1,6 @@
 package cc.fascinated.exception;
 
-import cc.fascinated.model.response.ErrorResponse;
+import cc.fascinated.model.response.Response;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +28,6 @@ public final class ExceptionControllerAdvice {
             message = "An internal error has occurred.";
         }
         ex.printStackTrace(); // Print the stack trace
-        return new ResponseEntity<>(new ErrorResponse(status, message), status);
+        return new Response(status, message).toResponseEntity(); // Return the error response
     }
 }

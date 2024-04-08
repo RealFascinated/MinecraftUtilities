@@ -2,6 +2,7 @@ package cc.fascinated.controller;
 
 import cc.fascinated.model.player.Player;
 import cc.fascinated.model.player.Skin;
+import cc.fascinated.model.response.impl.PlayerNotFoundResponse;
 import cc.fascinated.service.PlayerService;
 import cc.fascinated.util.PlayerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,10 @@ public class PlayerController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE) @ResponseBody
     public ResponseEntity<?> getPlayer(@PathVariable String id) {
         Player player = playerManagerService.getPlayer(id);
-        if (player == null) {
-            return new ResponseEntity<>(Map.of("error", "Player not found"), HttpStatus.NOT_FOUND);
+        if (player == null) { // No player with that id was found
+            return new PlayerNotFoundResponse().toResponseEntity();
         }
+        // Return the player
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
                 .body(player);
@@ -49,11 +51,10 @@ public class PlayerController {
             Skin.Parts skinPart = Skin.Parts.fromName(part);
             partBytes = PlayerUtils.getSkinPartBytes(skin, skinPart, size);
         }
-        
         if (partBytes == null) { // Fallback to the default head
             partBytes = PlayerUtils.getSkinPartBytes(Skin.DEFAULT_SKIN, Skin.Parts.HEAD, size);
         }
-        
+        // Return the part image
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
                 .contentType(MediaType.IMAGE_PNG)

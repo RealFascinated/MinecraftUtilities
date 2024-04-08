@@ -23,7 +23,7 @@ public class WebRequest {
      * @return the response
      * @param <T> the type of the response
      */
-    public static <T> T get(String url, Class<T> clazz) {
+    public static <T> T getAsEntity(String url, Class<T> clazz) {
         try {
             ResponseEntity<T> profile = CLIENT.get()
                     .uri(url)

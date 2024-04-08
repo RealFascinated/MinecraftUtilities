@@ -27,12 +27,9 @@ public class PlayerUtils {
     @SneakyThrows
     @JsonIgnore
     public static BufferedImage getSkinImage(String url) {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(url))
-                .GET()
-                .build();
-
-        byte[] body = Main.HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofByteArray()).body();
+        HttpResponse<byte[]> response = Main.HTTP_CLIENT.send(HttpRequest.newBuilder(URI.create(url)).build(),
+                HttpResponse.BodyHandlers.ofByteArray());
+        byte[] body = response.body();
         if (body == null) {
             return null;
         }

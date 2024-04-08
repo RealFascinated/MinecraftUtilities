@@ -24,7 +24,7 @@ public class MojangAPIService {
      * @return the profile
      */
     public MojangProfile getProfile(String id) {
-        return WebRequest.get(mojangSessionServerUrl + "/session/minecraft/profile/" + id, MojangProfile.class);
+        return WebRequest.getAsEntity(mojangSessionServerUrl + "/session/minecraft/profile/" + id, MojangProfile.class);
     }
 
     /**
@@ -35,6 +35,6 @@ public class MojangAPIService {
      * @return the profile
      */
     public MojangUsernameToUuid getUuidFromUsername(String id) {
-        return WebRequest.get(mojangApiUrl + "/users/profiles/minecraft/" + id, MojangUsernameToUuid.class);
+        return WebRequest.getAsEntity(mojangApiUrl + "/users/profiles/minecraft/" + id, MojangUsernameToUuid.class);
     }
 }
