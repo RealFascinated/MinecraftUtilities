@@ -61,7 +61,7 @@ public class Skin {
     public Skin populatePartUrls(String playerUuid) {
         for (Parts part : Parts.values()) {
             String partName = part.name().toLowerCase();
-            this.partUrls.put(partName, Config.INSTANCE.getWebPublicUrl() + "/player/" + partName + "/" + playerUuid + "?size=250");
+            this.partUrls.put(partName, Config.INSTANCE.getWebPublicUrl() + "/player/" + partName + "/" + playerUuid + "?size=" + part.getDefaultSize());
         }
         return this;
     }
@@ -73,7 +73,7 @@ public class Skin {
     @Getter @AllArgsConstructor
     public enum Parts {
 
-        HEAD(8, 8, 8, 8, 250);
+        HEAD(8, 8, 8, 8, 128);
 
         /**
          * The x and y position of the part.

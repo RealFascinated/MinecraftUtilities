@@ -16,7 +16,6 @@ import java.util.List;
 
 @Getter @NoArgsConstructor
 public class MojangProfile {
-
     /**
      * The UUID of the player.
      */
@@ -52,7 +51,7 @@ public class MojangProfile {
 
     /**
      * Gets the formatted UUID of the player.
-     * 
+     *
      * @return the formatted UUID
      */
     public String getFormattedUuid() {
