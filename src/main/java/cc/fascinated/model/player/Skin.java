@@ -87,7 +87,7 @@ public class Skin {
     @Getter @AllArgsConstructor
     public enum Parts {
 
-        HEAD(8, 8, 8, 8, 128);
+        HEAD(8, 8, 8, 8, 256);
 
         /**
          * The x and y position of the part.

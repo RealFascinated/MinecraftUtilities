@@ -42,7 +42,7 @@ public class PlayerController {
     @GetMapping(value = "/{part}/{id}")
     public ResponseEntity<?> getPlayerHead(@PathVariable String part,
                                                 @PathVariable String id,
-                                                @RequestParam(required = false, defaultValue = "250") int size) {
+                                                @RequestParam(required = false, defaultValue = "256") int size) {
         Player player = playerManagerService.getPlayer(id);
         byte[] partBytes = new byte[0];
         if (player != null) { // The player exists
