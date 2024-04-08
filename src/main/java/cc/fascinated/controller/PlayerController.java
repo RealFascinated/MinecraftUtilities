@@ -21,7 +21,9 @@ import java.util.concurrent.TimeUnit;
 public class PlayerController {
 
     private final CacheControl cacheControl = CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic();
-    @NonNull private final SkinPart defaultHead = Objects.requireNonNull(Skin.getDefaultHead(), "Default head is null");
+    @NonNull
+    private final SkinPart defaultHead = Objects.requireNonNull(Skin.getDefaultHead(), "Default head is null");
+
     private final PlayerService playerManagerService;
 
     @Autowired

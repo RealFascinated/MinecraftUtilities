@@ -17,8 +17,7 @@ public class HomeController {
 
     @RequestMapping(value = "/")
     public String home(Model model) {
-        model.addAttribute("url", Config.INSTANCE.getWebPublicUrl() + "/player/" + exampleUuid);
-        model.addAttribute("avatar_url", Config.INSTANCE.getWebPublicUrl() + "/player/avatar/" + exampleUuid);
+        model.addAttribute("player_example_url", Config.INSTANCE.getWebPublicUrl() + "/player/" + exampleUuid);
         return "index";
     }
 }
