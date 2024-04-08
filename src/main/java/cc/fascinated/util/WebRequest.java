@@ -1,10 +1,12 @@
 package cc.fascinated.util;
 
+import lombok.experimental.UtilityClass;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
+@UtilityClass
 public class WebRequest {
 
     /**

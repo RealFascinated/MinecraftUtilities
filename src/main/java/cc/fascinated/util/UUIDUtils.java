@@ -1,5 +1,8 @@
 package cc.fascinated.util;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class UUIDUtils {
 
     /**

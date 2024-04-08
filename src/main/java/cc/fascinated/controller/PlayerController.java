@@ -1,9 +1,9 @@
 package cc.fascinated.controller;
 
-import cc.fascinated.player.PlayerService;
-import cc.fascinated.player.impl.Player;
-import cc.fascinated.player.impl.Skin;
-import cc.fascinated.player.impl.SkinPart;
+import cc.fascinated.service.player.PlayerService;
+import cc.fascinated.service.player.impl.Player;
+import cc.fascinated.service.player.impl.Skin;
+import cc.fascinated.service.player.impl.SkinPart;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;

@@ -1,9 +1,9 @@
-package cc.fascinated.player;
+package cc.fascinated.service.player;
 
-import cc.fascinated.mojang.MojangAPIService;
-import cc.fascinated.mojang.types.MojangApiProfile;
-import cc.fascinated.mojang.types.MojangSessionServerProfile;
-import cc.fascinated.player.impl.Player;
+import cc.fascinated.service.mojang.MojangAPIService;
+import cc.fascinated.service.mojang.types.MojangProfile;
+import cc.fascinated.service.mojang.types.MojangUsernameToUuid;
+import cc.fascinated.service.player.impl.Player;
 import cc.fascinated.util.UUIDUtils;
 import lombok.extern.log4j.Log4j2;
 import net.jodah.expiringmap.ExpirationPolicy;
@@ -47,25 +47,28 @@ public class PlayerService {
      */
     public Player getPlayer(String id) {
         UUID uuid = null;
-        if (id.length() == 32 || id.length() == 36) {
+        if (id.length() == 32 || id.length() == 36) { // Check if the id is a UUID
             try {
                 uuid = UUID.fromString(id.length() == 32 ? UUIDUtils.addUUIDDashes(id) : id);
             } catch (Exception ignored) {}
-        } else {
+        } else { // Check if the id is a name
             uuid = playerNameToUUIDCache.get(id.toUpperCase());
         }
 
+        // Check if the player is cached
         if (uuid != null && players.containsKey(uuid)) {
             return players.get(uuid);
         }
 
-        MojangSessionServerProfile profile = uuid == null ? null : mojangAPIService.getSessionServerProfile(uuid.toString());
-        if (profile == null) {
-            MojangApiProfile apiProfile = mojangAPIService.getApiProfile(id);
+        MojangProfile profile = uuid == null ? null : mojangAPIService.getProfile(uuid.toString());
+        if (profile == null) { // The player cannot be found using their UUID
+            MojangUsernameToUuid apiProfile = mojangAPIService.getUuidFromUsername(id); // Get the UUID of the player using their name
             if (apiProfile == null || !apiProfile.isValid()) {
                 return null;
             }
-            profile = mojangAPIService.getSessionServerProfile(apiProfile.getId().length() == 32 ? UUIDUtils.addUUIDDashes(apiProfile.getId()) : apiProfile.getId());
+            // Get the profile of the player using their UUID
+            profile = mojangAPIService.getProfile(apiProfile.getId().length() == 32 ?
+                    UUIDUtils.addUUIDDashes(apiProfile.getId()) : apiProfile.getId());
         }
         if (profile == null) { // The player cannot be found using their name or UUID
             log.info("Player with id {} could not be found", id);
