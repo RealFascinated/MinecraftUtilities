@@ -1,4 +1,7 @@
-FROM fascinated/docker-images:java_17
+FROM eclipse-temurin:17.0.10_7-jdk-focal
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y maven
 
 COPY . .
 
