@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: Cloning repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up JDK 17 and Maven
         uses: s4u/setup-maven-action@v1.7.0
@@ -23,6 +21,11 @@ jobs:
 
       - name: Run Tests
         run: mvn --batch-mode test -q
+
+      - name: Cloning repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Push to dokku
         uses: dokku/github-action@master
