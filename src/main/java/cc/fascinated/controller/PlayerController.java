@@ -2,6 +2,7 @@ package cc.fascinated.controller;
 
 import cc.fascinated.model.player.Player;
 import cc.fascinated.model.player.Skin;
+import cc.fascinated.model.response.impl.InvalidPartResponse;
 import cc.fascinated.model.response.impl.PlayerNotFoundResponse;
 import cc.fascinated.service.PlayerService;
 import cc.fascinated.util.PlayerUtils;
@@ -39,7 +40,7 @@ public class PlayerController {
     }
 
     @GetMapping(value = "/{part}/{id}")
-    public ResponseEntity<byte[]> getPlayerHead(@PathVariable String part,
+    public ResponseEntity<?> getPlayerHead(@PathVariable String part,
                                                 @PathVariable String id,
                                                 @RequestParam(required = false, defaultValue = "250") int size) {
         Player player = playerManagerService.getPlayer(id);
@@ -47,9 +48,10 @@ public class PlayerController {
         if (player != null) { // The player exists
             Skin skin = player.getSkin();
             Skin.Parts skinPart = Skin.Parts.fromName(part);
-            if (skinPart != null) { // The part exists
-                partBytes = PlayerUtils.getSkinPartBytes(skin, skinPart, size);
+            if (skinPart == null) { // Unknown part name
+                return new InvalidPartResponse().toResponseEntity();
             }
+            partBytes = PlayerUtils.getSkinPartBytes(skin, skinPart, size);
         }
         if (partBytes == null) { // Fallback to the default head
             partBytes = PlayerUtils.getSkinPartBytes(Skin.DEFAULT_SKIN, Skin.Parts.HEAD, size);
