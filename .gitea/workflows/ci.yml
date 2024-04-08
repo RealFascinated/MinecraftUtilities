@@ -22,7 +22,7 @@ jobs:
           maven-version: 3.8.5
 
       - name: Run Tests
-        run: mvn --batch-mode test
+        run: mvn --batch-mode test -q
 
       - name: Push to dokku
         uses: dokku/github-action@master

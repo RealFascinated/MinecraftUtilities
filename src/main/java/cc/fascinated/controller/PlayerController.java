@@ -47,7 +47,9 @@ public class PlayerController {
         if (player != null) { // The player exists
             Skin skin = player.getSkin();
             Skin.Parts skinPart = Skin.Parts.fromName(part);
-            partBytes = PlayerUtils.getSkinPartBytes(skin, skinPart, size);
+            if (skinPart != null) { // The part exists
+                partBytes = PlayerUtils.getSkinPartBytes(skin, skinPart, size);
+            }
         }
         if (partBytes == null) { // Fallback to the default head
             partBytes = PlayerUtils.getSkinPartBytes(Skin.DEFAULT_SKIN, Skin.Parts.HEAD, size);
