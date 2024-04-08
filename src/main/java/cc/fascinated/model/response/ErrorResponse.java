@@ -1,4 +1,4 @@
-package cc.fascinated.model;
+package cc.fascinated.model.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.micrometer.common.lang.NonNull;

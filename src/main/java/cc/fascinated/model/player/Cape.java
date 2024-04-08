@@ -1,4 +1,4 @@
-package cc.fascinated.service.player.impl;
+package cc.fascinated.model.player;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

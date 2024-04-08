@@ -1,7 +1,7 @@
 package cc.fascinated.service.mojang;
 
-import cc.fascinated.service.mojang.types.MojangProfile;
-import cc.fascinated.service.mojang.types.MojangUsernameToUuid;
+import cc.fascinated.service.mojang.model.MojangProfile;
+import cc.fascinated.service.mojang.model.MojangUsernameToUuid;
 import cc.fascinated.util.WebRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;

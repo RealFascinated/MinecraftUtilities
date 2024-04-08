@@ -1,9 +1,9 @@
 package cc.fascinated.controller;
 
-import cc.fascinated.service.player.PlayerService;
-import cc.fascinated.service.player.impl.Player;
-import cc.fascinated.service.player.impl.Skin;
-import cc.fascinated.service.player.impl.SkinPart;
+import cc.fascinated.service.PlayerService;
+import cc.fascinated.model.player.Player;
+import cc.fascinated.model.player.Skin;
+import cc.fascinated.model.player.SkinPart;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
@@ -49,7 +49,7 @@ public class PlayerController {
                                                 @RequestParam(required = false, defaultValue = "250") int size) {
         Player player = playerManagerService.getPlayer(id);
         byte[] headBytes = new byte[0];
-        if (player != null) {
+        if (player != null) { // The player exists
             Skin skin = player.getSkin();
             SkinPart skinPart = skin.getPart(part);
             if (skinPart != null) {
@@ -57,7 +57,7 @@ public class PlayerController {
             }
         }
         
-        if (headBytes == null) {
+        if (headBytes == null) { // Fallback to the default head
             headBytes = defaultHead.getPartData(size);
         }
         

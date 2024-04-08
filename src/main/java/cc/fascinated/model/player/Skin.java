@@ -1,4 +1,4 @@
-package cc.fascinated.service.player.impl;
+package cc.fascinated.model.player;
 
 import cc.fascinated.Main;
 import cc.fascinated.config.Config;

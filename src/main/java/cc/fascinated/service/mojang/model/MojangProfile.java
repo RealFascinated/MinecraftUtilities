@@ -1,8 +1,8 @@
-package cc.fascinated.service.mojang.types;
+package cc.fascinated.service.mojang.model;
 
 import cc.fascinated.Main;
-import cc.fascinated.service.player.impl.Cape;
-import cc.fascinated.service.player.impl.Skin;
+import cc.fascinated.model.player.Cape;
+import cc.fascinated.model.player.Skin;
 import cc.fascinated.util.Tuple;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;

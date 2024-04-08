@@ -1,4 +1,4 @@
-package cc.fascinated.service.mojang.types;
+package cc.fascinated.service.mojang.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
