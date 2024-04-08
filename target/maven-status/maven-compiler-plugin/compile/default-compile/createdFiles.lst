@@ -1,0 +1,16 @@
+cc\fascinated\player\impl\Skin.class
+cc\fascinated\Main.class
+cc\fascinated\player\impl\SkinPart.class
+cc\fascinated\mojang\types\MojangSessionServerProfileProperties.class
+cc\fascinated\mojang\MojangAPIService$1.class
+cc\fascinated\mojang\types\MojangApiProfile.class
+cc\fascinated\player\impl\Player.class
+cc\fascinated\mojang\MojangAPIService$2.class
+cc\fascinated\player\impl\SkinType.class
+cc\fascinated\player\impl\Cape.class
+cc\fascinated\player\PlayerManagerService.class
+cc\fascinated\util\UUIDUtils.class
+cc\fascinated\mojang\types\MojangSessionServerProfile.class
+cc\fascinated\mojang\MojangAPIService.class
+cc\fascinated\Consts.class
+cc\fascinated\api\controller\PlayerController.class

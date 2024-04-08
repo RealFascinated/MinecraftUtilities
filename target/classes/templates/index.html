@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Minecraft Utilities</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--  Discord Meta Tags  -->
+    <meta name="description" content="Wrapper for the Minecraft APIs to make them easier to use.">
+    <meta name="theme-color" content="#3498DB">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col h-screen mt-5 items-center bg-neutral-900 text-white text-center">
+    <p class="font-bold">Hello!!!</p>
+    <p>Wrapper for the Minecraft APIs to make them easier to use.</p>
+
+    <div class="flex flex-col mt-3">
+        <p>Player Data: <a class="text-blue-600" th:href="${url}" th:text="${url}">???</a></p>
+        <p>Avatar Url: <a class="text-blue-600" th:href="${avatar_url}" th:text="${avatar_url}">???</a></p>
+    </div>
+</body>
+</html>
