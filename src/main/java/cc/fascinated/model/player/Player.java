@@ -5,7 +5,6 @@ import cc.fascinated.util.Tuple;
 import cc.fascinated.util.UUIDUtils;
 import lombok.Getter;
 
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -33,15 +32,9 @@ public class Player {
      */
     private Cape cape;
 
-    /**
-     * The raw properties of the player
-     */
-    private final List<MojangProfile.ProfileProperty> rawProperties;
-
     public Player(MojangProfile profile) {
-        this.uuid = UUID.fromString(UUIDUtils.addUUIDDashes(profile.getId()));
+        this.uuid = UUID.fromString(UUIDUtils.addUuidDashes(profile.getId()));
         this.name = profile.getName();
-        this.rawProperties = profile.getProperties();
 
         // Get the skin and cape
         Tuple<Skin, Cape> skinAndCape = profile.getSkinAndCape();

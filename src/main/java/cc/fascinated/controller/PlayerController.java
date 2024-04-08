@@ -3,8 +3,7 @@ package cc.fascinated.controller;
 import cc.fascinated.service.PlayerService;
 import cc.fascinated.model.player.Player;
 import cc.fascinated.model.player.Skin;
-import cc.fascinated.model.player.SkinPart;
-import lombok.NonNull;
+import cc.fascinated.util.PlayerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -21,9 +19,6 @@ import java.util.concurrent.TimeUnit;
 public class PlayerController {
 
     private final CacheControl cacheControl = CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic();
-    @NonNull
-    private final SkinPart defaultHead = Objects.requireNonNull(Skin.getDefaultHead(), "Default head is null");
-
     private final PlayerService playerManagerService;
 
     @Autowired
@@ -48,22 +43,20 @@ public class PlayerController {
                                                 @PathVariable String id,
                                                 @RequestParam(required = false, defaultValue = "250") int size) {
         Player player = playerManagerService.getPlayer(id);
-        byte[] headBytes = new byte[0];
+        byte[] partBytes = new byte[0];
         if (player != null) { // The player exists
             Skin skin = player.getSkin();
-            SkinPart skinPart = skin.getPart(part);
-            if (skinPart != null) {
-                headBytes = skinPart.getPartData(size);
-            }
+            Skin.Parts skinPart = Skin.Parts.fromName(part);
+            partBytes = PlayerUtils.getSkinPartBytes(skin, skinPart, size);
         }
         
-        if (headBytes == null) { // Fallback to the default head
-            headBytes = defaultHead.getPartData(size);
+        if (partBytes == null) { // Fallback to the default head
+            partBytes = PlayerUtils.getSkinPartBytes(Skin.DEFAULT_SKIN, Skin.Parts.HEAD, size);
         }
         
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
                 .contentType(MediaType.IMAGE_PNG)
-                .body(headBytes);
+                .body(partBytes);
     }
 }

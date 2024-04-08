@@ -1,23 +1,22 @@
 package cc.fascinated.model.player;
 
-import cc.fascinated.Main;
 import cc.fascinated.config.Config;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 
-import java.io.InputStream;
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter @Log4j2
 public class Skin {
+    /**
+     * The default skin, usually used when the skin is not found.
+     */
+    public static final Skin DEFAULT_SKIN = new Skin("http://textures.minecraft.net/texture/60a5bd016b3c9a1b9272e4929e30827a67be4ebb219017adbbc4a4d22ebd5b1",
+            Model.DEFAULT);
 
     /**
      * The URL of the skin
@@ -27,78 +26,44 @@ public class Skin {
     /**
      * The model of the skin
      */
-    private final SkinType model;
-
-    /**
-     * The bytes of the skin
-     */
-    @JsonIgnore
-    private final byte[] skinBytes;
-
-    /**
-     * The skin parts for this skin
-     */
-    @JsonIgnore
-    private final Map<SkinPartEnum, SkinPart> parts = new HashMap<>();
+    private final Model model;
 
     @JsonProperty("parts")
     private final Map<String, String> partUrls = new HashMap<>();
 
-    public Skin(String playerUuid, String url, SkinType model) {
+    public Skin(String url, Model model) {
         this.url = url;
         this.model = model;
-        this.skinBytes = this.getSkinData();
-
-        // The skin parts
-        this.parts.put(SkinPartEnum.HEAD, new SkinPart(this.skinBytes, SkinPartEnum.HEAD));
-
-        for (Map.Entry<SkinPartEnum, SkinPart> entry : this.parts.entrySet()) {
-            String partName = entry.getKey().name().toLowerCase();
-            this.partUrls.put(partName, Config.INSTANCE.getWebPublicUrl() + "/player/" + partName + "/" + playerUuid + "?size=250");
-        }
     }
 
     /**
-     * Gets the default/fallback head.
+     * Gets the skin from a {@link JsonObject}.
      *
-     * @return the default head
+     * @param json the JSON object
+     * @return the skin
      */
-    public static SkinPart getDefaultHead() {
-        try (InputStream stream = Main.class.getClassLoader().getResourceAsStream("images/default_head.png")) {
-            if (stream == null) {
-                return null;
-            }
-            byte[] bytes = stream.readAllBytes();
-            return new SkinPart(bytes, SkinPartEnum.HEAD);
-        } catch (Exception ex) {
-            log.warn("Failed to load default head", ex);
+    public static Skin fromJson(JsonObject json) {
+        if (json == null) {
             return null;
         }
+        String url = json.get("url").getAsString();
+        JsonObject metadata = json.getAsJsonObject("metadata");
+        Model model = Model.fromName(metadata == null ? "slim" : // Fall back to slim if the model is not found
+                metadata.get("model").getAsString());
+        return new Skin(url, model);
     }
 
     /**
-     * Gets the skin data from the URL.
+     * Populates the part URLs for the skin.
      *
-     * @return the skin data
+     * @param playerUuid the player's UUID
      */
-    @SneakyThrows @JsonIgnore
-    public byte[] getSkinData() {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(this.url))
-                .GET()
-                .build();
-
-        return Main.getCLIENT().send(request, HttpResponse.BodyHandlers.ofByteArray()).body();
-    }
-
-    /**
-     * Gets a part from the skin.
-     *
-     * @param part the part name
-     * @return the part
-     */
-    public SkinPart getPart(String part) {
-        return this.parts.get(SkinPartEnum.valueOf(part.toUpperCase()));
+    public Skin populatePartUrls(String playerUuid) {
+        for (Parts part : Parts.values()) {
+            String partName = part.name().toLowerCase();
+            this.partUrls.put(partName, Config.INSTANCE.getWebPublicUrl() + "/player/" + partName + "/" + playerUuid + "?size=250");
+        }
+        return this;
     }
 
     /**
@@ -106,7 +71,7 @@ public class Skin {
      * information about the part.
      */
     @Getter @AllArgsConstructor
-    public enum SkinPartEnum {
+    public enum Parts {
 
         HEAD(8, 8, 8, 8, 250);
 
@@ -124,13 +89,43 @@ public class Skin {
          * The scale of the part.
          */
         private final int defaultSize;
+
+        /**
+         * Gets the skin part from its name.
+         *
+         * @param name the name of the part
+         * @return the skin part
+         */
+        public static Parts fromName(String name) {
+            for (Parts part : values()) {
+                if (part.name().equalsIgnoreCase(name)) {
+                    return part;
+                }
+            }
+            return null;
+        }
     }
 
     /**
-     * The type of the skin.
+     * The model of the skin.
      */
-    public enum SkinType {
+    public enum Model {
         DEFAULT,
-        SLIM
+        SLIM;
+
+        /**
+         * Gets the model from its name.
+         *
+         * @param name the name of the model
+         * @return the model
+         */
+        public static Model fromName(String name) {
+            for (Model model : values()) {
+                if (model.name().equalsIgnoreCase(name)) {
+                    return model;
+                }
+            }
+            return null;
+        }
     }
 }

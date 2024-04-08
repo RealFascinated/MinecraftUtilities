@@ -4,12 +4,14 @@ import cc.fascinated.Main;
 import cc.fascinated.model.player.Cape;
 import cc.fascinated.model.player.Skin;
 import cc.fascinated.util.Tuple;
+import cc.fascinated.util.UUIDUtils;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Getter @NoArgsConstructor
@@ -36,36 +38,35 @@ public class MojangProfile {
      * @return the skin and cape of the player
      */
     public Tuple<Skin, Cape> getSkinAndCape() {
-        ProfileProperty textureProperty = getTextureProperty();
+        ProfileProperty textureProperty = getProfileProperty("textures");
         if (textureProperty == null) {
             return null;
         }
 
-        // Decode the texture property
-        String decoded = new String(java.util.Base64.getDecoder().decode(textureProperty.getValue()));
+        JsonObject json = Main.GSON.fromJson(textureProperty.getDecodedValue(), JsonObject.class); // Decode the texture property
+        JsonObject texturesJson = json.getAsJsonObject("textures"); // Parse the decoded JSON and get the textures object
 
-        // Parse the decoded JSON
-        JsonObject json = Main.getGSON().fromJson(decoded, JsonObject.class);
-        JsonObject texturesJson = json.getAsJsonObject("textures");
-        JsonObject skinJson = texturesJson.getAsJsonObject("SKIN");
-        JsonObject capeJson = texturesJson.getAsJsonObject("CAPE");
-        JsonObject metadataJson = skinJson.get("metadata").getAsJsonObject();
+        return new Tuple<>(Skin.fromJson(texturesJson.getAsJsonObject("SKIN")).populatePartUrls(this.getFormattedUuid()),
+                Cape.fromJson(texturesJson.getAsJsonObject("CAPE")));
+    }
 
-        Skin skin = new Skin(id, skinJson.get("url").getAsString(),
-                Skin.SkinType.valueOf(metadataJson.get("model").getAsString().toUpperCase()));
-        Cape cape = new Cape(capeJson.get("url").getAsString());
-
-        return new Tuple<>(skin, cape);
+    /**
+     * Gets the formatted UUID of the player.
+     * 
+     * @return the formatted UUID
+     */
+    public String getFormattedUuid() {
+        return id.length() == 32 ? UUIDUtils.addUuidDashes(id) : id;
     }
     
     /**
-     * Get the texture property of the player.
+     * Get a profile property for the player
      *
-     * @return the texture property
+     * @return the profile property
      */
-    public ProfileProperty getTextureProperty() {
+    public ProfileProperty getProfileProperty(String name) {
         for (ProfileProperty property : properties) {
-            if (property.getName().equals("textures")) {
+            if (property.getName().equals(name)) {
                 return property;
             }
         }
@@ -88,6 +89,15 @@ public class MojangProfile {
          * The signature of the property.
          */
         private String signature;
+
+        /**
+         * Decodes the value for this property.
+         *
+         * @return the decoded value
+         */
+        public String getDecodedValue() {
+            return new String(Base64.getDecoder().decode(this.value));
+        }
 
         /**
          * Check if the property is signed.

@@ -11,7 +11,7 @@ public class UUIDUtils {
      * @param idNoDashes the UUID without dashes
      * @return the UUID with dashes
      */
-    public static String addUUIDDashes(String idNoDashes) {
+    public static String addUuidDashes(String idNoDashes) {
         StringBuilder idBuff = new StringBuilder(idNoDashes);
         idBuff.insert(20, '-');
         idBuff.insert(16, '-');

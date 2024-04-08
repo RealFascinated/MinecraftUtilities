@@ -49,7 +49,7 @@ public class PlayerService {
         UUID uuid = null;
         if (id.length() == 32 || id.length() == 36) { // Check if the id is a UUID
             try {
-                uuid = UUID.fromString(id.length() == 32 ? UUIDUtils.addUUIDDashes(id) : id);
+                uuid = UUID.fromString(id.length() == 32 ? UUIDUtils.addUuidDashes(id) : id);
             } catch (Exception ignored) {}
         } else { // Check if the id is a name
             uuid = playerNameToUUIDCache.get(id.toUpperCase());
@@ -68,7 +68,7 @@ public class PlayerService {
             }
             // Get the profile of the player using their UUID
             profile = mojangAPIService.getProfile(apiProfile.getId().length() == 32 ?
-                    UUIDUtils.addUUIDDashes(apiProfile.getId()) : apiProfile.getId());
+                    UUIDUtils.addUuidDashes(apiProfile.getId()) : apiProfile.getId());
         }
         if (profile == null) { // The player cannot be found using their name or UUID
             log.info("Player with id {} could not be found", id);

@@ -1,7 +1,6 @@
 package cc.fascinated;
 
 import com.google.gson.Gson;
-import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
@@ -16,11 +15,8 @@ import java.util.Objects;
 @SpringBootApplication @Log4j2
 public class Main {
 
-    @Getter
-    private static final Gson GSON = new Gson();
-
-    @Getter
-    private static final HttpClient CLIENT = HttpClient.newHttpClient();
+    public static final Gson GSON = new Gson();
+    public static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
 
     @SneakyThrows
     public static void main(String[] args) {
