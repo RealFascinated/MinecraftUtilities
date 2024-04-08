@@ -1,4 +1,4 @@
-package cc.fascinated.model.player;
+package cc.fascinated.service.player.model;
 
 import cc.fascinated.config.Config;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,6 +28,9 @@ public class Skin {
      */
     private final Model model;
 
+    /**
+     * The part URLs of the skin
+     */
     @JsonProperty("parts")
     private final Map<String, String> partUrls = new HashMap<>();
 

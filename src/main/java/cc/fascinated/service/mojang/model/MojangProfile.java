@@ -1,8 +1,8 @@
 package cc.fascinated.service.mojang.model;
 
 import cc.fascinated.Main;
-import cc.fascinated.model.player.Cape;
-import cc.fascinated.model.player.Skin;
+import cc.fascinated.service.player.model.Cape;
+import cc.fascinated.service.player.model.Skin;
 import cc.fascinated.util.Tuple;
 import cc.fascinated.util.UUIDUtils;
 import com.google.gson.JsonObject;

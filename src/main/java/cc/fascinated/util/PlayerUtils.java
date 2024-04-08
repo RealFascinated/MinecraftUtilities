@@ -1,7 +1,7 @@
 package cc.fascinated.util;
 
 import cc.fascinated.Main;
-import cc.fascinated.model.player.Skin;
+import cc.fascinated.service.player.model.Skin;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;

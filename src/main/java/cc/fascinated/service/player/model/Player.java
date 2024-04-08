@@ -1,4 +1,4 @@
-package cc.fascinated.model.player;
+package cc.fascinated.service.player.model;
 
 import cc.fascinated.service.mojang.model.MojangProfile;
 import cc.fascinated.util.Tuple;

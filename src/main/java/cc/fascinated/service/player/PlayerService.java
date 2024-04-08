@@ -1,6 +1,6 @@
-package cc.fascinated.service;
+package cc.fascinated.service.player;
 
-import cc.fascinated.model.player.Player;
+import cc.fascinated.service.player.model.Player;
 import cc.fascinated.service.mojang.MojangAPIService;
 import cc.fascinated.service.mojang.model.MojangProfile;
 import cc.fascinated.service.mojang.model.MojangUsernameToUuid;
