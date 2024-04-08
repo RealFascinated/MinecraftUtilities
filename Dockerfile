@@ -1,11 +1,7 @@
-FROM eclipse-temurin:17.0.10_7-jdk-focal
-
-# Install maven
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y maven
+FROM maven:3.8.5-openjdk-17-slim
 
 # Set the working directory
-WORKDIR     /home/container
+WORKDIR /home/container
 
 # Copy the current directory contents into the container at /home/container
 COPY . .
