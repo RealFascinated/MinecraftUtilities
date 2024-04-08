@@ -5,7 +5,7 @@ import cc.fascinated.model.player.Skin;
 import cc.fascinated.model.response.impl.InvalidPartResponse;
 import cc.fascinated.model.response.impl.PlayerNotFoundResponse;
 import cc.fascinated.service.PlayerService;
-import cc.fascinated.util.PlayerUtils;
+import cc.fascinated.common.PlayerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;

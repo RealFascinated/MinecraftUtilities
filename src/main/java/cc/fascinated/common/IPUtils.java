@@ -1,4 +1,4 @@
-package cc.fascinated.util;
+package cc.fascinated.common;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;

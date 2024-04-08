@@ -1,6 +1,6 @@
 package cc.fascinated.log;
 
-import cc.fascinated.util.IPUtils;
+import cc.fascinated.common.IPUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;

@@ -1,4 +1,4 @@
-package cc.fascinated.util;
+package cc.fascinated.common;
 
 import cc.fascinated.Main;
 import cc.fascinated.model.player.Skin;

@@ -1,8 +1,8 @@
 package cc.fascinated.model.player;
 
 import cc.fascinated.model.mojang.MojangProfile;
-import cc.fascinated.util.Tuple;
-import cc.fascinated.util.UUIDUtils;
+import cc.fascinated.common.Tuple;
+import cc.fascinated.common.UUIDUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
