@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,19 +21,19 @@ public class Skin {
             Model.DEFAULT);
 
     /**
-     * The URL of the skin
+     * The URL for the skin
      */
     private final String url;
 
     /**
-     * The model of the skin
+     * The model for the skin
      */
     private final Model model;
 
     /**
-     * The skin data of the skin
+     * The skin image for the skin
      */
-    private final byte[] skinData;
+    private final BufferedImage skinImage;
 
     /**
      * The part URLs of the skin
@@ -44,7 +45,7 @@ public class Skin {
         this.url = url;
         this.model = model;
 
-        this.skinData = PlayerUtils.getSkinData(url);
+        this.skinImage = PlayerUtils.getSkinImage(url);
     }
 
     /**

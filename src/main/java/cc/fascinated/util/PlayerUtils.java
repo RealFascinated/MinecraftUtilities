@@ -26,13 +26,17 @@ public class PlayerUtils {
      */
     @SneakyThrows
     @JsonIgnore
-    public static byte[] getSkinData(String url) {
+    public static BufferedImage getSkinImage(String url) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI(url))
                 .GET()
                 .build();
 
-        return Main.HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofByteArray()).body();
+        byte[] body = Main.HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofByteArray()).body();
+        if (body == null) {
+            return null;
+        }
+        return ImageIO.read(new ByteArrayInputStream(body));
     }
 
     /**
@@ -46,7 +50,7 @@ public class PlayerUtils {
         }
 
         try {
-            BufferedImage image = ImageIO.read(new ByteArrayInputStream(skin.getSkinData()));
+            BufferedImage image = skin.getSkinImage();
             if (image == null) {
                 return null;
             }
