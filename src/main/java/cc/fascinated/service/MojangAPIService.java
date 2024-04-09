@@ -1,8 +1,8 @@
 package cc.fascinated.service;
 
+import cc.fascinated.common.WebRequest;
 import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.model.mojang.MojangUsernameToUuid;
-import cc.fascinated.common.WebRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

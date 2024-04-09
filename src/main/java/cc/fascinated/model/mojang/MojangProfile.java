@@ -1,10 +1,10 @@
 package cc.fascinated.model.mojang;
 
 import cc.fascinated.Main;
-import cc.fascinated.model.player.Cape;
-import cc.fascinated.model.player.Skin;
 import cc.fascinated.common.Tuple;
 import cc.fascinated.common.UUIDUtils;
+import cc.fascinated.model.player.Cape;
+import cc.fascinated.model.player.Skin;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

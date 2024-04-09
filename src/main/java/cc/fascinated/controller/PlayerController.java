@@ -1,11 +1,11 @@
 package cc.fascinated.controller;
 
+import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.model.player.Player;
 import cc.fascinated.model.player.Skin;
 import cc.fascinated.model.response.impl.InvalidPartResponse;
 import cc.fascinated.model.response.impl.PlayerNotFoundResponse;
 import cc.fascinated.service.PlayerService;
-import cc.fascinated.common.PlayerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
