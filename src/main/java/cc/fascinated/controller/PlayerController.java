@@ -26,7 +26,8 @@ public class PlayerController {
         this.playerManagerService = playerManagerService;
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE) @ResponseBody
+    @ResponseBody
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getPlayer(@PathVariable String id) {
         Player player = playerManagerService.getPlayer(id);
         if (player == null) { // No player with that id was found
@@ -36,7 +37,6 @@ public class PlayerController {
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
                 .body(player);
-
     }
 
     @GetMapping(value = "/{part}/{id}")
