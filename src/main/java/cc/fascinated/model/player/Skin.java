@@ -1,7 +1,7 @@
 package cc.fascinated.model.player;
 
-import cc.fascinated.config.Config;
 import cc.fascinated.common.PlayerUtils;
+import cc.fascinated.config.Config;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.JsonObject;
