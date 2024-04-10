@@ -1,5 +1,6 @@
 package cc.fascinated.model.cache;
 
+import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.model.player.Cape;
 import cc.fascinated.model.player.Player;
 import cc.fascinated.model.player.Skin;
@@ -26,8 +27,8 @@ public final class CachedPlayer extends Player implements Serializable {
      */
     private long cached;
 
-    public CachedPlayer(UUID uuid, String username, Skin skin, Cape cape, long cached) {
-        super(uuid, username, skin, cape);
+    public CachedPlayer(UUID uuid, String username, Skin skin, Cape cape, MojangProfile.ProfileProperty[] rawProperties, long cached) {
+        super(uuid, username, skin, cape, rawProperties);
         this.cached = cached;
     }
 }

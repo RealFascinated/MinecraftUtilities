@@ -73,6 +73,7 @@ public class PlayerService {
                     mojangProfile.getName(), // Player Name
                     skinAndCape.getLeft(), // Skin
                     skinAndCape.getRight(), // Cape
+                    mojangProfile.getProperties(), // Raw properties
                     System.currentTimeMillis() // Cache time
             );
 

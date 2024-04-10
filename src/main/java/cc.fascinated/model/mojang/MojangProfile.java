@@ -5,14 +5,13 @@ import cc.fascinated.common.Tuple;
 import cc.fascinated.common.UUIDUtils;
 import cc.fascinated.model.player.Cape;
 import cc.fascinated.model.player.Skin;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 
 @Getter @NoArgsConstructor @AllArgsConstructor
 public class MojangProfile {
@@ -30,7 +29,7 @@ public class MojangProfile {
     /**
      * The properties of the player.
      */
-    private final List<ProfileProperty> properties = new ArrayList<>();
+    private ProfileProperty[] properties = new ProfileProperty[0];
     
     /**
      * Get the skin and cape of the player.
@@ -95,6 +94,7 @@ public class MojangProfile {
          *
          * @return the decoded value
          */
+        @JsonIgnore
         public String getDecodedValue() {
             return new String(Base64.getDecoder().decode(this.value));
         }

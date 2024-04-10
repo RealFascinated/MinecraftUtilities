@@ -34,9 +34,15 @@ public class Player {
      */
     private Cape cape;
 
+    /**
+     * The raw properties of the player
+     */
+    private MojangProfile.ProfileProperty[] rawProperties;
+
     public Player(MojangProfile profile) {
         this.uuid = UUIDUtils.addDashes(profile.getId());
         this.username = profile.getName();
+        this.rawProperties = profile.getProperties();
 
         // Get the skin and cape
         Tuple<Skin, Cape> skinAndCape = profile.getSkinAndCape();
