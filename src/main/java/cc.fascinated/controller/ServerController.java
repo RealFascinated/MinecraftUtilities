@@ -31,14 +31,14 @@ public class ServerController {
     @GetMapping(value = "/{platform}/{hostname}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CachedMinecraftServer getServer(
             @Parameter(description = "The platform of the server", example = "java") @PathVariable String platform,
-            @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net") @PathVariable String hostname) {
+            @Parameter(description = "The hostname and port of the server", example = "aetheria.cc") @PathVariable String hostname) {
         return serverService.getServer(platform, hostname);
     }
 
     @ResponseBody
     @GetMapping(value = "/icon/{hostname}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<?> getServerIcon(
-            @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net") @PathVariable String hostname,
+            @Parameter(description = "The hostname and port of the server", example = "aetheria.cc") @PathVariable String hostname,
             @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download) {
         String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
 
@@ -51,7 +51,7 @@ public class ServerController {
     @ResponseBody
     @GetMapping(value = "/blocked/{hostname}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getServerBlockedStatus(
-            @Parameter(description = "The hostname of the server", example = "play.hypixel.net") @PathVariable String hostname) {
+            @Parameter(description = "The hostname of the server", example = "aetheria.cc") @PathVariable String hostname) {
         return ResponseEntity.ok(Map.of(
                 "blocked", mojangService.isServerBlocked(hostname)
         ));

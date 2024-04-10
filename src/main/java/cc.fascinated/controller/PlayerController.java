@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -34,6 +35,17 @@ public class PlayerController {
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
                 .body(playerService.getPlayer(id));
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/uuid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getPlayerUuid(
+            @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id) {
+        CachedPlayer player = playerService.getPlayer(id);
+        return ResponseEntity.ok(Map.of(
+                "username", player.getUsername(),
+                "uuid", player.getUuid().toString()
+        ));
     }
 
     @GetMapping(value = "/{part}/{id}")
