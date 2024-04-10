@@ -86,7 +86,7 @@ public class PlayerService {
      */
     private UUID usernameToUuid(String username) {
         log.info("Getting UUID from username: {}", username);
-        Optional<CachedPlayerName> cachedPlayerName = playerNameCacheRepository.findById(username);
+        Optional<CachedPlayerName> cachedPlayerName = playerNameCacheRepository.findById(username.toUpperCase());
         if (cachedPlayerName.isPresent()) {
             return cachedPlayerName.get().getUniqueId();
         }
