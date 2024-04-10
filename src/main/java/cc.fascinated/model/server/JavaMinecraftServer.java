@@ -4,7 +4,7 @@ import cc.fascinated.Main;
 import cc.fascinated.common.JavaMinecraftVersion;
 import cc.fascinated.common.ServerUtils;
 import cc.fascinated.config.Config;
-import cc.fascinated.model.mojang.JavaServerStatusToken;
+import cc.fascinated.model.token.JavaServerStatusToken;
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
 import net.md_5.bungee.api.chat.TextComponent;

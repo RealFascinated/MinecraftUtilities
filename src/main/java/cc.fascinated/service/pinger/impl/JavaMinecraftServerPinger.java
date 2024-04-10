@@ -2,12 +2,13 @@ package cc.fascinated.service.pinger.impl;
 
 import cc.fascinated.Main;
 import cc.fascinated.common.DNSUtils;
+import cc.fascinated.common.JavaMinecraftVersion;
 import cc.fascinated.common.ServerUtils;
 import cc.fascinated.common.packet.impl.java.JavaPacketHandshakingInSetProtocol;
 import cc.fascinated.common.packet.impl.java.JavaPacketStatusInStart;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
-import cc.fascinated.model.mojang.JavaServerStatusToken;
+import cc.fascinated.model.token.JavaServerStatusToken;
 import cc.fascinated.model.server.JavaMinecraftServer;
 import cc.fascinated.service.pinger.MinecraftServerPinger;
 import lombok.extern.log4j.Log4j2;
@@ -42,12 +43,11 @@ public final class JavaMinecraftServerPinger implements MinecraftServerPinger<Ja
             try (DataInputStream inputStream = new DataInputStream(socket.getInputStream());
                  DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream())) {
                 // Begin handshaking with the server
-                new JavaPacketHandshakingInSetProtocol(hostname, port, 47).process(inputStream, outputStream);
+                new JavaPacketHandshakingInSetProtocol(hostname, port, JavaMinecraftVersion.getMinimumVersion().getProtocol()).process(inputStream, outputStream);
 
                 // Send the status request to the server, and await back the response
                 JavaPacketStatusInStart packetStatusInStart = new JavaPacketStatusInStart();
                 packetStatusInStart.process(inputStream, outputStream);
-                System.out.println(packetStatusInStart.getResponse());
                 JavaServerStatusToken token = Main.GSON.fromJson(packetStatusInStart.getResponse(), JavaServerStatusToken.class);
                 return JavaMinecraftServer.create(hostname, ip, port, token);
             }

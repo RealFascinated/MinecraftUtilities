@@ -1,4 +1,4 @@
-package cc.fascinated.model.mojang;
+package cc.fascinated.model.token;
 
 import cc.fascinated.model.server.JavaMinecraftServer;
 import cc.fascinated.model.server.MinecraftServer;

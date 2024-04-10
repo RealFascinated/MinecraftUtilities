@@ -1,6 +1,7 @@
 package cc.fascinated.common;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
@@ -65,6 +66,8 @@ public enum JavaMinecraftVersion {
 
     V1_8(47, "v1_8_R3"), // 1.8.x
 
+    V1_7_6(5, "v1_7_R4"), // 1.7.6 - 1.7.10
+
     UNKNOWN(-1, "Unknown");
 
     // Game Updates
@@ -81,6 +84,8 @@ public enum JavaMinecraftVersion {
     public static final JavaMinecraftVersion FROSTBURN_UPDATE = JavaMinecraftVersion.V1_10;
     public static final JavaMinecraftVersion THE_COMBAT_UPDATE = JavaMinecraftVersion.V1_9;
     public static final JavaMinecraftVersion BOUNTIFUL_UPDATE = JavaMinecraftVersion.V1_8;
+
+    private static final JavaMinecraftVersion[] VALUES = JavaMinecraftVersion.values();
 
     /**
      * The protocol number of this version.
@@ -168,6 +173,16 @@ public enum JavaMinecraftVersion {
      */
     public boolean isOrBelow(JavaMinecraftVersion other) {
         return this.protocol <= other.getProtocol();
+    }
+
+    /**
+     * Get the minimum Minecraft version.
+     *
+     * @return the minimum version
+     */
+    @NonNull
+    public static JavaMinecraftVersion getMinimumVersion() {
+        return VALUES[VALUES.length - 2];
     }
 
     /**
