@@ -3,9 +3,9 @@ server:
   port: 80
   servlet:
     context-path: /
-  error:
-    whitelabel:
-      enabled: false
+
+# The public URL of the application
+public-url: http://localhost:80
 
 # Spring Configuration
 spring:
@@ -17,4 +17,7 @@ spring:
       database: 0
       auth: "" # Leave blank for no auth
 
-public-url: http://localhost:80
+  # Don't serialize null values
+  jackson:
+    default-property-inclusion: non_null
+

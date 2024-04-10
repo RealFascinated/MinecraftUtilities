@@ -5,10 +5,8 @@ import cc.fascinated.common.JavaMinecraftVersion;
 import cc.fascinated.common.ServerUtils;
 import cc.fascinated.config.Config;
 import cc.fascinated.model.mojang.JavaServerStatusToken;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import com.google.gson.annotations.SerializedName;
+import lombok.*;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 
@@ -29,14 +27,18 @@ public final class JavaMinecraftServer extends MinecraftServer {
     private Favicon favicon;
 
     /**
-     * The mods of the server.
+     * The mods running on this server.
      */
-    private MinecraftServer.Mod[] mods;
+    private ForgeModInfo modInfo;
 
     /**
-     * The plugins of the server.
+     * The mods running on this server.
+     * <p>
+     *     This is only used for servers
+     *     running 1.13 and above.
+     * </p>
      */
-    private MinecraftServer.Plugin[] plugins;
+    private ForgeData forgeData;
 
     /**
      * The mojang banned status of the server.
@@ -44,12 +46,12 @@ public final class JavaMinecraftServer extends MinecraftServer {
     private boolean mojangBanned;
 
     public JavaMinecraftServer(String hostname, String ip, int port, MOTD motd, Players players,
-                               @NonNull Version version, Favicon favicon, Mod[] mods, Plugin[] plugins) {
+                               @NonNull Version version, Favicon favicon, ForgeModInfo modInfo, ForgeData forgeData) {
         super(hostname, ip, port, motd, players);
         this.version = version;
         this.favicon = favicon;
-        this.mods = mods;
-        this.plugins = plugins;
+        this.modInfo = modInfo;
+        this.forgeData = forgeData;
     }
 
     /**
@@ -75,8 +77,8 @@ public final class JavaMinecraftServer extends MinecraftServer {
                 token.getPlayers(),
                 token.getVersion().detailedCopy(),
                 JavaMinecraftServer.Favicon.create(token.getFavicon(), ServerUtils.getAddress(hostname, port)),
-                token.getMods(),
-                token.getPlugins()
+                token.getModInfo(),
+                token.getForgeData()
         );
     }
 
@@ -149,6 +151,83 @@ public final class JavaMinecraftServer extends MinecraftServer {
                 return null;
             }
             return new Favicon(base64, Config.INSTANCE.getWebPublicUrl() + "/server/icon/%s".formatted(address));
+        }
+    }
+
+    /**
+     * Forge mod information for a server.
+     */
+    @AllArgsConstructor @Getter @ToString
+    public static class ForgeModInfo {
+        /**
+         * The type of modded server this is.
+         */
+        @NonNull private final String type;
+
+        /**
+         * The list of mods on this server, null or empty if none.
+         */
+        private final ForgeMod[] modList;
+
+        /**
+         * A forge mod for a server.
+         */
+        @AllArgsConstructor @Getter @ToString
+        private static class ForgeMod {
+            /**
+             * The id of this mod.
+             */
+            @NonNull @SerializedName("modid") private final String name;
+
+            /**
+             * The version of this mod.
+             */
+            private final String version;
+        }
+    }
+
+    @AllArgsConstructor @Getter
+    public static class ForgeData {
+
+        /**
+         * The list of mod channels on this server, null or empty if none.
+         */
+        private final Channel[] channels;
+
+        /**
+         * The list of mods on this server, null or empty if none.
+         */
+        private final Mod[] mods;
+
+        @AllArgsConstructor @Getter
+        public static class Channel {
+            /**
+             * The id of this mod channel.
+             */
+            @NonNull @SerializedName("res") private final String name;
+
+            /**
+             * The version of this mod channel.
+             */
+            private final String version;
+
+            /**
+             * Whether this mod channel is required to join.
+             */
+            private boolean required;
+        }
+
+        @AllArgsConstructor @Getter
+        public static class Mod {
+            /**
+             * The id of this mod.
+             */
+            @NonNull @SerializedName("modId") private final String name;
+
+            /**
+             * The version of this mod.
+             */
+            @SerializedName("modmarker") private final String version;
         }
     }
 }

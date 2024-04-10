@@ -47,6 +47,7 @@ public final class JavaMinecraftServerPinger implements MinecraftServerPinger<Ja
                 // Send the status request to the server, and await back the response
                 JavaPacketStatusInStart packetStatusInStart = new JavaPacketStatusInStart();
                 packetStatusInStart.process(inputStream, outputStream);
+                System.out.println(packetStatusInStart.getResponse());
                 JavaServerStatusToken token = Main.GSON.fromJson(packetStatusInStart.getResponse(), JavaServerStatusToken.class);
                 return JavaMinecraftServer.create(hostname, ip, port, token);
             }

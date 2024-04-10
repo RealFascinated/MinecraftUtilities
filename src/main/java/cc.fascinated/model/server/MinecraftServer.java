@@ -141,40 +141,4 @@ public class MinecraftServer {
             @NonNull private final String name;
         }
     }
-
-    /**
-     * Mod data for a server.
-     */
-    @AllArgsConstructor @Getter
-    public static final class Mod {
-
-        /**
-         * The name of the mod.
-         */
-        private final String name;
-
-
-        /**
-         * The version of the mod.
-         */
-        private final String version;
-    }
-
-    /**
-     * Plugin data for a server.
-     */
-    @AllArgsConstructor @Getter
-    public static final class Plugin {
-
-        /**
-         * The name of the plugin.
-         */
-        private final String name;
-
-
-        /**
-         * The version of the plugin.
-         */
-        private final String version;
-    }
 }

@@ -2,6 +2,7 @@ package cc.fascinated.model.mojang;
 
 import cc.fascinated.model.server.JavaMinecraftServer;
 import cc.fascinated.model.server.MinecraftServer;
+import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -23,14 +24,19 @@ public final class JavaServerStatusToken {
     private final MinecraftServer.Players players;
 
     /**
-     * The mods running on the server.
+     * The mods running on this server.
      */
-    private final MinecraftServer.Mod[] mods;
+    @SerializedName("modinfo")
+    private JavaMinecraftServer.ForgeModInfo modInfo;
 
     /**
-     * The plugins running on the server.
+     * The mods running on this server.
+     * <p>
+     *     This is only used for servers
+     *     running 1.13 and above.
+     * </p>
      */
-    private final MinecraftServer.Plugin[] plugins;
+    private JavaMinecraftServer.ForgeData forgeData;
 
     /**
      * The motd of the server.
