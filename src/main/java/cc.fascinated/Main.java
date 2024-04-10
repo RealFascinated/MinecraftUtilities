@@ -34,6 +34,6 @@ public class Main {
         }
         log.info("Found configuration at '{}'", config.getAbsolutePath()); // Log the found config
 
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(Main.class, args); // Start the application
     }
 }

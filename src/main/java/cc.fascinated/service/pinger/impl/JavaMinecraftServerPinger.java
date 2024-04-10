@@ -1,13 +1,13 @@
 package cc.fascinated.service.pinger.impl;
 
 import cc.fascinated.Main;
-import cc.fascinated.common.DNSUtils;
 import cc.fascinated.common.JavaMinecraftVersion;
 import cc.fascinated.common.ServerUtils;
 import cc.fascinated.common.packet.impl.java.JavaPacketHandshakingInSetProtocol;
 import cc.fascinated.common.packet.impl.java.JavaPacketStatusInStart;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
+import cc.fascinated.model.dns.DNSRecord;
 import cc.fascinated.model.server.JavaMinecraftServer;
 import cc.fascinated.model.token.JavaServerStatusToken;
 import cc.fascinated.service.pinger.MinecraftServerPinger;
@@ -26,12 +26,7 @@ public final class JavaMinecraftServerPinger implements MinecraftServerPinger<Ja
     private static final int TIMEOUT = 1500; // The timeout for the socket
 
     @Override
-    public JavaMinecraftServer ping(String hostname, int port) {
-        InetAddress inetAddress = DNSUtils.resolveA(hostname); // Resolve the hostname to an IP address
-        String ip = inetAddress == null ? null : inetAddress.getHostAddress(); // Get the IP address
-        if (ip != null) { // Was the IP resolved?
-            log.info("Resolved hostname: {} -> {}", hostname, ip);
-        }
+    public JavaMinecraftServer ping(String hostname, String ip, int port, DNSRecord[] records) {
         log.info("Pinging {}:{}...", hostname, port);
 
         // Open a socket connection to the server
@@ -49,7 +44,7 @@ public final class JavaMinecraftServerPinger implements MinecraftServerPinger<Ja
                 JavaPacketStatusInStart packetStatusInStart = new JavaPacketStatusInStart();
                 packetStatusInStart.process(inputStream, outputStream);
                 JavaServerStatusToken token = Main.GSON.fromJson(packetStatusInStart.getResponse(), JavaServerStatusToken.class);
-                return JavaMinecraftServer.create(hostname, ip, port, token);
+                return JavaMinecraftServer.create(hostname, ip, port, records, token);
             }
         } catch (IOException ex) {
             if (ex instanceof UnknownHostException) {

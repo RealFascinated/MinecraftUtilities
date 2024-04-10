@@ -1,17 +1,19 @@
 package cc.fascinated.service.pinger.impl;
 
-import cc.fascinated.common.DNSUtils;
 import cc.fascinated.common.packet.impl.bedrock.BedrockPacketUnconnectedPing;
 import cc.fascinated.common.packet.impl.bedrock.BedrockPacketUnconnectedPong;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
+import cc.fascinated.model.dns.DNSRecord;
 import cc.fascinated.model.server.BedrockMinecraftServer;
 import cc.fascinated.service.pinger.MinecraftServerPinger;
-import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 /**
  * The {@link MinecraftServerPinger} for pinging
@@ -31,12 +33,7 @@ public final class BedrockMinecraftServerPinger implements MinecraftServerPinger
      * @return the server that was pinged
      */
     @Override
-    public BedrockMinecraftServer ping(@NonNull String hostname, int port) {
-        InetAddress inetAddress = DNSUtils.resolveA(hostname); // Resolve the hostname to an IP address
-        String ip = inetAddress == null ? null : inetAddress.getHostAddress(); // Get the IP address
-        if (ip != null) { // Was the IP resolved?
-            log.info("Resolved hostname: {} -> {}", hostname, ip);
-        }
+    public BedrockMinecraftServer ping(String hostname, String ip, int port, DNSRecord[] records) {
         log.info("Pinging {}:{}...", hostname, port);
         long before = System.currentTimeMillis(); // Timestamp before pinging
 
@@ -58,7 +55,7 @@ public final class BedrockMinecraftServerPinger implements MinecraftServerPinger
             if (response == null) { // No pong response
                 throw new ResourceNotFoundException("Server didn't respond to ping");
             }
-            return BedrockMinecraftServer.create(hostname, ip, port, response); // Return the server
+            return BedrockMinecraftServer.create(hostname, ip, port, records, response); // Return the server
         } catch (IOException ex) {
             if (ex instanceof UnknownHostException) {
                 throw new BadRequestException("Unknown hostname: %s".formatted(hostname));

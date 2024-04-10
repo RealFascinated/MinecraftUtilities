@@ -4,6 +4,7 @@ import cc.fascinated.Main;
 import cc.fascinated.common.JavaMinecraftVersion;
 import cc.fascinated.common.ServerUtils;
 import cc.fascinated.config.Config;
+import cc.fascinated.model.dns.DNSRecord;
 import cc.fascinated.model.token.JavaServerStatusToken;
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
@@ -60,14 +61,14 @@ public final class JavaMinecraftServer extends MinecraftServer {
     private boolean previewsChat;
 
     /**
-     * The mojang banned status of the server.
+     * The mojang blocked status for the server.
      */
-    private boolean mojangBanned;
+    private boolean mojangBlocked;
 
-    public JavaMinecraftServer(String hostname, String ip, int port, MOTD motd, Players players, @NonNull Version version,
-                               Favicon favicon, ForgeModInfo modInfo, ForgeData forgeData, boolean preventsChatReports,
-                               boolean enforcesSecureChat, boolean previewsChat) {
-        super(hostname, ip, port, motd, players);
+    public JavaMinecraftServer(String hostname, String ip, int port, MOTD motd, Players players, DNSRecord[] records,
+                               @NonNull Version version, Favicon favicon, ForgeModInfo modInfo, ForgeData forgeData,
+                               boolean preventsChatReports, boolean enforcesSecureChat, boolean previewsChat) {
+        super(hostname, ip, port, records, motd, players);
         this.version = version;
         this.favicon = favicon;
         this.modInfo = modInfo;
@@ -87,7 +88,7 @@ public final class JavaMinecraftServer extends MinecraftServer {
      * @return the Java Minecraft server
      */
     @NonNull
-    public static JavaMinecraftServer create(@NonNull String hostname, String ip, int port, @NonNull JavaServerStatusToken token) {
+    public static JavaMinecraftServer create(@NonNull String hostname, String ip, int port, DNSRecord[] records, @NonNull JavaServerStatusToken token) {
         String motdString = token.getDescription() instanceof String ? (String) token.getDescription() : null;
         if (motdString == null) { // Not a string motd, convert from Json
             motdString = new TextComponent(ComponentSerializer.parse(Main.GSON.toJson(token.getDescription()))).toLegacyText();
@@ -98,6 +99,7 @@ public final class JavaMinecraftServer extends MinecraftServer {
                 port,
                 MinecraftServer.MOTD.create(motdString),
                 token.getPlayers(),
+                records,
                 token.getVersion().detailedCopy(),
                 JavaMinecraftServer.Favicon.create(token.getFavicon(), ServerUtils.getAddress(hostname, port)),
                 token.getModInfo(),

@@ -1,12 +1,14 @@
 package cc.fascinated.model.server;
 
 import cc.fascinated.common.ColorUtils;
+import cc.fascinated.model.dns.DNSRecord;
 import cc.fascinated.service.pinger.MinecraftServerPinger;
 import cc.fascinated.service.pinger.impl.BedrockMinecraftServerPinger;
 import cc.fascinated.service.pinger.impl.JavaMinecraftServerPinger;
 import io.micrometer.common.lang.NonNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Arrays;
@@ -15,8 +17,10 @@ import java.util.UUID;
 /**
  * @author Braydon
  */
-@AllArgsConstructor @Getter @ToString
+@AllArgsConstructor
+@Getter @Setter
 public class MinecraftServer {
+
     /**
      * The hostname of the server.
      */
@@ -33,6 +37,11 @@ public class MinecraftServer {
     private final int port;
 
     /**
+     * The DNS records for the server.
+     */
+    private final DNSRecord[] records;
+
+    /**
      * The motd for the server.
      */
     private final MOTD motd;
@@ -40,7 +49,7 @@ public class MinecraftServer {
     /**
      * The players on the server.
      */
-    private Players players;
+    private final Players players;
 
     /**
      * A platform a Minecraft

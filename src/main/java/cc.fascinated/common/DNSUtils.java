@@ -1,13 +1,13 @@
 package cc.fascinated.common;
 
+import cc.fascinated.model.dns.impl.ARecord;
+import cc.fascinated.model.dns.impl.SRVRecord;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import org.xbill.DNS.Lookup;
 import org.xbill.DNS.Record;
-import org.xbill.DNS.*;
-
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
+import org.xbill.DNS.Type;
 
 /**
  * @author Braydon
@@ -17,43 +17,42 @@ public final class DNSUtils {
     private static final String SRV_QUERY_PREFIX = "_minecraft._tcp.%s";
 
     /**
-     * Resolve the hostname to an {@link InetSocketAddress}.
+     * Get the resolved address and port of the
+     * given hostname by resolving the SRV records.
      *
      * @param hostname the hostname to resolve
-     * @return the resolved {@link InetSocketAddress}
+     * @return the resolved address and port, null if none
      */
     @SneakyThrows
-    public static InetSocketAddress resolveSRV(@NonNull String hostname) {
+    public static SRVRecord resolveSRV(@NonNull String hostname) {
         Record[] records = new Lookup(SRV_QUERY_PREFIX.formatted(hostname), Type.SRV).run(); // Resolve SRV records
         if (records == null) { // No records exist
             return null;
         }
-        String host = null;
-        int port = -1;
+        SRVRecord result = null;
         for (Record record : records) {
-            SRVRecord srv = (SRVRecord) record;
-            host = srv.getTarget().toString().replaceFirst("\\.$", "");
-            port = srv.getPort();
+            result = new SRVRecord((org.xbill.DNS.SRVRecord) record);
         }
-        return host == null ? null :  new InetSocketAddress(host, port);
+        return result;
     }
 
     /**
-     * Resolve the hostname to an {@link InetAddress}.
+     * Get the resolved address of the given
+     * hostname by resolving the A records.
      *
      * @param hostname the hostname to resolve
-     * @return the resolved {@link InetAddress}
+     * @return the resolved address, null if none
      */
     @SneakyThrows
-    public static InetAddress resolveA(@NonNull String hostname) {
+    public static ARecord resolveA(@NonNull String hostname) {
         Record[] records = new Lookup(hostname, Type.A).run(); // Resolve A records
         if (records == null) { // No records exist
             return null;
         }
-        InetAddress address = null;
+        ARecord result = null;
         for (Record record : records) {
-            address = ((ARecord) record).getAddress();
+            result = new ARecord((org.xbill.DNS.ARecord) record);
         }
-        return address;
+        return result;
     }
 }

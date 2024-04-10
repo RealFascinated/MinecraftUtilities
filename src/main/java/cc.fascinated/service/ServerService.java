@@ -5,6 +5,9 @@ import cc.fascinated.common.EnumUtils;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
 import cc.fascinated.model.cache.CachedMinecraftServer;
+import cc.fascinated.model.dns.DNSRecord;
+import cc.fascinated.model.dns.impl.ARecord;
+import cc.fascinated.model.dns.impl.SRVRecord;
 import cc.fascinated.model.server.JavaMinecraftServer;
 import cc.fascinated.model.server.MinecraftServer;
 import cc.fascinated.repository.MinecraftServerCacheRepository;
@@ -13,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 @Service @Log4j2
@@ -63,21 +68,32 @@ public class ServerService {
             return cached.get();
         }
 
-        // Resolve the SRV record if the platform is Java
-        InetSocketAddress address = platform == MinecraftServer.Platform.JAVA ? DNSUtils.resolveSRV(hostname) : null;
-        if (address != null) {
-            hostname = address.getHostName();
+        List<DNSRecord> records = new ArrayList<>(); // The resolved DNS records for the server
+
+        SRVRecord srvRecord = platform == MinecraftServer.Platform.JAVA ? DNSUtils.resolveSRV(hostname) : null; // Resolve the SRV record
+        if (srvRecord != null) { // SRV was resolved, use the hostname and port
+            records.add(srvRecord); // Going to need this for later
+            InetSocketAddress socketAddress = srvRecord.getSocketAddress();
+            hostname = socketAddress.getHostName();
+            port = socketAddress.getPort();
+        }
+
+        ARecord aRecord = DNSUtils.resolveA(hostname); // Resolve the A record so we can get the IPv4 address
+        String ip = aRecord == null ? null : aRecord.getAddress(); // Get the IP address
+        if (ip != null) { // Was the IP resolved?
+            records.add(aRecord); // Going to need this for later
+            log.info("Resolved hostname: {} -> {}", hostname, ip);
         }
 
         CachedMinecraftServer server = new CachedMinecraftServer(
                 key,
-                platform.getPinger().ping(hostname, port),
+                platform.getPinger().ping(hostname, ip, port, records.toArray(new DNSRecord[0])),
                 System.currentTimeMillis()
         );
 
         // Check if the server is blocked by Mojang
         if (platform == MinecraftServer.Platform.JAVA) {
-            ((JavaMinecraftServer) server.getServer()).setMojangBanned(mojangService.isServerBlocked(hostname));
+            ((JavaMinecraftServer) server.getServer()).setMojangBlocked(mojangService.isServerBlocked(hostname));
         }
 
         log.info("Found server: {}:{}", hostname, port);
