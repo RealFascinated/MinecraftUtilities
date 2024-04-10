@@ -47,4 +47,23 @@ public final class JavaServerStatusToken {
      * The favicon of the server.
      */
     private final String favicon;
+
+    /**
+     * Whether the server prevents chat reports.
+     */
+    private boolean preventsChatReports;
+
+    /**
+     * Whether the server enforces secure chat.
+     */
+    private boolean enforcesSecureChat;
+
+    /**
+     * Whether the server has previews chat enabled.
+     * <p>
+     *      Chat Preview sends chat messages to the server as they are typed, even before they're sent.
+     *      <a href="https://www.minecraft.net/es-mx/article/minecraft-snapshot-22w19a">More information</a>
+     * </p>
+     */
+    private boolean previewsChat;
 }
