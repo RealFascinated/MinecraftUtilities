@@ -30,7 +30,7 @@ public class ServerController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/icon/{hostnameAndPort}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/icon/{hostnameAndPort}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<?> getServerIcon(
             @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net") @PathVariable String hostnameAndPort,
             @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download) {
