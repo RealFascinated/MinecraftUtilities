@@ -1,7 +1,7 @@
 package cc.fascinated.service;
 
-import cc.fascinated.common.EnumUtils;
 import cc.fascinated.common.DNSUtils;
+import cc.fascinated.common.EnumUtils;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
 import cc.fascinated.model.cache.CachedMinecraftServer;

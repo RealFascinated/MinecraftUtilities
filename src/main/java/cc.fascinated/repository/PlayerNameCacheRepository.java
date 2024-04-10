@@ -1,10 +1,7 @@
 package cc.fascinated.repository;
 
-import cc.fascinated.model.cache.CachedPlayer;
 import cc.fascinated.model.cache.CachedPlayerName;
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.UUID;
 
 /**
  * A cache repository for player usernames.

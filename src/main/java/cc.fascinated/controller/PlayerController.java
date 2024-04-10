@@ -4,6 +4,7 @@ import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.model.player.Player;
 import cc.fascinated.model.player.Skin;
 import cc.fascinated.service.PlayerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.TimeUnit;
 
 @RestController
+@Tag(name = "Player Controller", description = "The Player Controller is used to get information about a player.")
 @RequestMapping(value = "/player/")
 public class PlayerController {
 

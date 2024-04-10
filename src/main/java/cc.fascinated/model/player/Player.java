@@ -3,7 +3,6 @@ package cc.fascinated.model.player;
 import cc.fascinated.common.Tuple;
 import cc.fascinated.common.UUIDUtils;
 import cc.fascinated.model.mojang.MojangProfile;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;

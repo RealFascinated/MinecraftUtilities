@@ -1,6 +1,8 @@
 server:
   address: 0.0.0.0
   port: 80
+  servlet:
+    context-path: /
   error:
     whitelabel:
       enabled: false

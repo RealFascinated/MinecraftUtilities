@@ -44,6 +44,7 @@ public class PlayerService {
      */
     public CachedPlayer getPlayer(String id) {
         id = id.toUpperCase(); // Convert the id to uppercase to prevent case sensitivity
+        log.info("Getting player: {}", id);
         UUID uuid = PlayerUtils.getUuidFromString(id);
         if (uuid == null) { // If the id is not a valid uuid, get the uuid from the username
             uuid = usernameToUuid(id);
@@ -51,11 +52,14 @@ public class PlayerService {
 
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
         if (cachedPlayer.isPresent()) { // Return the cached player if it exists
+            log.info("Player {} is cached", id);
             return cachedPlayer.get();
         }
 
         try {
+            log.info("Getting player profile from Mojang: {}", id);
             MojangProfile mojangProfile = mojangAPIService.getProfile(uuid.toString()); // Get the player profile from Mojang
+            log.info("Got player profile from Mojang: {}", id);
             Tuple<Skin, Cape> skinAndCape = mojangProfile.getSkinAndCape();
             CachedPlayer player = new CachedPlayer(
                     uuid, // Player UUID
@@ -80,6 +84,7 @@ public class PlayerService {
      * @return the uuid of the player
      */
     private UUID usernameToUuid(String username) {
+        log.info("Getting UUID from username: {}", username);
         Optional<CachedPlayerName> cachedPlayerName = playerNameCacheRepository.findById(username);
         if (cachedPlayerName.isPresent()) {
             return cachedPlayerName.get().getUniqueId();
@@ -87,10 +92,12 @@ public class PlayerService {
         try {
             MojangUsernameToUuid mojangUsernameToUuid = mojangAPIService.getUuidFromUsername(username);
             if (mojangUsernameToUuid == null) {
+                log.info("Player with username '{}' not found", username);
                 throw new ResourceNotFoundException("Player with username '%s' not found".formatted(username));
             }
             UUID uuid = UUIDUtils.addDashes(mojangUsernameToUuid.getId());
             playerNameCacheRepository.save(new CachedPlayerName(username, uuid));
+            log.info("Got UUID from username: {} -> {}", username, uuid);
             return uuid;
         } catch (RateLimitException exception) {
             throw new MojangAPIRateLimitException();

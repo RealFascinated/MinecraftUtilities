@@ -1,6 +1,10 @@
 package cc.fascinated;
 
 import com.google.gson.Gson;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +16,15 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
-@SpringBootApplication @Log4j2
+@Log4j2
+@SpringBootApplication
+@OpenAPIDefinition(info = @Info(
+        title = "Minecraft Utilities API",
+        version = "1.0",
+        description = "Wrapper for the Minecraft APIs to make them easier to use.",
+        contact = @Contact(name = "Liam", email = "liam@fascinated.cc", url = "https://fascinated.cc"),
+        license = @License(name = "MIT License", url = "https://opensource.org/licenses/MIT")
+))
 public class Main {
 
     public static final Gson GSON = new Gson();

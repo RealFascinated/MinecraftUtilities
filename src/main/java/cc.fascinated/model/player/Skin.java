@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 

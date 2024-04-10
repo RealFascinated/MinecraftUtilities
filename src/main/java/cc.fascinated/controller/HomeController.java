@@ -19,6 +19,7 @@ public class HomeController {
     public String home(Model model) {
         model.addAttribute("player_example_url", Config.INSTANCE.getWebPublicUrl() + "/player/" + exampleUuid);
         model.addAttribute("java_server_example_url", Config.INSTANCE.getWebPublicUrl() + "/server/java/play.hypixel.net");
+        model.addAttribute("swagger_url", Config.INSTANCE.getWebPublicUrl() + "/swagger-ui.html");
         return "index";
     }
 }

@@ -3,10 +3,8 @@ package cc.fascinated.controller;
 import cc.fascinated.common.ServerUtils;
 import cc.fascinated.common.Tuple;
 import cc.fascinated.model.cache.CachedMinecraftServer;
-import cc.fascinated.model.server.JavaMinecraftServer;
-import cc.fascinated.model.server.MinecraftServer;
 import cc.fascinated.service.ServerService;
-import cc.fascinated.service.pinger.impl.JavaMinecraftServerPinger;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Tag(name = "Server Controller", description = "The Server Controller is used to get information about a server.")
 @RequestMapping(value = "/server/")
 public class ServerController {
 
