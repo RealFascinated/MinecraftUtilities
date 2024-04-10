@@ -48,7 +48,7 @@ public class PlayerService {
         log.info("Getting player: {}", originalId);
         UUID uuid = PlayerUtils.getUuidFromString(originalId);
         if (uuid == null) { // If the id is not a valid uuid, get the uuid from the username
-            uuid = usernameToUuid(id);
+            uuid = usernameToUuid(originalId);
         }
 
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
