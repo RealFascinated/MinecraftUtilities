@@ -58,6 +58,6 @@ class PlayerControllerTests {
     @Test
     public void ensurePlayerSkinPartsLookupFailure() throws Exception {
         mockMvc.perform(get("/player/invalidpart/eeab5f8a-18dd-4d58-af78-2b3c4543da48"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
     }
 }
