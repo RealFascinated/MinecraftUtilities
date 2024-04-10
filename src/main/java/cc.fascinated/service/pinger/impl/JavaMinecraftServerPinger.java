@@ -8,8 +8,8 @@ import cc.fascinated.common.packet.impl.java.JavaPacketHandshakingInSetProtocol;
 import cc.fascinated.common.packet.impl.java.JavaPacketStatusInStart;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
-import cc.fascinated.model.token.JavaServerStatusToken;
 import cc.fascinated.model.server.JavaMinecraftServer;
+import cc.fascinated.model.token.JavaServerStatusToken;
 import cc.fascinated.service.pinger.MinecraftServerPinger;
 import lombok.extern.log4j.Log4j2;
 

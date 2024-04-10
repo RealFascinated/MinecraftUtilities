@@ -1,5 +1,6 @@
 package cc.fascinated.tests;
 
+import cc.fascinated.config.TestRedisConfig;
 import cc.fascinated.model.player.Skin;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import cc.fascinated.config.TestRedisConfig;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -17,30 +17,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TestRedisConfig.class)
 class PlayerControllerTests {
 
+    private final String testPlayerUuid = "eeab5f8a-18dd-4d58-af78-2b3c4543da48";
+    private final String testPlayer = "ImFascinated";
+    private final String testInvalidPlayer = "invalidplayeromgyeswow";
+
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void ensurePlayerLookupUuidSuccess() throws Exception {
-        mockMvc.perform(get("/player/eeab5f8a-18dd-4d58-af78-2b3c4543da48")
+        mockMvc.perform(get("/player/" + testPlayerUuid)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("ImFascinated"));
+                .andExpect(jsonPath("$.username").value(testPlayer));
     }
 
     @Test
     public void ensurePlayerLookupUsernameSuccess() throws Exception {
-        mockMvc.perform(get("/player/ImFascinated")
+        mockMvc.perform(get("/player/" + testPlayer)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("ImFascinated"));
+                .andExpect(jsonPath("$.username").value(testPlayer));
     }
 
     @Test
     public void ensurePlayerLookupFailure() throws Exception {
-        mockMvc.perform(get("/player/invalidnamehahahahahayesslmaooo")
+        mockMvc.perform(get("/player/" + testInvalidPlayer)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -49,7 +53,7 @@ class PlayerControllerTests {
     @Test
     public void ensurePlayerSkinPartsLookupSuccess() throws Exception {
         for (Skin.Parts part : Skin.Parts.values()) {
-            mockMvc.perform(get("/player/" + part.getName() + "/eeab5f8a-18dd-4d58-af78-2b3c4543da48")
+            mockMvc.perform(get("/player/" + part.getName() + "/" + testPlayerUuid)
                     .accept(MediaType.IMAGE_PNG)
                     .contentType(MediaType.IMAGE_PNG))
                     .andExpect(status().isOk());
@@ -58,7 +62,7 @@ class PlayerControllerTests {
 
     @Test
     public void ensurePlayerSkinPartsLookupFailure() throws Exception {
-        mockMvc.perform(get("/player/invalidpart/eeab5f8a-18dd-4d58-af78-2b3c4543da48"))
+        mockMvc.perform(get("/player/invalidpart/" + testPlayer))
                 .andExpect(status().isBadRequest());
     }
 }
