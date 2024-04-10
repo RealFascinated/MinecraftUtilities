@@ -1,6 +1,7 @@
 package cc.fascinated.controller;
 
 import cc.fascinated.model.cache.CachedPlayer;
+import cc.fascinated.model.cache.CachedPlayerName;
 import cc.fascinated.model.player.Skin;
 import cc.fascinated.service.PlayerService;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -41,10 +42,10 @@ public class PlayerController {
     @GetMapping(value = "/uuid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getPlayerUuid(
             @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id) {
-        CachedPlayer player = playerService.getPlayer(id);
+        CachedPlayerName player = playerService.usernameToUuid(id);
         return ResponseEntity.ok(Map.of(
                 "username", player.getUsername(),
-                "uuid", player.getUuid().toString()
+                "uuid", player.getUniqueId()
         ));
     }
 

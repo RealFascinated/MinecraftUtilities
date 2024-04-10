@@ -15,7 +15,7 @@ public class Player {
     /**
      * The UUID of the player
      */
-    @Id private final UUID uuid;
+    @Id private final UUID uniqueId;
 
     /**
      * The username of the player
@@ -40,7 +40,7 @@ public class Player {
     private MojangProfile.ProfileProperty[] rawProperties;
 
     public Player(MojangProfile profile) {
-        this.uuid = UUIDUtils.addDashes(profile.getId());
+        this.uniqueId = UUIDUtils.addDashes(profile.getId());
         this.username = profile.getName();
         this.rawProperties = profile.getProperties();
 

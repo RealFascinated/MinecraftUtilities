@@ -54,7 +54,7 @@ public class PlayerService {
         log.info("Getting player: {}", originalId);
         UUID uuid = PlayerUtils.getUuidFromString(originalId);
         if (uuid == null) { // If the id is not a valid uuid, get the uuid from the username
-            uuid = usernameToUuid(originalId);
+            uuid = usernameToUuid(originalId).getUniqueId();
         }
 
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
@@ -91,11 +91,11 @@ public class PlayerService {
      * @param username the username of the player
      * @return the uuid of the player
      */
-    public UUID usernameToUuid(String username) {
+    public CachedPlayerName usernameToUuid(String username) {
         log.info("Getting UUID from username: {}", username);
         Optional<CachedPlayerName> cachedPlayerName = playerNameCacheRepository.findById(username.toUpperCase());
         if (cachedPlayerName.isPresent()) {
-            return cachedPlayerName.get().getUniqueId();
+            return cachedPlayerName.get();
         }
         try {
             MojangUsernameToUuid mojangUsernameToUuid = mojangAPIService.getUuidFromUsername(username);
@@ -103,10 +103,11 @@ public class PlayerService {
                 log.info("Player with username '{}' not found", username);
                 throw new ResourceNotFoundException("Player with username '%s' not found".formatted(username));
             }
-            UUID uuid = UUIDUtils.addDashes(mojangUsernameToUuid.getId());
-            playerNameCacheRepository.save(new CachedPlayerName(username, uuid));
+            UUID uuid = UUIDUtils.addDashes(mojangUsernameToUuid.getUuid());
+            CachedPlayerName player = new CachedPlayerName(username, uuid);
+            playerNameCacheRepository.save(player);
             log.info("Got UUID from username: {} -> {}", username, uuid);
-            return uuid;
+            return player;
         } catch (RateLimitException exception) {
             throw new MojangAPIRateLimitException();
         }
@@ -120,13 +121,13 @@ public class PlayerService {
      * @return the skin part
      */
     public CachedPlayerSkinPart getSkinPart(Player player, Skin.Parts part, int size) {
-        log.info("Getting skin part: {} for player: {}", part.getName(), player.getUuid());
-        String key = "%s-%s-%s".formatted(player.getUuid(), part.getName(), size);
+        log.info("Getting skin part: {} for player: {}", part.getName(), player.getUniqueId());
+        String key = "%s-%s-%s".formatted(player.getUniqueId(), part.getName(), size);
         Optional<CachedPlayerSkinPart> cache = playerSkinPartCacheRepository.findById(key);
 
         // The skin part is cached
         if (cache.isPresent()) {
-            log.info("Skin part {} for player {} is cached", part.getName(), player.getUuid());
+            log.info("Skin part {} for player {} is cached", part.getName(), player.getUniqueId());
             return cache.get();
         }
 
@@ -135,7 +136,7 @@ public class PlayerService {
                 key,
                 skinPartBytes
         );
-        log.info("Fetched skin part: {} for player: {}", part.getName(), player.getUuid());
+        log.info("Fetched skin part: {} for player: {}", part.getName(), player.getUniqueId());
 
         playerSkinPartCacheRepository.save(skinPart);
         return skinPart;

@@ -1,5 +1,6 @@
 package cc.fascinated.model.mojang;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,12 +10,14 @@ public class MojangUsernameToUuid {
     /**
      * The UUID of the player.
      */
-    private String id;
+    @JsonProperty("id")
+    private String uuid;
 
     /**
      * The name of the player.
      */
-    private String name;
+    @JsonProperty("name")
+    private String username;
 
     /**
      * Check if the profile is valid.
@@ -22,6 +25,6 @@ public class MojangUsernameToUuid {
      * @return if the profile is valid
      */
     public boolean isValid() {
-        return id != null && name != null;
+        return uuid != null && username != null;
     }
 }
