@@ -50,7 +50,6 @@ public final class JavaMinecraftServerPinger implements MinecraftServerPinger<Ja
                 // Send the status request to the server, and await back the response
                 JavaPacketStatusInStart packetStatusInStart = new JavaPacketStatusInStart();
                 packetStatusInStart.process(inputStream, outputStream);
-                System.out.println(packetStatusInStart.getResponse());
                 JavaServerStatusToken token = Main.GSON.fromJson(packetStatusInStart.getResponse(), JavaServerStatusToken.class);
                 return new JavaMinecraftServer(
                         hostname,
@@ -68,7 +67,7 @@ public final class JavaMinecraftServerPinger implements MinecraftServerPinger<Ja
             } else if (ex instanceof ConnectException || ex instanceof SocketTimeoutException) {
                 throw new ResourceNotFoundException(ex);
             }
-            log.error("An error occurred pinging %s:%s:".formatted(hostname, port), ex);
+            log.error("An error occurred pinging %s".formatted(ServerUtils.getAddress(hostname, port)), ex);
         }
         return null;
     }
