@@ -51,15 +51,7 @@ public final class JavaMinecraftServerPinger implements MinecraftServerPinger<Ja
                 JavaPacketStatusInStart packetStatusInStart = new JavaPacketStatusInStart();
                 packetStatusInStart.process(inputStream, outputStream);
                 JavaServerStatusToken token = Main.GSON.fromJson(packetStatusInStart.getResponse(), JavaServerStatusToken.class);
-                return new JavaMinecraftServer(
-                        hostname,
-                        ip,
-                        port,
-                        MinecraftServer.MOTD.create(token.getDescription()),
-                        token.getVersion().detailedCopy(),
-                        token.getPlayers(),
-                        JavaMinecraftServer.Favicon.create(token.getFavicon(), ServerUtils.getAddress(hostname, port))
-                );
+                return JavaMinecraftServer.create(hostname, ip, port, token);
             }
         } catch (IOException ex) {
             if (ex instanceof UnknownHostException) {

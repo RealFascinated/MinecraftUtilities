@@ -24,7 +24,7 @@ public final class JavaServerStatusToken {
     /**
      * The motd of the server.
      */
-    private final String description;
+    private final Object description;
 
     /**
      * The favicon of the server.

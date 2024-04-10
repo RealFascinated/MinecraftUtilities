@@ -24,12 +24,12 @@ import java.util.UUID;
 @Service @Log4j2
 public class PlayerService {
 
-    private final MojangAPIService mojangAPIService;
+    private final MojangService mojangAPIService;
     private final PlayerCacheRepository playerCacheRepository;
     private final PlayerNameCacheRepository playerNameCacheRepository;
 
     @Autowired
-    public PlayerService(MojangAPIService mojangAPIService, PlayerCacheRepository playerCacheRepository, PlayerNameCacheRepository playerNameCacheRepository) {
+    public PlayerService(MojangService mojangAPIService, PlayerCacheRepository playerCacheRepository, PlayerNameCacheRepository playerNameCacheRepository) {
         this.mojangAPIService = mojangAPIService;
         this.playerCacheRepository = playerCacheRepository;
         this.playerNameCacheRepository = playerNameCacheRepository;

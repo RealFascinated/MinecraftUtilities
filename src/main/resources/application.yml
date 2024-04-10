@@ -18,7 +18,3 @@ spring:
       auth: "" # Leave blank for no auth
 
 public-url: http://localhost:80
-
-mojang:
-  session-server: https://sessionserver.mojang.com
-  api: https://api.mojang.com

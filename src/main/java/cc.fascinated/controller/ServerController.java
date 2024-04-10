@@ -3,6 +3,7 @@ package cc.fascinated.controller;
 import cc.fascinated.common.ServerUtils;
 import cc.fascinated.common.Tuple;
 import cc.fascinated.model.cache.CachedMinecraftServer;
+import cc.fascinated.service.MojangService;
 import cc.fascinated.service.ServerService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,13 +13,21 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @Tag(name = "Server Controller", description = "The Server Controller is used to get information about a server.")
 @RequestMapping(value = "/server/")
 public class ServerController {
 
+    private final ServerService serverService;
+    private final MojangService mojangService;
+
     @Autowired
-    private ServerService serverService;
+    public ServerController(ServerService serverService, MojangService mojangService) {
+        this.serverService = serverService;
+        this.mojangService = mojangService;
+    }
 
     @ResponseBody
     @GetMapping(value = "/{platform}/{hostnameAndPort}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,5 +52,14 @@ public class ServerController {
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(ServerUtils.getAddress(hostname, port)))
                 .body(serverService.getServerFavicon(hostname, port));
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/blocked/{hostname}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getServerBlockedStatus(
+            @Parameter(description = "The hostname of the server", example = "play.hypixel.net") @PathVariable String hostname) {
+        return ResponseEntity.ok(Map.of(
+                "banned", mojangService.isServerBlocked(hostname)
+        ));
     }
 }
