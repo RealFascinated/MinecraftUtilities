@@ -36,14 +36,17 @@ public class ServerService {
      * @return the server
      */
     public CachedMinecraftServer getServer(String platformName, String hostname, int port) {
+        log.info("Getting server: {} {}:{}", platformName, hostname, port);
         MinecraftServer.Platform platform = EnumUtils.getEnumConstant(MinecraftServer.Platform.class, platformName.toUpperCase());
         if (platform == null) {
+            log.info("Invalid platform: {} for server {}:{}", platformName, hostname, port);
             throw new BadRequestException("Invalid platform: %s".formatted(platformName));
         }
         String key = "%s-%s:%s".formatted(platformName, hostname, port);
 
         Optional<CachedMinecraftServer> cached = serverCacheRepository.findById(key);
         if (cached.isPresent()) {
+                log.info("Server {}:{} is cached", hostname, port);
             return cached.get();
         }
 
@@ -58,6 +61,7 @@ public class ServerService {
                 platform.getPinger().ping(hostname, port),
                 System.currentTimeMillis()
         );
+        log.info("Found server: {}:{}", hostname, port);
         serverCacheRepository.save(server);
         server.setCached(-1); // Indicate that the server is not cached
         return server;

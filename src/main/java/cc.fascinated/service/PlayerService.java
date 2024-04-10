@@ -43,23 +43,24 @@ public class PlayerService {
      * @return the player
      */
     public CachedPlayer getPlayer(String id) {
+        String originalId = id;
         id = id.toUpperCase(); // Convert the id to uppercase to prevent case sensitivity
-        log.info("Getting player: {}", id);
-        UUID uuid = PlayerUtils.getUuidFromString(id);
+        log.info("Getting player: {}", originalId);
+        UUID uuid = PlayerUtils.getUuidFromString(originalId);
         if (uuid == null) { // If the id is not a valid uuid, get the uuid from the username
             uuid = usernameToUuid(id);
         }
 
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
         if (cachedPlayer.isPresent()) { // Return the cached player if it exists
-            log.info("Player {} is cached", id);
+            log.info("Player {} is cached", originalId);
             return cachedPlayer.get();
         }
 
         try {
-            log.info("Getting player profile from Mojang: {}", id);
+            log.info("Getting player profile from Mojang: {}", originalId);
             MojangProfile mojangProfile = mojangAPIService.getProfile(uuid.toString()); // Get the player profile from Mojang
-            log.info("Got player profile from Mojang: {}", id);
+            log.info("Got player profile from Mojang: {}", originalId);
             Tuple<Skin, Cape> skinAndCape = mojangProfile.getSkinAndCape();
             CachedPlayer player = new CachedPlayer(
                     uuid, // Player UUID
