@@ -7,7 +7,7 @@ WORKDIR /home/container
 COPY . .
 
 # Build the jar
-RUN mvn package -q
+RUN mvn package -q -DskipTests
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
