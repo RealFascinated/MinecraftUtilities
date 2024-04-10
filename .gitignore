@@ -28,3 +28,4 @@ fabric.properties
 git.properties
 pom.xml.versionsBackup
 application.yml
+target/

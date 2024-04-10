@@ -30,6 +30,14 @@
         </plugins>
     </build>
 
+    <repositories>
+        <!-- Jitpack - Used for dnsjava -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -84,6 +92,30 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- DNS Lookup -->
+        <dependency>
+            <groupId>com.github.dnsjava</groupId>
+            <artifactId>dnsjava</artifactId>
+            <version>v3.5.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Redis for caching -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.lettuce</groupId>
+                    <artifactId>lettuce-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+
         <!--   Unit Tests    -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -106,6 +138,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.codemonstur</groupId>
+            <artifactId>embedded-redis</artifactId>
+            <version>1.4.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

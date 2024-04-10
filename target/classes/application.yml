@@ -5,6 +5,16 @@ server:
     whitelabel:
       enabled: false
 
+# Spring Configuration
+spring:
+  data:
+    # Redis - This is used for caching
+    redis:
+      host: "localhost"
+      port: 6379
+      database: 0
+      auth: "" # Leave blank for no auth
+
 public-url: http://localhost:80
 
 mojang:
