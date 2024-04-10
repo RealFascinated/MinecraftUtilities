@@ -6,6 +6,7 @@ import cc.fascinated.model.player.Skin;
 import cc.fascinated.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,7 @@ public class PlayerController {
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
                 .contentType(MediaType.IMAGE_PNG)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=%s.png".formatted(player.getUsername()))
                 .body(PlayerUtils.getSkinPartBytes(player.getSkin(), skinPart, size));
     }
 }

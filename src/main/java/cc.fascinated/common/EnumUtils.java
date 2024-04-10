@@ -1,4 +1,4 @@
-package cc.fascinated;
+package cc.fascinated.common;
 
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
