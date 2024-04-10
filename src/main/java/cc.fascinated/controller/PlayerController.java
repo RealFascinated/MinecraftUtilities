@@ -40,13 +40,9 @@ public class PlayerController {
 
     @ResponseBody
     @GetMapping(value = "/uuid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getPlayerUuid(
+    public CachedPlayerName getPlayerUuid(
             @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id) {
-        CachedPlayerName player = playerService.usernameToUuid(id);
-        return ResponseEntity.ok(Map.of(
-                "username", player.getUsername(),
-                "uuid", player.getUniqueId()
-        ));
+        return playerService.usernameToUuid(id);
     }
 
     @GetMapping(value = "/{part}/{id}")
