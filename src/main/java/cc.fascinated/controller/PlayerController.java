@@ -46,7 +46,7 @@ public class PlayerController {
             @PathVariable String id,
             @Parameter(description = "The size of the image", example = "256")
             @RequestParam(required = false, defaultValue = "256") int size,
-            @Parameter(description = "Whether to download the image", example = "false")
+            @Parameter(description = "Whether to download the image")
             @RequestParam(required = false, defaultValue = "false") boolean download) {
         Player player = playerManagerService.getPlayer(id);
         Skin.Parts skinPart = Skin.Parts.fromName(part);

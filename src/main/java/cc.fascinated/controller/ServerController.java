@@ -36,7 +36,7 @@ public class ServerController {
     public ResponseEntity<?> getServerIcon(
             @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net")
             @PathVariable String hostnameAndPort,
-            @Parameter(description = "Whether to download the image", example = "false")
+            @Parameter(description = "Whether to download the image")
             @RequestParam(required = false, defaultValue = "false") boolean download) {
         Tuple<String, Integer> host = ServerUtils.getHostnameAndPort(hostnameAndPort);
         String hostname = host.getLeft();
