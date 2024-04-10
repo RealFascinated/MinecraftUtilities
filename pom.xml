@@ -110,13 +110,17 @@
             <version>1.20-R0.2</version>
             <scope>compile</scope>
         </dependency>
-
-        <!-- Web Templating -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+        </dependency>
+
 
         <!-- DNS Lookup -->
         <dependency>
