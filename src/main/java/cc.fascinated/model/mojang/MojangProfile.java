@@ -73,7 +73,7 @@ public class MojangProfile {
         return null;
     }
 
-    @Getter @AllArgsConstructor
+    @Getter @NoArgsConstructor
     public static class ProfileProperty {
         /**
          * The name of the property.
