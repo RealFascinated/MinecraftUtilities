@@ -1,32 +1,50 @@
-name: "ci"
+name: Deploy App
 
 on:
   push:
-    branches:
-      - master
+    branches: ["master"]
+    paths-ignore:
+      - .gitignore
+      - README.md
+      - LICENSE
+      - docker-compose.yml
+      - postman_collection.json
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  docker:
+    strategy:
+      matrix:
+        arch: ["ubuntu-latest"]
+        git-version: ["2.44.0"]
+        java-version: ["17"]
+        maven-version: ["3.8.5"]
+    runs-on: ${{ matrix.arch }}
+
+    # Steps to run
     steps:
-      - name: Cloning repo
+      # Checkout the repo
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17 and Maven
+      # Setup Java and Maven
+      - name: Set up JDK and Maven
         uses: s4u/setup-maven-action@v1.12.0
         with:
-          java-version: '17'
-          distribution: 'zulu'
-          maven-version: 3.8.5
+          java-version: ${{ matrix.java-version }}
+          distribution: "zulu"
+          maven-version: ${{ matrix.maven-version }}
 
+      # Run JUnit Tests
       - name: Run Tests
         run: mvn --batch-mode test -q
 
-      - name: Cloning repo
+      # Re-checkout to reset the FS before deploying to Dokku
+      - name: Checkout - Reset FS
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # Deploy to Dokku
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
