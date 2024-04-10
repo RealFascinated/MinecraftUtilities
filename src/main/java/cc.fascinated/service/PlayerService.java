@@ -68,6 +68,7 @@ public class PlayerService {
         );
 
         playerCacheRepository.save(player);
+        player.setCached(-1); // Indicate that the player is not cached
         return player;
     }
 
