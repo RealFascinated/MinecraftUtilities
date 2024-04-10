@@ -24,7 +24,7 @@ public final class CachedMinecraftServer implements Serializable {
      * The cached server.
      */
     @NonNull
-    private final MinecraftServer value;
+    private final MinecraftServer server;
 
     /**
      * The unix timestamp of when this

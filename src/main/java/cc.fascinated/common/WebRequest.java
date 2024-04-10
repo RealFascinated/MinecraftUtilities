@@ -1,6 +1,8 @@
 package cc.fascinated.common;
 
+import cc.fascinated.exception.impl.RateLimitException;
 import lombok.experimental.UtilityClass;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.HttpClientErrorException;
@@ -32,6 +34,9 @@ public class WebRequest {
 
             if (profile.getStatusCode().isError()) {
                 return null;
+            }
+            if (profile.getStatusCode().isSameCodeAs(HttpStatus.TOO_MANY_REQUESTS)) {
+                throw new RateLimitException("Rate limit reached");
             }
             return profile.getBody();
         } catch (HttpClientErrorException ex) {

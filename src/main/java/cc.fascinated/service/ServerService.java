@@ -73,7 +73,7 @@ public class ServerService {
     public byte[] getServerFavicon(String hostname, int port) {
         String icon = null; // The server base64 icon
         try {
-            JavaMinecraftServer.Favicon favicon = ((JavaMinecraftServer) getServer(MinecraftServer.Platform.JAVA.name(), hostname, port).getValue()).getFavicon();
+            JavaMinecraftServer.Favicon favicon = ((JavaMinecraftServer) getServer(MinecraftServer.Platform.JAVA.name(), hostname, port).getServer()).getFavicon();
             if (favicon != null) { // Use the server's favicon
                 icon = favicon.getBase64();
                 icon = icon.substring(icon.indexOf(",") + 1); // Remove the data type from the server icon
