@@ -1,6 +1,7 @@
 package cc.fascinated.model.cache;
 
 import cc.fascinated.model.server.MinecraftServer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
@@ -16,12 +17,14 @@ public final class CachedMinecraftServer implements Serializable {
     /**
      * The id of this cached server.
      */
-    @Id @NonNull private transient final String id;
+    @Id @NonNull @JsonIgnore
+    private final String id;
 
     /**
      * The cached server.
      */
-    @NonNull private final MinecraftServer value;
+    @NonNull
+    private final MinecraftServer value;
 
     /**
      * The unix timestamp of when this
