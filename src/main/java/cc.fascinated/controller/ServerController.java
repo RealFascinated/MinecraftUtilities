@@ -30,21 +30,21 @@ public class ServerController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/{platform}/{hostnameAndPort}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{platform}/{hostname}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CachedMinecraftServer getServer(
             @Parameter(description = "The platform of the server", example = "java") @PathVariable String platform,
-            @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net") @PathVariable String hostnameAndPort) {
-        Tuple<String, Integer> host = ServerUtils.getHostnameAndPort(hostnameAndPort);
+            @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net") @PathVariable String hostname) {
+        Tuple<String, Integer> host = ServerUtils.getHostnameAndPort(hostname);
         return serverService.getServer(platform, host.getLeft(), host.getRight());
     }
 
     @ResponseBody
-    @GetMapping(value = "/icon/{hostnameAndPort}", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value = "/icon/{hostname}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<?> getServerIcon(
-            @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net") @PathVariable String hostnameAndPort,
+            @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net") @PathVariable String hostname,
             @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download) {
-        Tuple<String, Integer> host = ServerUtils.getHostnameAndPort(hostnameAndPort);
-        String hostname = host.getLeft();
+        Tuple<String, Integer> host = ServerUtils.getHostnameAndPort(hostname);
+        hostname = host.getLeft();
         int port = host.getRight();
         String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
 
