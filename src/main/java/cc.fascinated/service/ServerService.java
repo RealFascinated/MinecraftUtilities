@@ -58,8 +58,8 @@ public class ServerService {
                 platform.getPinger().ping(hostname, port),
                 System.currentTimeMillis()
         );
-        server.setCached(-1); // Indicate that the server is not cached
         serverCacheRepository.save(server);
+        server.setCached(-1); // Indicate that the server is not cached
         return server;
     }
 }
