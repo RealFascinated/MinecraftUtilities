@@ -22,9 +22,7 @@ import java.net.*;
  */
 @Log4j2(topic = "Java Pinger")
 public final class JavaMinecraftServerPinger implements MinecraftServerPinger<JavaMinecraftServer> {
-    public static final JavaMinecraftServerPinger INSTANCE = new JavaMinecraftServerPinger();
-
-    private static final int TIMEOUT = 3000; // The timeout for the socket
+    private static final int TIMEOUT = 1500; // The timeout for the socket
 
     @Override
     public JavaMinecraftServer ping(String hostname, int port) {

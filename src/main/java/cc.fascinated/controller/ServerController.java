@@ -34,8 +34,7 @@ public class ServerController {
     public CachedMinecraftServer getServer(
             @Parameter(description = "The platform of the server", example = "java") @PathVariable String platform,
             @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net") @PathVariable String hostname) {
-        Tuple<String, Integer> host = ServerUtils.getHostnameAndPort(hostname);
-        return serverService.getServer(platform, host.getLeft(), host.getRight());
+        return serverService.getServer(platform, hostname);
     }
 
     @ResponseBody
@@ -43,15 +42,12 @@ public class ServerController {
     public ResponseEntity<?> getServerIcon(
             @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net") @PathVariable String hostname,
             @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download) {
-        Tuple<String, Integer> host = ServerUtils.getHostnameAndPort(hostname);
-        hostname = host.getLeft();
-        int port = host.getRight();
         String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
 
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
-                .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(ServerUtils.getAddress(hostname, port)))
-                .body(serverService.getServerFavicon(hostname, port));
+                .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(hostname))
+                .body(serverService.getServerFavicon(hostname));
     }
 
     @ResponseBody

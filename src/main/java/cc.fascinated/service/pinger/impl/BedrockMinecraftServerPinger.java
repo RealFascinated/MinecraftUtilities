@@ -21,7 +21,7 @@ import java.net.*;
  */
 @Log4j2(topic = "Bedrock MC Server Pinger")
 public final class BedrockMinecraftServerPinger implements MinecraftServerPinger<BedrockMinecraftServer> {
-    private static final int TIMEOUT = 3000; // The timeout for the socket
+    private static final int TIMEOUT = 1500; // The timeout for the socket
 
     /**
      * Ping the server with the given hostname and port.
