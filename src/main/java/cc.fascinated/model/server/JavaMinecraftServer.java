@@ -225,6 +225,16 @@ public final class JavaMinecraftServer extends MinecraftServer {
          */
         private final Mod[] mods;
 
+        /**
+         * Whether the mod list is truncated.
+         */
+        private final boolean truncated;
+
+        /**
+         * The version of the FML network.
+         */
+        private final int fmlNetworkVersion;
+
         @AllArgsConstructor @Getter
         public static class Channel {
             /**
