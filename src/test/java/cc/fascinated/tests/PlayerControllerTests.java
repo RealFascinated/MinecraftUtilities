@@ -1,4 +1,4 @@
-package cc.fascinated;
+package cc.fascinated.tests;
 
 import cc.fascinated.model.player.Skin;
 import org.junit.jupiter.api.Test;

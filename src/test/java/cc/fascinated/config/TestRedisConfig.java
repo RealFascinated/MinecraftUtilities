@@ -1,4 +1,4 @@
-package cc.fascinated;
+package cc.fascinated.config;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
