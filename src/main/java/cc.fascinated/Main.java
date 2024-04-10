@@ -1,6 +1,7 @@
 package cc.fascinated;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +17,9 @@ import java.util.Objects;
 @SpringBootApplication
 public class Main {
 
-    public static final Gson GSON = new Gson();
+    public static final Gson GSON = new GsonBuilder()
+            .setDateFormat("MM-dd-yyyy HH:mm:ss")
+            .create();
     public static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
 
     @SneakyThrows

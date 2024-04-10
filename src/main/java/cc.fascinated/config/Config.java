@@ -5,8 +5,8 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
 @Getter
+@Configuration
 public class Config {
     public static Config INSTANCE;
 

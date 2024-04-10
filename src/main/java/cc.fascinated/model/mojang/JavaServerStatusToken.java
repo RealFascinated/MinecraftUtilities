@@ -23,6 +23,16 @@ public final class JavaServerStatusToken {
     private final MinecraftServer.Players players;
 
     /**
+     * The mods running on the server.
+     */
+    private final MinecraftServer.Mod[] mods;
+
+    /**
+     * The plugins running on the server.
+     */
+    private final MinecraftServer.Plugin[] plugins;
+
+    /**
      * The motd of the server.
      */
     private final Object description;

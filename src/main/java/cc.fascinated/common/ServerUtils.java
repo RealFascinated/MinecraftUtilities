@@ -1,6 +1,5 @@
 package cc.fascinated.common;
 
-import cc.fascinated.exception.impl.BadRequestException;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

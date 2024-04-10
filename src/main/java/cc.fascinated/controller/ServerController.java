@@ -1,7 +1,5 @@
 package cc.fascinated.controller;
 
-import cc.fascinated.common.ServerUtils;
-import cc.fascinated.common.Tuple;
 import cc.fascinated.model.cache.CachedMinecraftServer;
 import cc.fascinated.service.MojangService;
 import cc.fascinated.service.ServerService;

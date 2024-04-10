@@ -60,7 +60,7 @@ public class PlayerUtils {
      * @return the part data
      */
     public static byte[] getSkinPartBytes(Skin skin, Skin.Parts part, int size) {
-        if (size == -1) {
+        if (size <= 0) {
             size = part.getDefaultSize();
         }
 

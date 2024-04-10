@@ -1,6 +1,5 @@
 package cc.fascinated.repository;
 
-import cc.fascinated.model.cache.CachedPlayerName;
 import cc.fascinated.model.cache.CachedPlayerSkinPart;
 import org.springframework.data.repository.CrudRepository;
 

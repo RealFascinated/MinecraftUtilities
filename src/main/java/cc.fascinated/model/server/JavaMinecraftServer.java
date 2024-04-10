@@ -29,14 +29,27 @@ public final class JavaMinecraftServer extends MinecraftServer {
     private Favicon favicon;
 
     /**
+     * The mods of the server.
+     */
+    private MinecraftServer.Mod[] mods;
+
+    /**
+     * The plugins of the server.
+     */
+    private MinecraftServer.Plugin[] plugins;
+
+    /**
      * The mojang banned status of the server.
      */
     private boolean mojangBanned;
 
-    public JavaMinecraftServer(String hostname, String ip, int port, MOTD motd, @NonNull Version version, Players players, Favicon favicon) {
+    public JavaMinecraftServer(String hostname, String ip, int port, MOTD motd, Players players,
+                               @NonNull Version version, Favicon favicon, Mod[] mods, Plugin[] plugins) {
         super(hostname, ip, port, motd, players);
         this.version = version;
         this.favicon = favicon;
+        this.mods = mods;
+        this.plugins = plugins;
     }
 
     /**
@@ -59,9 +72,11 @@ public final class JavaMinecraftServer extends MinecraftServer {
                 ip,
                 port,
                 MinecraftServer.MOTD.create(motdString),
-                token.getVersion().detailedCopy(),
                 token.getPlayers(),
-                JavaMinecraftServer.Favicon.create(token.getFavicon(), ServerUtils.getAddress(hostname, port))
+                token.getVersion().detailedCopy(),
+                JavaMinecraftServer.Favicon.create(token.getFavicon(), ServerUtils.getAddress(hostname, port)),
+                token.getMods(),
+                token.getPlugins()
         );
     }
 
