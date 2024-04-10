@@ -2,10 +2,15 @@ package cc.fascinated;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.File;
 import java.net.http.HttpClient;
@@ -35,5 +40,19 @@ public class Main {
         log.info("Found configuration at '{}'", config.getAbsolutePath()); // Log the found config
 
         SpringApplication.run(Main.class, args); // Start the application
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(@NonNull CorsRegistry registry) {
+                // Allow all origins to access the API
+                registry.addMapping("/**")
+                        .allowedOrigins("*") // Allow all origins
+                        .allowedMethods("*") // Allow all methods
+                        .allowedHeaders("*"); // Allow all headers
+            }
+        };
     }
 }
