@@ -53,7 +53,7 @@ public class ServerController {
     public ResponseEntity<?> getServerBlockedStatus(
             @Parameter(description = "The hostname of the server", example = "play.hypixel.net") @PathVariable String hostname) {
         return ResponseEntity.ok(Map.of(
-                "banned", mojangService.isServerBlocked(hostname)
+                "blocked", mojangService.isServerBlocked(hostname)
         ));
     }
 }
