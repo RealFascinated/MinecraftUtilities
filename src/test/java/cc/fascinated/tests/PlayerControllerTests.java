@@ -54,7 +54,7 @@ class PlayerControllerTests {
 
     @Test
     public void ensurePlayerUsernameToUuidLookupFailure() throws Exception {
-        mockMvc.perform(get("/player/uuid/" + testPlayer)
+        mockMvc.perform(get("/player/uuid/" + testInvalidPlayer)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
