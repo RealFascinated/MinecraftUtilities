@@ -18,6 +18,7 @@ public class HomeController {
     @RequestMapping(value = "/")
     public String home(Model model) {
         model.addAttribute("player_example_url", Config.INSTANCE.getWebPublicUrl() + "/player/" + exampleUuid);
+        model.addAttribute("java_server_example_url", Config.INSTANCE.getWebPublicUrl() + "/java/play.hypixel.net");
         return "index";
     }
 }
