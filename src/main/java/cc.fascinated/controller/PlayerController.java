@@ -31,8 +31,7 @@ public class PlayerController {
     @ResponseBody
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getPlayer(
-            @Parameter(description = "The UUID or Username of the player", example = "ImFascinated")
-            @PathVariable String id) {
+            @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id) {
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
                 .body(playerManagerService.getPlayer(id));
@@ -40,14 +39,10 @@ public class PlayerController {
 
     @GetMapping(value = "/{part}/{id}")
     public ResponseEntity<?> getPlayerHead(
-            @Parameter(description = "The part of the skin", example = "head")
-            @PathVariable String part,
-            @Parameter(description = "The UUID or Username of the player", example = "ImFascinated")
-            @PathVariable String id,
-            @Parameter(description = "The size of the image", example = "256")
-            @RequestParam(required = false, defaultValue = "256") int size,
-            @Parameter(description = "Whether to download the image")
-            @RequestParam(required = false, defaultValue = "false") boolean download) {
+            @Parameter(description = "The part of the skin", example = "head") @PathVariable String part,
+            @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id,
+            @Parameter(description = "The size of the image", example = "256") @RequestParam(required = false, defaultValue = "256") int size,
+            @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download) {
         Player player = playerManagerService.getPlayer(id);
         Skin.Parts skinPart = Skin.Parts.fromName(part);
         String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
