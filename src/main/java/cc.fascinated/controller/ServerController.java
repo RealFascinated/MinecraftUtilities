@@ -35,13 +35,17 @@ public class ServerController {
     @GetMapping(value = "/icon/{hostnameAndPort}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getServerIcon(
             @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net")
-            @PathVariable String hostnameAndPort) {
+            @PathVariable String hostnameAndPort,
+            @Parameter(description = "Whether to download the image", example = "false")
+            @RequestParam(required = false, defaultValue = "false") boolean download) {
         Tuple<String, Integer> host = ServerUtils.getHostnameAndPort(hostnameAndPort);
         String hostname = host.getLeft();
         int port = host.getRight();
+        String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
+
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=%s.png".formatted(ServerUtils.getAddress(hostname, port)))
+                .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(ServerUtils.getAddress(hostname, port)))
                 .body(serverService.getServerFavicon(hostname, port));
     }
 }

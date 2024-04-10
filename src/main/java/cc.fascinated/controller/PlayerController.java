@@ -45,15 +45,18 @@ public class PlayerController {
             @Parameter(description = "The UUID or Username of the player", example = "ImFascinated")
             @PathVariable String id,
             @Parameter(description = "The size of the image", example = "256")
-            @RequestParam(required = false, defaultValue = "256") int size) {
+            @RequestParam(required = false, defaultValue = "256") int size,
+            @Parameter(description = "Whether to download the image", example = "false")
+            @RequestParam(required = false, defaultValue = "false") boolean download) {
         Player player = playerManagerService.getPlayer(id);
         Skin.Parts skinPart = Skin.Parts.fromName(part);
+        String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
 
         // Return the part image
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
                 .contentType(MediaType.IMAGE_PNG)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=%s.png".formatted(player.getUsername()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(player.getUsername()))
                 .body(PlayerUtils.getSkinPartBytes(player.getSkin(), skinPart, size));
     }
 }
