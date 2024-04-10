@@ -14,4 +14,4 @@ EXPOSE 80
 ENV PORT=80
 
 # Run the jar file
-CMD ["java", "-jar", "target/Minecraft-Helper-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/Minecraft-Utilities.jar"]
