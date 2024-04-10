@@ -12,8 +12,6 @@ import lombok.Setter;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 
-import java.awt.*;
-
 /**
  * @author Braydon
  */
@@ -26,11 +24,6 @@ public final class JavaMinecraftServer extends MinecraftServer {
     @NonNull private final Version version;
 
     /**
-     * The players on the server.
-     */
-    private Players players;
-
-    /**
      * The favicon of the server.
      */
     private Favicon favicon;
@@ -41,9 +34,8 @@ public final class JavaMinecraftServer extends MinecraftServer {
     private boolean mojangBanned;
 
     public JavaMinecraftServer(String hostname, String ip, int port, MOTD motd, @NonNull Version version, Players players, Favicon favicon) {
-        super(hostname, ip, port, motd);
+        super(hostname, ip, port, motd, players);
         this.version = version;
-        this.players = players;
         this.favicon = favicon;
     }
 
@@ -115,25 +107,6 @@ public final class JavaMinecraftServer extends MinecraftServer {
             return new Version(name, platform, protocol, minecraftVersion == null ? null : minecraftVersion.getName());
         }
 
-    }
-
-    @Getter @AllArgsConstructor
-    public static class Players {
-
-        /**
-         * The maximum amount of players the server can hold.
-         */
-        private final int max;
-
-        /**
-         * The amount of players currently online.
-         */
-        private final int online;
-
-        /**
-         * The sample of players currently online.
-         */
-        private final String[] sample;
     }
 
     @Getter @AllArgsConstructor

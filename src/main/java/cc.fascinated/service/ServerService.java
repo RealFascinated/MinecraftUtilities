@@ -38,14 +38,15 @@ public class ServerService {
      * @return the server
      */
     public CachedMinecraftServer getServer(String platformName, String hostname, int port) {
-        log.info("Getting server: {} {}:{}", platformName, hostname, port);
         MinecraftServer.Platform platform = EnumUtils.getEnumConstant(MinecraftServer.Platform.class, platformName.toUpperCase());
         if (platform == null) {
-            log.info("Invalid platform: {} for server {}:{}", platformName, hostname, port);
+            log.info("Invalid platform: {} for server {}", platformName, hostname);
             throw new BadRequestException("Invalid platform: %s".formatted(platformName));
         }
+        port = port == -1 ? platform.getDefaultPort() : port; // Use the default port if the port is -1 (not provided)
         String key = "%s-%s:%s".formatted(platformName, hostname, port);
 
+        log.info("Getting server: {}:{}", hostname, port);
         Optional<CachedMinecraftServer> cached = serverCacheRepository.findById(key);
         if (cached.isPresent()) {
                 log.info("Server {}:{} is cached", hostname, port);
@@ -54,7 +55,6 @@ public class ServerService {
 
         InetSocketAddress address = platform == MinecraftServer.Platform.JAVA ? DNSUtils.resolveSRV(hostname) : null;
         if (address != null) {
-            port = port != -1 ? port : platform.getDefaultPort(); // If the port is -1, set it to the default port
             hostname = address.getHostName();
         }
 
@@ -65,8 +65,7 @@ public class ServerService {
         );
 
         if (platform == MinecraftServer.Platform.JAVA) { // Check if the server is blocked by Mojang
-            JavaMinecraftServer javaServer = (JavaMinecraftServer) server.getServer();
-            javaServer.setMojangBanned(mojangService.isServerBlocked(hostname));
+            ((JavaMinecraftServer) server.getServer()).setMojangBanned(mojangService.isServerBlocked(hostname));
         }
 
         log.info("Found server: {}:{}", hostname, port);

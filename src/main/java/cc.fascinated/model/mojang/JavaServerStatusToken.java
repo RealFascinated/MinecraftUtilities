@@ -1,6 +1,7 @@
 package cc.fascinated.model.mojang;
 
 import cc.fascinated.model.server.JavaMinecraftServer;
+import cc.fascinated.model.server.MinecraftServer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -19,7 +20,7 @@ public final class JavaServerStatusToken {
     /**
      * The players on the server.
      */
-    private final JavaMinecraftServer.Players players;
+    private final MinecraftServer.Players players;
 
     /**
      * The motd of the server.

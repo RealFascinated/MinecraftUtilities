@@ -9,7 +9,6 @@ import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
 import cc.fascinated.model.mojang.JavaServerStatusToken;
 import cc.fascinated.model.server.JavaMinecraftServer;
-import cc.fascinated.model.server.MinecraftServer;
 import cc.fascinated.service.pinger.MinecraftServerPinger;
 import lombok.extern.log4j.Log4j2;
 

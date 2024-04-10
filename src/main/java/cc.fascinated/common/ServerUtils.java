@@ -13,10 +13,7 @@ public class ServerUtils {
      */
     public static Tuple<String, Integer> getHostnameAndPort(String hostname) {
         String[] split = hostname.split(":");
-        if (split.length == 1) {
-            return new Tuple<>(split[0], 25565);
-        }
-        return new Tuple<>(split[0], Integer.parseInt(split[1]));
+        return new Tuple<>(split[0], split.length == 1 ? -1 : Integer.parseInt(split[1]));
     }
 
     /**

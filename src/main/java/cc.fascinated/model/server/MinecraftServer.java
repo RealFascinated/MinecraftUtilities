@@ -2,6 +2,7 @@ package cc.fascinated.model.server;
 
 import cc.fascinated.common.ColorUtils;
 import cc.fascinated.service.pinger.MinecraftServerPinger;
+import cc.fascinated.service.pinger.impl.BedrockMinecraftServerPinger;
 import cc.fascinated.service.pinger.impl.JavaMinecraftServerPinger;
 import io.micrometer.common.lang.NonNull;
 import lombok.AllArgsConstructor;
@@ -9,16 +10,37 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * @author Braydon
  */
 @AllArgsConstructor @Getter @ToString
 public class MinecraftServer {
+    /**
+     * The hostname of the server.
+     */
     private final String hostname;
+
+    /**
+     * The IP address of the server.
+     */
     private final String ip;
+
+    /**
+     * The port of the server.
+     */
     private final int port;
+
+    /**
+     * The motd for the server.
+     */
     private final MOTD motd;
+
+    /**
+     * The players on the server.
+     */
+    private Players players;
 
     /**
      * A platform a Minecraft
@@ -29,7 +51,12 @@ public class MinecraftServer {
         /**
          * The Java edition of Minecraft.
          */
-        JAVA(new JavaMinecraftServerPinger(), 25565);
+        JAVA(new JavaMinecraftServerPinger(), 25565),
+
+        /**
+         * The Bedrock edition of Minecraft.
+         */
+        BEDROCK(new BedrockMinecraftServerPinger(), 19132);
 
         /**
          * The server pinger for this platform.
@@ -75,6 +102,43 @@ public class MinecraftServer {
                     Arrays.stream(rawLines).map(ColorUtils::stripColor).toArray(String[]::new),
                     Arrays.stream(rawLines).map(ColorUtils::toHTML).toArray(String[]::new)
             );
+        }
+    }
+
+    /**
+     * Player count data for a server.
+     */
+    @AllArgsConstructor @Getter @ToString
+    public static class Players {
+        /**
+         * The online players on this server.
+         */
+        private final int online;
+
+        /**
+         * The maximum allowed players on this server.
+         */
+        private final int max;
+
+        /**
+         * A sample of players on this server, null or empty if no sample.
+         */
+        private final Sample[] sample;
+
+        /**
+         * A sample player.
+         */
+        @AllArgsConstructor @Getter @ToString
+        public static class Sample {
+            /**
+             * The unique id of this player.
+             */
+            @NonNull private final UUID id;
+
+            /**
+             * The name of this player.
+             */
+            @NonNull private final String name;
         }
     }
 }
