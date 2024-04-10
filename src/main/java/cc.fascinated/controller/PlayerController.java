@@ -1,7 +1,6 @@
 package cc.fascinated.controller;
 
-import cc.fascinated.common.PlayerUtils;
-import cc.fascinated.model.player.Player;
+import cc.fascinated.model.cache.CachedPlayer;
 import cc.fascinated.model.player.Skin;
 import cc.fascinated.service.PlayerService;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,11 +20,11 @@ import java.util.concurrent.TimeUnit;
 public class PlayerController {
 
     private final CacheControl cacheControl = CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic();
-    private final PlayerService playerManagerService;
+    private final PlayerService playerService;
 
     @Autowired
     public PlayerController(PlayerService playerManagerService) {
-        this.playerManagerService = playerManagerService;
+        this.playerService = playerManagerService;
     }
 
     @ResponseBody
@@ -34,7 +33,7 @@ public class PlayerController {
             @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id) {
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
-                .body(playerManagerService.getPlayer(id));
+                .body(playerService.getPlayer(id));
     }
 
     @GetMapping(value = "/{part}/{id}")
@@ -43,7 +42,7 @@ public class PlayerController {
             @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id,
             @Parameter(description = "The size of the image", example = "256") @RequestParam(required = false, defaultValue = "256") int size,
             @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download) {
-        Player player = playerManagerService.getPlayer(id);
+        CachedPlayer player = playerService.getPlayer(id);
         Skin.Parts skinPart = Skin.Parts.fromName(part);
         String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
 
@@ -52,6 +51,6 @@ public class PlayerController {
                 .cacheControl(cacheControl)
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(player.getUsername()))
-                .body(PlayerUtils.getSkinPartBytes(player.getSkin(), skinPart, size));
+                .body(playerService.getSkinPart(player, skinPart, size).getBytes());
     }
 }

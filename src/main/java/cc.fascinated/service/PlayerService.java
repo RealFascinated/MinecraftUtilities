@@ -8,12 +8,15 @@ import cc.fascinated.exception.impl.RateLimitException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
 import cc.fascinated.model.cache.CachedPlayer;
 import cc.fascinated.model.cache.CachedPlayerName;
+import cc.fascinated.model.cache.CachedPlayerSkinPart;
 import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.model.mojang.MojangUsernameToUuid;
 import cc.fascinated.model.player.Cape;
+import cc.fascinated.model.player.Player;
 import cc.fascinated.model.player.Skin;
 import cc.fascinated.repository.PlayerCacheRepository;
 import cc.fascinated.repository.PlayerNameCacheRepository;
+import cc.fascinated.repository.PlayerSkinPartCacheRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,12 +30,15 @@ public class PlayerService {
     private final MojangService mojangAPIService;
     private final PlayerCacheRepository playerCacheRepository;
     private final PlayerNameCacheRepository playerNameCacheRepository;
+    private final PlayerSkinPartCacheRepository playerSkinPartCacheRepository;
 
     @Autowired
-    public PlayerService(MojangService mojangAPIService, PlayerCacheRepository playerCacheRepository, PlayerNameCacheRepository playerNameCacheRepository) {
+    public PlayerService(MojangService mojangAPIService, PlayerCacheRepository playerCacheRepository,
+                         PlayerNameCacheRepository playerNameCacheRepository, PlayerSkinPartCacheRepository playerSkinPartCacheRepository) {
         this.mojangAPIService = mojangAPIService;
         this.playerCacheRepository = playerCacheRepository;
         this.playerNameCacheRepository = playerNameCacheRepository;
+        this.playerSkinPartCacheRepository = playerSkinPartCacheRepository;
     }
 
     /**
@@ -103,5 +109,34 @@ public class PlayerService {
         } catch (RateLimitException exception) {
             throw new MojangAPIRateLimitException();
         }
+    }
+
+    /**
+     * Gets a skin part from the player's skin.
+     *
+     * @param player the player
+     * @param part the part of the skin
+     * @return the skin part
+     */
+    public CachedPlayerSkinPart getSkinPart(Player player, Skin.Parts part, int size) {
+        log.info("Getting skin part: {} for player: {}", part.getName(), player.getUuid());
+        String key = "%s-%s-%s".formatted(player.getUuid(), part.getName(), size);
+        Optional<CachedPlayerSkinPart> cache = playerSkinPartCacheRepository.findById(key);
+
+        // The skin part is cached
+        if (cache.isPresent()) {
+            log.info("Skin part {} for player {} is cached", part.getName(), player.getUuid());
+            return cache.get();
+        }
+
+        byte[] skinPartBytes = PlayerUtils.getSkinPartBytes(player.getSkin(), part, size);
+        CachedPlayerSkinPart skinPart = new CachedPlayerSkinPart(
+                key,
+                skinPartBytes
+        );
+        log.info("Fetched skin part: {} for player: {}", part.getName(), player.getUuid());
+
+        playerSkinPartCacheRepository.save(skinPart);
+        return skinPart;
     }
 }
