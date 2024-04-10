@@ -4,6 +4,7 @@ import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.model.player.Player;
 import cc.fascinated.model.player.Skin;
 import cc.fascinated.service.PlayerService;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
@@ -29,16 +30,22 @@ public class PlayerController {
 
     @ResponseBody
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getPlayer(@PathVariable String id) {
+    public ResponseEntity<?> getPlayer(
+            @Parameter(description = "The UUID or Username of the player", example = "ImFascinated")
+            @PathVariable String id) {
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
                 .body(playerManagerService.getPlayer(id));
     }
 
     @GetMapping(value = "/{part}/{id}")
-    public ResponseEntity<?> getPlayerHead(@PathVariable String part,
-                                                @PathVariable String id,
-                                                @RequestParam(required = false, defaultValue = "256") int size) {
+    public ResponseEntity<?> getPlayerHead(
+            @Parameter(description = "The part of the skin", example = "head")
+            @PathVariable String part,
+            @Parameter(description = "The UUID or Username of the player", example = "ImFascinated")
+            @PathVariable String id,
+            @Parameter(description = "The size of the image", example = "256")
+            @RequestParam(required = false, defaultValue = "256") int size) {
         Player player = playerManagerService.getPlayer(id);
         Skin.Parts skinPart = Skin.Parts.fromName(part);
 

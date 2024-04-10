@@ -4,6 +4,8 @@ import cc.fascinated.common.ServerUtils;
 import cc.fascinated.common.Tuple;
 import cc.fascinated.model.cache.CachedMinecraftServer;
 import cc.fascinated.service.ServerService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,14 +23,20 @@ public class ServerController {
 
     @ResponseBody
     @GetMapping(value = "/{platform}/{hostnameAndPort}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CachedMinecraftServer getServer(@PathVariable String platform, @PathVariable String hostnameAndPort) {
+    public CachedMinecraftServer getServer(
+            @Parameter(description = "The platform of the server", example = "java")
+            @PathVariable String platform,
+            @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net")
+            @PathVariable String hostnameAndPort) {
         Tuple<String, Integer> host = ServerUtils.getHostnameAndPort(hostnameAndPort);
         return serverService.getServer(platform, host.getLeft(), host.getRight());
     }
 
     @ResponseBody
     @GetMapping(value = "/icon/{hostnameAndPort}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getServerIcon(@PathVariable String hostnameAndPort) {
+    public ResponseEntity<?> getServerIcon(
+            @Parameter(description = "The hostname and port of the server", example = "play.hypixel.net")
+            @PathVariable String hostnameAndPort) {
         Tuple<String, Integer> host = ServerUtils.getHostnameAndPort(hostnameAndPort);
         String hostname = host.getLeft();
         int port = host.getRight();
