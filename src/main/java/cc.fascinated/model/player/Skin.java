@@ -115,7 +115,7 @@ public class Skin {
         /**
          * The skin part renderer for the part.
          */
-        private final SkinRenderer skinRenderer;
+        private final SkinRenderer renderer;
 
         /**
          * Gets the name of the part.
@@ -151,7 +151,7 @@ public class Skin {
         HEAD(8, 8, 8, 8, null),
         HEAD_TOP(8, 0, 8, 8, null),
         HEAD_FRONT(8, 8, 8, 8, null),
-        HEAD_RIGHT(0, 8, 8, 8, null),
+        HEAD_LEFT(0, 8, 8, 8, null),
 
         BODY(20, 20, 8, 12, null),
         BODY_BACK(20, 36, 8, 12, null),
@@ -169,7 +169,6 @@ public class Skin {
          */
         HEAD_OVERLAY_TOP(40, 0, 8, 8, null),
         HEAD_OVERLAY_FRONT(40, 8, 8, 8, null),
-        HEAD_OVERLAY_RIGHT(32, 8, 8, 8, null),
         HEAD_OVERLAY_LEFT(48, 8, 8, 8, null),
 
         BODY_OVERLAY_FRONT(20, 36, 8, 12, null),

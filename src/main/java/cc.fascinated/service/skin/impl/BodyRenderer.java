@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 @Getter @Log4j2

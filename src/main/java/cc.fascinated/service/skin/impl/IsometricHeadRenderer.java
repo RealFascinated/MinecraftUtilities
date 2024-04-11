@@ -1,6 +1,5 @@
 package cc.fascinated.service.skin.impl;
 
-import cc.fascinated.common.ImageUtils;
 import cc.fascinated.model.player.Skin;
 import cc.fascinated.service.skin.SkinRenderer;
 import lombok.Getter;
@@ -19,16 +18,15 @@ public class IsometricHeadRenderer extends SkinRenderer {
     /**
      * The head transforms
      */
-    private static final AffineTransform HEAD_TRANSFORM = new AffineTransform(1d, -SKEW_A, 1, SKEW_A, 0, 0);
-    private static final AffineTransform FRONT_TRANSFORM = new AffineTransform(1d, -SKEW_A, 0d, SKEW_B, 0d, SKEW_A);
-    private static final AffineTransform RIGHT_TRANSFORM = new AffineTransform(1d, SKEW_A, 0d, SKEW_B, 0d, 0d);
+    private static final AffineTransform HEAD_TOP_TRANSFORM = new AffineTransform(1D, -SKEW_A, 1, SKEW_A, 0, 0);
+    private static final AffineTransform FACE_TRANSFORM = new AffineTransform(1D, -SKEW_A, 0D, SKEW_B, 0d, SKEW_A);
+    private static final AffineTransform HEAD_LEFT_TRANSFORM = new AffineTransform(1D, SKEW_A, 0D, SKEW_B, 0D, 0D);
 
     @Override
     public byte[] renderPart(Skin skin, String partName, boolean renderOverlay, int size) {
         double scale = (size / 8d) / 2.5;
         log.info("Getting {} part bytes for {} with size {} and scale {}", partName, skin.getUrl(), size, scale);
 
-        double x, y, z; // The x, y, and z positions
         double zOffset = scale * 3.5d;
         double xOffset = scale * 2d;
         BufferedImage outputImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
@@ -37,32 +35,23 @@ public class IsometricHeadRenderer extends SkinRenderer {
         // Get all the required head parts
         BufferedImage headTop = this.getSkinPart(skin, Skin.PartPosition.HEAD_TOP, scale);
         BufferedImage headFront = this.getSkinPart(skin, Skin.PartPosition.HEAD_FRONT, scale);
-        BufferedImage headRight = this.getSkinPart(skin, Skin.PartPosition.HEAD_RIGHT, scale);
+        BufferedImage headLeft = this.getSkinPart(skin, Skin.PartPosition.HEAD_LEFT, scale);
 
         if (renderOverlay) { // Render the skin layers
             applyOverlay(headTop, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_TOP, scale));
             applyOverlay(headFront, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, scale));
-            applyOverlay(headRight, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_RIGHT, scale));
+            applyOverlay(headLeft, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_LEFT, scale));
         }
 
-        // Draw the top of the head
-        x = xOffset;
-        y = -0.5;
-        z = zOffset;
-        // The head is offset by 2 pixels for whatever reason
-        drawPart(graphics, headTop, HEAD_TRANSFORM, y - z, x + z, headTop.getWidth(), headTop.getHeight() + 2);
+        // Draw the top of the left
+        drawPart(graphics, headTop, HEAD_TOP_TRANSFORM, -0.5 - zOffset, xOffset + zOffset, headTop.getWidth(), headTop.getHeight() + 2);
 
-        // Draw the front of the head
-        x = xOffset + 8 * scale;
-        y = 0;
-        z = zOffset - 0.5;
-        drawPart(graphics, headFront, FRONT_TRANSFORM, y + x, x + z, headFront.getWidth(), headFront.getHeight());
+        // Draw the face of the head
+        double x = xOffset + 8 * scale;
+        drawPart(graphics, headFront, FACE_TRANSFORM, x, x + zOffset - 0.5, headFront.getWidth(), headFront.getHeight());
 
-        // Draw the right side of the head
-        x = xOffset;
-        y = 0;
-        z = zOffset;
-        drawPart(graphics, headRight, RIGHT_TRANSFORM, x + y + 1, z - y - 0.5, headRight.getWidth(), headRight.getHeight());
+        // Draw the left side of the head
+        drawPart(graphics, headLeft, HEAD_LEFT_TRANSFORM, xOffset + 1, zOffset - 0.5, headLeft.getWidth(), headLeft.getHeight());
 
         return super.getBytes(outputImage, skin, partName);
     }
