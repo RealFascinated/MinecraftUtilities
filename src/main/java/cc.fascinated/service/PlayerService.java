@@ -123,7 +123,7 @@ public class PlayerService {
      * @return the skin part
      */
     public CachedPlayerSkinPart getSkinPart(Player player, Skin.Parts part, boolean renderOverlay, int size) {
-        log.info("Getting skin part: {} for player: {}", part.getName(), player.getUniqueId());
+        log.info("Getting skin part {} for player: {}", part.getName(), player.getUniqueId());
         String key = "%s-%s-%s".formatted(player.getUniqueId(), part.getName(), size);
         Optional<CachedPlayerSkinPart> cache = playerSkinPartCacheRepository.findById(key);
 
@@ -135,12 +135,12 @@ public class PlayerService {
 
         long before = System.currentTimeMillis();
         byte[] skinPartBytes = part.getSkinPartParser().renderPart(player.getSkin(), part.getName(), renderOverlay, size);
-        log.info("Took {}ms to render skin part: {} for player: {}", System.currentTimeMillis() - before, part.getName(), player.getUniqueId());
+        log.info("Took {}ms to render skin part {} for player: {}", System.currentTimeMillis() - before, part.getName(), player.getUniqueId());
         CachedPlayerSkinPart skinPart = new CachedPlayerSkinPart(
                 key,
                 skinPartBytes
         );
-        log.info("Fetched skin part: {} for player: {}", part.getName(), player.getUniqueId());
+        log.info("Fetched skin part {} for player: {}", part.getName(), player.getUniqueId());
 
         playerSkinPartCacheRepository.save(skinPart);
         return skinPart;
