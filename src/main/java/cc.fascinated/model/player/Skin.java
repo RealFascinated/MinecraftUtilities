@@ -3,9 +3,9 @@ package cc.fascinated.model.player;
 import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.config.Config;
 import cc.fascinated.exception.impl.BadRequestException;
-import cc.fascinated.service.skin.SkinPartParser;
-import cc.fascinated.service.skin.impl.FlatParser;
-import cc.fascinated.service.skin.impl.IsometricHeadParser;
+import cc.fascinated.service.skin.SkinPartRenderer;
+import cc.fascinated.service.skin.impl.FlatRenderer;
+import cc.fascinated.service.skin.impl.IsometricHeadRenderer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.JsonObject;
@@ -95,13 +95,13 @@ public class Skin {
         /**
          * Head parts
          */
-        HEAD(new FlatParser(8, 8, 8)),
-        HEAD_ISOMETRIC(new IsometricHeadParser());
+        HEAD(new FlatRenderer(8, 8, 8)),
+        HEAD_ISOMETRIC(new IsometricHeadRenderer());
 
         /**
          * The skin part parser for the part.
          */
-        private final SkinPartParser skinPartParser;
+        private final SkinPartRenderer skinPartParser;
 
         /**
          * Gets the name of the part.

@@ -1,8 +1,7 @@
 package cc.fascinated.service.skin.impl;
 
-import cc.fascinated.common.ImageUtils;
 import cc.fascinated.model.player.Skin;
-import cc.fascinated.service.skin.SkinPartParser;
+import cc.fascinated.service.skin.SkinPartRenderer;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
@@ -13,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
 @Getter @Log4j2
-public class FlatParser extends SkinPartParser {
+public class FlatRenderer extends SkinPartRenderer {
 
     /**
      * The x and y position of the part.
@@ -26,20 +25,20 @@ public class FlatParser extends SkinPartParser {
     private final int widthAndHeight;
 
     /**
-     * Constructs a new {@link FlatParser}.
+     * Constructs a new {@link FlatRenderer}.
      *
      * @param x the x position of the part
      * @param y the y position of the part
      * @param widthAndHeight the width and height of the part
      */
-    public FlatParser(int x, int y, int widthAndHeight) {
+    public FlatRenderer(int x, int y, int widthAndHeight) {
         this.x = x;
         this.y = y;
         this.widthAndHeight = widthAndHeight;
     }
 
     @Override
-    public byte[] getPart(Skin skin, String partName, boolean renderOverlay, int size) {
+    public byte[] renderPart(Skin skin, String partName, boolean renderOverlay, int size) {
         double scale = (double) size / this.widthAndHeight;
         log.info("Getting {} part bytes for {} with size {} and scale {}", partName, skin.getUrl(), size, scale);
 
@@ -60,7 +59,7 @@ public class FlatParser extends SkinPartParser {
             }
         } catch (Exception ex) {
             log.error("Failed to get {} part bytes for {}", partName, skin.getUrl(), ex);
-            return null;
+            throw new RuntimeException("Failed to get " + partName + " part for " + skin.getUrl());
         }
     }
 }

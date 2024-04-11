@@ -133,7 +133,9 @@ public class PlayerService {
             return cache.get();
         }
 
-        byte[] skinPartBytes = part.getSkinPartParser().getPart(player.getSkin(), part.getName(), renderOverlay, size);
+        long before = System.currentTimeMillis();
+        byte[] skinPartBytes = part.getSkinPartParser().renderPart(player.getSkin(), part.getName(), renderOverlay, size);
+        log.info("Took {}ms to render skin part: {} for player: {}", System.currentTimeMillis() - before, part.getName(), player.getUniqueId());
         CachedPlayerSkinPart skinPart = new CachedPlayerSkinPart(
                 key,
                 skinPartBytes

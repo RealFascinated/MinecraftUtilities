@@ -1,2 +1,3 @@
-cc\fascinated\PlayerControllerTests.class
-cc\fascinated\TestRedisConfig.class
+cc\fascinated\tests\PlayerControllerTests.class
+cc\fascinated\tests\ServerControllerTests.class
+cc\fascinated\config\TestRedisConfig.class
