@@ -3,6 +3,7 @@ package cc.fascinated.service;
 import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.common.Tuple;
 import cc.fascinated.common.UUIDUtils;
+import cc.fascinated.config.Config;
 import cc.fascinated.exception.impl.MojangAPIRateLimitException;
 import cc.fascinated.exception.impl.RateLimitException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
@@ -58,7 +59,7 @@ public class PlayerService {
         }
 
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
-        if (cachedPlayer.isPresent()) { // Return the cached player if it exists
+        if (cachedPlayer.isPresent() && Config.INSTANCE.isProduction()) { // Return the cached player if it exists
             log.info("Player {} is cached", originalId);
             return cachedPlayer.get();
         }
@@ -94,7 +95,7 @@ public class PlayerService {
     public CachedPlayerName usernameToUuid(String username) {
         log.info("Getting UUID from username: {}", username);
         Optional<CachedPlayerName> cachedPlayerName = playerNameCacheRepository.findById(username.toUpperCase());
-        if (cachedPlayerName.isPresent()) {
+        if (cachedPlayerName.isPresent() && Config.INSTANCE.isProduction()) {
             return cachedPlayerName.get();
         }
         try {
@@ -118,20 +119,21 @@ public class PlayerService {
      *
      * @param player the player
      * @param part the part of the skin
+     * @param renderOverlay whether to render the overlay
      * @return the skin part
      */
-    public CachedPlayerSkinPart getSkinPart(Player player, Skin.Parts part, int size) {
+    public CachedPlayerSkinPart getSkinPart(Player player, Skin.Parts part, boolean renderOverlay, int size) {
         log.info("Getting skin part: {} for player: {}", part.getName(), player.getUniqueId());
         String key = "%s-%s-%s".formatted(player.getUniqueId(), part.getName(), size);
         Optional<CachedPlayerSkinPart> cache = playerSkinPartCacheRepository.findById(key);
 
         // The skin part is cached
-        if (cache.isPresent()) {
+        if (cache.isPresent() && Config.INSTANCE.isProduction()) {
             log.info("Skin part {} for player {} is cached", part.getName(), player.getUniqueId());
             return cache.get();
         }
 
-        byte[] skinPartBytes = PlayerUtils.getSkinPartBytes(player.getSkin(), part, size);
+        byte[] skinPartBytes = part.getSkinPartParser().getPart(player.getSkin(), part.getName(), renderOverlay, size);
         CachedPlayerSkinPart skinPart = new CachedPlayerSkinPart(
                 key,
                 skinPartBytes

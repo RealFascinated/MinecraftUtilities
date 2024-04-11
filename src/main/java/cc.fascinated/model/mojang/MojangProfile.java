@@ -41,10 +41,7 @@ public class MojangProfile {
         if (textureProperty == null) {
             return null;
         }
-
-        JsonObject json = Main.GSON.fromJson(textureProperty.getDecodedValue(), JsonObject.class); // Decode the texture property
-        JsonObject texturesJson = json.getAsJsonObject("textures"); // Parse the decoded JSON and get the textures object
-
+        JsonObject texturesJson = textureProperty.getDecodedValue().getAsJsonObject("textures"); // Parse the decoded JSON and get the texture object
         return new Tuple<>(Skin.fromJson(texturesJson.getAsJsonObject("SKIN")).populatePartUrls(this.getFormattedUuid()),
                 Cape.fromJson(texturesJson.getAsJsonObject("CAPE")));
     }
@@ -95,8 +92,8 @@ public class MojangProfile {
          * @return the decoded value
          */
         @JsonIgnore
-        public String getDecodedValue() {
-            return new String(Base64.getDecoder().decode(this.value));
+        public JsonObject getDecodedValue() {
+            return Main.GSON.fromJson(new String(Base64.getDecoder().decode(this.value)), JsonObject.class);
         }
 
         /**

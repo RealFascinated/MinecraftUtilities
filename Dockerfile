@@ -13,5 +13,8 @@ RUN mvn package -q -DskipTests
 EXPOSE 80
 ENV PORT=80
 
+# Indicate that we're running in production
+ENV ENVIRONMENT=production
+
 # Run the jar file
 CMD ["java", "-jar", "target/Minecraft-Utilities.jar"]

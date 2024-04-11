@@ -2,6 +2,7 @@ package cc.fascinated.service;
 
 import cc.fascinated.common.DNSUtils;
 import cc.fascinated.common.EnumUtils;
+import cc.fascinated.config.Config;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
 import cc.fascinated.model.cache.CachedMinecraftServer;
@@ -63,7 +64,7 @@ public class ServerService {
 
         // Check if the server is cached
         Optional<CachedMinecraftServer> cached = serverCacheRepository.findById(key);
-        if (cached.isPresent()) {
+        if (cached.isPresent() && Config.INSTANCE.isProduction()) {
                 log.info("Server {}:{} is cached", hostname, port);
             return cached.get();
         }

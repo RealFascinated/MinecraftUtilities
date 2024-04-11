@@ -3,6 +3,9 @@ package cc.fascinated.model.player;
 import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.config.Config;
 import cc.fascinated.exception.impl.BadRequestException;
+import cc.fascinated.service.skin.SkinPartParser;
+import cc.fascinated.service.skin.impl.FlatParser;
+import cc.fascinated.service.skin.impl.IsometricHeadParser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.JsonObject;
@@ -77,7 +80,7 @@ public class Skin {
     public Skin populatePartUrls(String playerUuid) {
         for (Parts part : Parts.values()) {
             String partName = part.name().toLowerCase();
-            this.partUrls.put(partName, Config.INSTANCE.getWebPublicUrl() + "/player/" + partName + "/" + playerUuid + "?size=" + part.getDefaultSize());
+            this.partUrls.put(partName, Config.INSTANCE.getWebPublicUrl() + "/player/" + partName + "/" + playerUuid);
         }
         return this;
     }
@@ -89,22 +92,16 @@ public class Skin {
     @Getter @AllArgsConstructor
     public enum Parts {
 
-        HEAD(8, 8, 8, 8, 256);
+        /**
+         * Head parts
+         */
+        HEAD(new FlatParser(8, 8, 8)),
+        HEAD_ISOMETRIC(new IsometricHeadParser());
 
         /**
-         * The x and y position of the part.
+         * The skin part parser for the part.
          */
-        private final int x, y;
-
-        /**
-         * The width and height of the part.
-         */
-        private final int width, height;
-
-        /**
-         * The scale of the part.
-         */
-        private final int defaultSize;
+        private final SkinPartParser skinPartParser;
 
         /**
          * Gets the name of the part.
