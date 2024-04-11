@@ -32,15 +32,18 @@ public class BodyRenderer extends SkinRenderer {
             BufferedImage leftLeg = this.getSkinPart(skin, Skin.PartPosition.LEFT_LEG, 1);
 
             if (renderOverlay) { // Render the skin layers
-                Graphics2D overlayGraphics = head.createGraphics();
-
-                applyOverlay(overlayGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
+                applyOverlay(head.createGraphics(), this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
+                applyOverlay(body.createGraphics(), this.getSkinPart(skin, Skin.PartPosition.BODY_OVERLAY_FRONT, 1));
+                applyOverlay(rightArm.createGraphics(), this.getSkinPart(skin, Skin.PartPosition.RIGHT_ARM_OVERLAY, 1));
+                applyOverlay(leftArm.createGraphics(), this.getSkinPart(skin, Skin.PartPosition.LEFT_ARM_OVERLAY, 1));
+                applyOverlay(rightLeg.createGraphics(), this.getSkinPart(skin, Skin.PartPosition.RIGHT_LEG_OVERLAY, 1));
+                applyOverlay(leftLeg.createGraphics(), this.getSkinPart(skin, Skin.PartPosition.LEFT_LEG_OVERLAY, 1));
             }
 
             // Draw the body
             graphics.drawImage(head, 4, 0, null);
             graphics.drawImage(body, 4, 8, null);
-            graphics.drawImage(rightArm, 0, 8, null);
+            graphics.drawImage(rightArm, skin.getModel() == Skin.Model.SLIM ? 1 : 0, 8, null);
             graphics.drawImage(leftArm, 12, 8, null);
             graphics.drawImage(rightLeg, 4, 20, null);
             graphics.drawImage(leftLeg, 8, 20, null);

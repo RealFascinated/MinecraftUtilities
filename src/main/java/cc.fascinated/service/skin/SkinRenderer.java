@@ -44,18 +44,13 @@ public abstract class SkinRenderer {
             if (skinImage == null) {
                 return null;
             }
-            BufferedImage part;
-            Skin.LegacyPartPositionData legacyData = position.getLegacyData();
-            if (skin.isLegacy() && legacyData != null) {
-                part = skinImage.getSubimage(legacyData.getX(), legacyData.getY(), position.getWidth(), position.getHeight());
-                if (legacyData.isFlipped()) {
-                    part = ImageUtils.flip(part);
-                }
-            } else {
-                part = skinImage.getSubimage(position.getX(), position.getY(), position.getWidth(), position.getHeight());
-            }
+            int width = skin.getModel() == Skin.Model.SLIM && position.name().contains("ARM") ? position.getWidth() - 1 : position.getWidth();
+            BufferedImage part = skinImage.getSubimage(position.getX(), position.getY(), width, position.getHeight());
             if (part == null) {
                 return null;
+            }
+            if (position.isFlipped()) { // Flip the part horizontally
+                part = ImageUtils.flip(part);
             }
             return ImageUtils.resize(part, scale);
         } catch (Exception ex) {

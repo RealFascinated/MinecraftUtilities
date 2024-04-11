@@ -148,38 +148,37 @@ public class Skin {
         /**
          * Skin postions
          */
-        HEAD(8, 8, 8, 8, null),
-        HEAD_TOP(8, 0, 8, 8, null),
-        HEAD_FRONT(8, 8, 8, 8, null),
-        HEAD_RIGHT(0, 8, 8, 8, null),
+        HEAD(8, 8, 8, 8, false),
+        HEAD_TOP(8, 0, 8, 8, false),
+        HEAD_FRONT(8, 8, 8, 8, false),
+        HEAD_RIGHT(0, 8, 8, 8, false),
 
-        BODY(20, 20, 8, 12, null),
-        BODY_BACK(20, 36, 8, 12, null),
-        BODY_LEFT(32, 52, 8, 12, null),
-        BODY_RIGHT(44, 20, 8, 12, null),
+        BODY(20, 20, 8, 12, false),
+        BODY_BACK(20, 36, 8, 12, false),
+        BODY_LEFT(32, 52, 8, 12, false),
+        BODY_RIGHT(44, 20, 8, 12, false),
 
-        RIGHT_ARM(44, 20, 4, 12, null),
-        LEFT_ARM(36, 52, 4, 12, new LegacyPartPositionData(43, 20, true)),
+        RIGHT_ARM(44, 20, 4, 12, false),
+        LEFT_ARM(36, 52, 4, 12, true),
 
-        RIGHT_LEG(4, 20, 4, 12, null),
-        LEFT_LEG(20, 52, 4, 12, new LegacyPartPositionData(3, 20, true)),
+        RIGHT_LEG(4, 20, 4, 12, false),
+        LEFT_LEG(20, 52, 4, 12, true),
 
         /**
          * Skin overlay (layer) positions
          */
-        // todo: finish these below
-        HEAD_OVERLAY_TOP(40, 0, 8, 8, null),
-        HEAD_OVERLAY_FRONT(40, 8, 8, 8, null),
-        HEAD_OVERLAY_RIGHT(32, 8, 8, 8, null),
-        HEAD_OVERLAY_LEFT(48, 8, 8, 8, null),
+        HEAD_OVERLAY_TOP(40, 0, 8, 8, false),
+        HEAD_OVERLAY_FRONT(40, 8, 8, 8, false),
+        HEAD_OVERLAY_RIGHT(32, 8, 8, 8, false),
+        HEAD_OVERLAY_LEFT(48, 8, 8, 8, false),
 
-        BODY_OVERLAY_FRONT(20, 36, 8, 12, null),
+        BODY_OVERLAY_FRONT(20, 36, 8, 12, false),
 
-        RIGHT_ARM_OVERLAY(44, 36, 8, 12, null),
-        LEFT_ARM_OVERLAY(52, 52, 8, 12, null),
+        RIGHT_ARM_OVERLAY(44, 36, 8, 12, false),
+        LEFT_ARM_OVERLAY(52, 52, 8, 12, false),
 
-        RIGHT_LEG_OVERLAY(4, 36, 4, 12, null),
-        LEFT_LEG_OVERLAY(4, 52, 20, 12, null);
+        RIGHT_LEG_OVERLAY(4, 36, 4, 12, false),
+        LEFT_LEG_OVERLAY(4, 52, 20, 12, false);
 
         /**
          * The x, and y position of the part.
@@ -192,23 +191,9 @@ public class Skin {
         private final int width, height;
 
         /*
-         * The part position data for legacy skins.
-         * This can be null to use the default position.
+         * Should the part be flipped horizontally?
          */
-        private final LegacyPartPositionData legacyData;
-    }
-
-    @AllArgsConstructor @Getter
-    public static class LegacyPartPositionData {
-        /**
-         * The x, and y position of the part.
-         */
-        private int x, y;
-
-        /**
-         * Should the part be flipped?
-         */
-        private boolean flipped;
+        private final boolean flipped;
     }
 
     /**
