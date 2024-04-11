@@ -18,6 +18,11 @@ public class Player {
     @Id private final UUID uniqueId;
 
     /**
+     * The trimmed UUID of the player
+     */
+    private final String trimmedUniqueId;
+
+    /**
      * The username of the player
      */
     private final String username;
@@ -41,6 +46,7 @@ public class Player {
 
     public Player(MojangProfile profile) {
         this.uniqueId = UUIDUtils.addDashes(profile.getId());
+        this.trimmedUniqueId = UUIDUtils.removeDashes(this.uniqueId);
         this.username = profile.getName();
         this.rawProperties = profile.getProperties();
 

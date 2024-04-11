@@ -22,4 +22,15 @@ public class UUIDUtils {
         }
         return UUID.fromString(builder.toString());
     }
+
+    /**
+     * Remove dashes from a UUID.
+     *
+     * @param dashed the UUID with dashes
+     * @return the UUID without dashes
+     */
+    @NonNull
+    public static String removeDashes(@NonNull UUID dashed) {
+        return dashed.toString().replace("-", "");
+    }
 }
