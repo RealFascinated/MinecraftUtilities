@@ -27,8 +27,8 @@ public final class CachedPlayer extends Player implements Serializable {
      */
     private long cached;
 
-    public CachedPlayer(UUID uniqueId, String username, Skin skin, Cape cape, MojangProfile.ProfileProperty[] rawProperties, long cached) {
-        super(uniqueId, username, skin, cape, rawProperties);
+    public CachedPlayer(UUID uniqueId, String trimmedUniqueId, String username, Skin skin, Cape cape, MojangProfile.ProfileProperty[] rawProperties, long cached) {
+        super(uniqueId, trimmedUniqueId, username, skin, cape, rawProperties);
         this.cached = cached;
     }
 }

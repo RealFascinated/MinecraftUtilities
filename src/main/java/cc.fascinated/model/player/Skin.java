@@ -4,7 +4,8 @@ import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.config.Config;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.service.skin.SkinRenderer;
-import cc.fascinated.service.skin.impl.SquareRenderer;
+import cc.fascinated.service.skin.impl.BodyRenderer;
+import cc.fascinated.service.skin.impl.HeadRenderer;
 import cc.fascinated.service.skin.impl.IsometricHeadRenderer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,6 +15,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +41,11 @@ public class Skin {
     private Model model;
 
     /**
+     * The legacy status of the skin
+     */
+    private boolean isLegacy = false;
+
+    /**
      * The skin image for the skin
      */
     @JsonIgnore
@@ -53,6 +62,14 @@ public class Skin {
         this.model = model;
 
         this.skinImage = PlayerUtils.getSkinImage(url);
+        if (this.skinImage != null) {
+            try {
+                BufferedImage image = ImageIO.read(new ByteArrayInputStream(this.skinImage));
+                if (image.getWidth() == 64 && image.getHeight() == 32) { // Using the old skin format
+                    this.isLegacy = true;
+                }
+            } catch (Exception ignored) {}
+        }
     }
 
     /**
@@ -91,17 +108,14 @@ public class Skin {
      */
     @Getter @AllArgsConstructor
     public enum Parts {
+        FACE(new HeadRenderer()),
+        HEAD(new IsometricHeadRenderer()),
+        BODY(new BodyRenderer());
 
         /**
-         * Head parts
+         * The skin part renderer for the part.
          */
-        HEAD(new SquareRenderer(8, 8, 8)),
-        HEAD_ISOMETRIC(new IsometricHeadRenderer());
-
-        /**
-         * The skin part parser for the part.
-         */
-        private final SkinRenderer skinPartParser;
+        private final SkinRenderer skinRenderer;
 
         /**
          * Gets the name of the part.
@@ -127,6 +141,77 @@ public class Skin {
             }
             throw new BadRequestException("Invalid part name: " + name);
         }
+    }
+
+    @AllArgsConstructor @Getter
+    public enum PartPosition {
+        /**
+         * Skin postions
+         */
+        HEAD(8, 8, 8, 8, new LegacyPartPositionData(8, 8, false)),
+        HEAD_TOP(8, 0, 8, 8, null),
+        HEAD_FRONT(8, 8, 8, 8, null),
+        HEAD_RIGHT(0, 8, 8, 8, null),
+
+        BODY(20, 20, 8, 12, new LegacyPartPositionData(20, 20, false)),
+        BODY_BACK(20, 36, 8, 12, null),
+        BODY_LEFT(32, 52, 8, 12, null),
+        BODY_RIGHT(44, 20, 8, 12, null),
+
+        RIGHT_ARM(44, 20, 4, 12, new LegacyPartPositionData(44, 20, false)),
+        LEFT_ARM(36, 52, 4, 12, new LegacyPartPositionData(43, 20, true)),
+
+        RIGHT_LEG(4, 20, 4, 12, new LegacyPartPositionData(4, 20, false)),
+        LEFT_LEG(20, 52, 4, 12, new LegacyPartPositionData(3, 20, true)),
+
+        /**
+         * Skin overlay (layer) positions
+         */
+        HEAD_OVERLAY(40, 8, 8, 8, null),
+        // todo: finish these below
+        HEAD_OVERLAY_TOP(40, 0, 40, 0, null),
+        HEAD_OVERLAY_FRONT(40, 8, 40, 8, null),
+        HEAD_OVERLAY_RIGHT(32, 8, 32, 8, null),
+
+        BODY_OVERLAY(20, 32, 20, 12, null),
+        BODY_OVERLAY_BACK(20, 36, 20, 12, null),
+        BODY_OVERLAY_LEFT(32, 52, 32, 12, null),
+        BODY_OVERLAY_RIGHT(44, 32, 44, 12, null),
+
+        RIGHT_ARM_OVERLAY(44, 32, 44, 12, null),
+        LEFT_ARM_OVERLAY(36, 52, 36, 12, null),
+
+        RIGHT_LEG_OVERLAY(4, 32, 4, 12, null),
+        LEFT_LEG_OVERLAY(20, 52, 20, 12, null);
+
+        /**
+         * The x, and y position of the part.
+         */
+        private final int x, y;
+
+        /**
+         * The width and height of the part.
+         */
+        private final int width, height;
+
+        /*
+         * The part position data for legacy skins.
+         * This can be null to use the default position.
+         */
+        private final LegacyPartPositionData legacyData;
+    }
+
+    @AllArgsConstructor @Getter
+    public static class LegacyPartPositionData {
+        /**
+         * The x, and y position of the part.
+         */
+        private int x, y;
+
+        /**
+         * Should the part be flipped?
+         */
+        private boolean flipped;
     }
 
     /**

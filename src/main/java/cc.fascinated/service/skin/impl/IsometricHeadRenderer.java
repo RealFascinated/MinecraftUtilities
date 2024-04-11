@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 @Getter @Log4j2
 public class IsometricHeadRenderer extends SkinRenderer {
 
-    private static final double SKEW_A = 26d / 45d;    // 0.57777777
+    private static final double SKEW_A = 26d / 45d;   // 0.57777777
     private static final double SKEW_B = SKEW_A * 2d; // 1.15555555
 
     /**
@@ -36,19 +36,19 @@ public class IsometricHeadRenderer extends SkinRenderer {
             Graphics2D graphics = outputImage.createGraphics();
 
             // Get all the required head parts
-            BufferedImage headTop = ImageUtils.resize(this.getSkinPart(skin, 8, 0, 8, 8, 1), scale);
-            BufferedImage headFront = ImageUtils.resize(this.getSkinPart(skin, 8, 8, 8, 8, 1), scale);
-            BufferedImage headRight = ImageUtils.resize(this.getSkinPart(skin, 0, 8, 8, 8, 1), scale);
+            BufferedImage headTop = ImageUtils.resize(this.getSkinPart(skin, Skin.PartPosition.HEAD_TOP, 1), scale);
+            BufferedImage headFront = ImageUtils.resize(this.getSkinPart(skin, Skin.PartPosition.HEAD_FRONT, 1), scale);
+            BufferedImage headRight = ImageUtils.resize(this.getSkinPart(skin, Skin.PartPosition.HEAD_RIGHT, 1), scale);
 
-            if (renderOverlay) {
+            if (renderOverlay) { // Render the skin layers
                 Graphics2D headGraphics = headTop.createGraphics();
-                applyOverlay(headGraphics,this.getSkinPart(skin, 40, 0, 8, 8, 1));
+                applyOverlay(headGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY, 1));
 
                 headGraphics = headFront.createGraphics();
-                applyOverlay(headGraphics, this.getSkinPart(skin, 16, 8, 8, 8, 1));
+                applyOverlay(headGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
 
                 headGraphics = headRight.createGraphics();
-                applyOverlay(headGraphics, this.getSkinPart(skin, 32, 8, 8, 8, 1));
+                applyOverlay(headGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_RIGHT, 1));
             }
 
             // Draw the head
@@ -75,17 +75,6 @@ public class IsometricHeadRenderer extends SkinRenderer {
             log.error("Failed to get {} part bytes for {}", partName, skin.getUrl(), ex);
             throw new RuntimeException("Failed to get " + partName + " part for " + skin.getUrl());
         }
-    }
-
-    /**
-     * Applies an overlay (skin layer) to the head part.
-     *
-     * @param graphics the graphics
-     * @param part the part
-     */
-    private void applyOverlay(Graphics2D graphics, BufferedImage part) {
-        graphics.drawImage(part, 0, 0, null);
-        graphics.dispose();
     }
 
     /**

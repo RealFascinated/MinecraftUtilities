@@ -24,4 +24,18 @@ public class ImageUtils {
         graphics.dispose();
         return scaled;
     }
+
+    /**
+     * Flip an image.
+     *
+     * @param src the source image
+     * @return the flipped image
+     */
+    public static BufferedImage flip(@NotNull final BufferedImage src) {
+        BufferedImage flipped = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = flipped.createGraphics();
+        graphics.drawImage(src, src.getWidth(), 0, 0, src.getHeight(), 0, 0, src.getWidth(), src.getHeight(), null);
+        graphics.dispose();
+        return flipped;
+    }
 }

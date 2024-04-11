@@ -10,34 +10,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 @Getter @Log4j2
-public class SquareRenderer extends SkinRenderer {
-
-    /**
-     * The x and y position of the part.
-     */
-    private final int x, y;
-
-    /**
-     * The width and height of the part.
-     */
-    private final int widthAndHeight;
-
-    /**
-     * Constructs a new {@link SquareRenderer}.
-     *
-     * @param x the x position of the part
-     * @param y the y position of the part
-     * @param widthAndHeight the width and height of the part
-     */
-    public SquareRenderer(int x, int y, int widthAndHeight) {
-        this.x = x;
-        this.y = y;
-        this.widthAndHeight = widthAndHeight;
-    }
+public class HeadRenderer extends SkinRenderer {
 
     @Override
     public byte[] renderPart(Skin skin, String partName, boolean renderOverlay, int size) {
-        double scale = (double) size / this.widthAndHeight;
+        double scale = (double) size / 8d;
         log.info("Getting {} part bytes for {} with size {} and scale {}", partName, skin.getUrl(), size, scale);
 
         try {
@@ -45,7 +22,11 @@ public class SquareRenderer extends SkinRenderer {
             Graphics2D graphics = outputImage.createGraphics();
 
             graphics.setTransform(AffineTransform.getScaleInstance(scale, scale));
-            graphics.drawImage(this.getSkinPart(skin, this.x, this.y, this.widthAndHeight, this.widthAndHeight, 1), 0, 0, null);
+            graphics.drawImage(this.getSkinPart(skin, Skin.PartPosition.HEAD, 1), 0, 0, null);
+
+            if (renderOverlay) { // Render the skin layers
+                applyOverlay(outputImage.createGraphics(), this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY, 1));
+            }
 
             return super.getBytes(outputImage, skin, partName);
         } catch (Exception ex) {

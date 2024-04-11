@@ -71,6 +71,7 @@ public class PlayerService {
             Tuple<Skin, Cape> skinAndCape = mojangProfile.getSkinAndCape();
             CachedPlayer player = new CachedPlayer(
                     uuid, // Player UUID
+                    UUIDUtils.removeDashes(uuid), // Trimmed UUID
                     mojangProfile.getName(), // Player Name
                     skinAndCape.getLeft(), // Skin
                     skinAndCape.getRight(), // Cape
@@ -134,7 +135,7 @@ public class PlayerService {
         }
 
         long before = System.currentTimeMillis();
-        byte[] skinPartBytes = part.getSkinPartParser().renderPart(player.getSkin(), part.getName(), renderOverlay, size);
+        byte[] skinPartBytes = part.getSkinRenderer().renderPart(player.getSkin(), part.getName(), renderOverlay, size);
         log.info("Took {}ms to render skin part {} for player: {}", System.currentTimeMillis() - before, part.getName(), player.getUniqueId());
         CachedPlayerSkinPart skinPart = new CachedPlayerSkinPart(
                 key,
