@@ -34,7 +34,7 @@ public class BodyRenderer extends SkinRenderer {
             if (renderOverlay) { // Render the skin layers
                 Graphics2D overlayGraphics = head.createGraphics();
 
-                applyOverlay(overlayGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY, 1));
+                applyOverlay(overlayGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
             }
 
             // Draw the body

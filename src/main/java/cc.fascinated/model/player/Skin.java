@@ -148,41 +148,38 @@ public class Skin {
         /**
          * Skin postions
          */
-        HEAD(8, 8, 8, 8, new LegacyPartPositionData(8, 8, false)),
+        HEAD(8, 8, 8, 8, null),
         HEAD_TOP(8, 0, 8, 8, null),
         HEAD_FRONT(8, 8, 8, 8, null),
         HEAD_RIGHT(0, 8, 8, 8, null),
 
-        BODY(20, 20, 8, 12, new LegacyPartPositionData(20, 20, false)),
+        BODY(20, 20, 8, 12, null),
         BODY_BACK(20, 36, 8, 12, null),
         BODY_LEFT(32, 52, 8, 12, null),
         BODY_RIGHT(44, 20, 8, 12, null),
 
-        RIGHT_ARM(44, 20, 4, 12, new LegacyPartPositionData(44, 20, false)),
+        RIGHT_ARM(44, 20, 4, 12, null),
         LEFT_ARM(36, 52, 4, 12, new LegacyPartPositionData(43, 20, true)),
 
-        RIGHT_LEG(4, 20, 4, 12, new LegacyPartPositionData(4, 20, false)),
+        RIGHT_LEG(4, 20, 4, 12, null),
         LEFT_LEG(20, 52, 4, 12, new LegacyPartPositionData(3, 20, true)),
 
         /**
          * Skin overlay (layer) positions
          */
-        HEAD_OVERLAY(40, 8, 8, 8, null),
         // todo: finish these below
-        HEAD_OVERLAY_TOP(40, 0, 40, 0, null),
-        HEAD_OVERLAY_FRONT(40, 8, 40, 8, null),
-        HEAD_OVERLAY_RIGHT(32, 8, 32, 8, null),
+        HEAD_OVERLAY_TOP(40, 0, 8, 8, null),
+        HEAD_OVERLAY_FRONT(40, 8, 8, 8, null),
+        HEAD_OVERLAY_RIGHT(32, 8, 8, 8, null),
+        HEAD_OVERLAY_LEFT(48, 8, 8, 8, null),
 
-        BODY_OVERLAY(20, 32, 20, 12, null),
-        BODY_OVERLAY_BACK(20, 36, 20, 12, null),
-        BODY_OVERLAY_LEFT(32, 52, 32, 12, null),
-        BODY_OVERLAY_RIGHT(44, 32, 44, 12, null),
+        BODY_OVERLAY_FRONT(20, 36, 8, 12, null),
 
-        RIGHT_ARM_OVERLAY(44, 32, 44, 12, null),
-        LEFT_ARM_OVERLAY(36, 52, 36, 12, null),
+        RIGHT_ARM_OVERLAY(44, 36, 8, 12, null),
+        LEFT_ARM_OVERLAY(52, 52, 8, 12, null),
 
-        RIGHT_LEG_OVERLAY(4, 32, 4, 12, null),
-        LEFT_LEG_OVERLAY(20, 52, 20, 12, null);
+        RIGHT_LEG_OVERLAY(4, 36, 4, 12, null),
+        LEFT_LEG_OVERLAY(4, 52, 20, 12, null);
 
         /**
          * The x, and y position of the part.

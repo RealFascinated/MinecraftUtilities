@@ -25,7 +25,7 @@ public class HeadRenderer extends SkinRenderer {
             graphics.drawImage(this.getSkinPart(skin, Skin.PartPosition.HEAD, 1), 0, 0, null);
 
             if (renderOverlay) { // Render the skin layers
-                applyOverlay(outputImage.createGraphics(), this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY, 1));
+                applyOverlay(outputImage.createGraphics(), this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
             }
 
             return super.getBytes(outputImage, skin, partName);

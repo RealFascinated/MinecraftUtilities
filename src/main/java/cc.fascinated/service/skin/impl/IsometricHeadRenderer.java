@@ -42,7 +42,7 @@ public class IsometricHeadRenderer extends SkinRenderer {
 
             if (renderOverlay) { // Render the skin layers
                 Graphics2D headGraphics = headTop.createGraphics();
-                applyOverlay(headGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY, 1));
+                applyOverlay(headGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_TOP, 1));
 
                 headGraphics = headFront.createGraphics();
                 applyOverlay(headGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
