@@ -3,7 +3,7 @@ package cc.fascinated.model.player;
 import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.config.Config;
 import cc.fascinated.exception.impl.BadRequestException;
-import cc.fascinated.service.skin.SkinPartRenderer;
+import cc.fascinated.service.skin.SkinRenderer;
 import cc.fascinated.service.skin.impl.FlatRenderer;
 import cc.fascinated.service.skin.impl.IsometricHeadRenderer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -101,7 +101,7 @@ public class Skin {
         /**
          * The skin part parser for the part.
          */
-        private final SkinPartRenderer skinPartParser;
+        private final SkinRenderer skinPartParser;
 
         /**
          * Gets the name of the part.

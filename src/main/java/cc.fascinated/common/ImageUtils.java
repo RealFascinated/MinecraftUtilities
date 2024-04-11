@@ -1,11 +1,13 @@
 package cc.fascinated.common;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+@Log4j2
 public class ImageUtils {
 
     /**

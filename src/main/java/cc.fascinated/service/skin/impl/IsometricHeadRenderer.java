@@ -2,7 +2,7 @@ package cc.fascinated.service.skin.impl;
 
 import cc.fascinated.common.ImageUtils;
 import cc.fascinated.model.player.Skin;
-import cc.fascinated.service.skin.SkinPartRenderer;
+import cc.fascinated.service.skin.SkinRenderer;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
@@ -11,7 +11,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 @Getter @Log4j2
-public class IsometricHeadRenderer extends SkinPartRenderer {
+public class IsometricHeadRenderer extends SkinRenderer {
 
     private static final double SKEW_A = 26d / 45d;    // 0.57777777
     private static final double SKEW_B = SKEW_A * 2d; // 1.15555555

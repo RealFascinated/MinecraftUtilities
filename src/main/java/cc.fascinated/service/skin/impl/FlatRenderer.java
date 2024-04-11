@@ -1,18 +1,16 @@
 package cc.fascinated.service.skin.impl;
 
 import cc.fascinated.model.player.Skin;
-import cc.fascinated.service.skin.SkinPartRenderer;
+import cc.fascinated.service.skin.SkinRenderer;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 
 @Getter @Log4j2
-public class FlatRenderer extends SkinPartRenderer {
+public class FlatRenderer extends SkinRenderer {
 
     /**
      * The x and y position of the part.
@@ -49,14 +47,7 @@ public class FlatRenderer extends SkinPartRenderer {
             graphics.setTransform(AffineTransform.getScaleInstance(scale, scale));
             graphics.drawImage(this.getSkinPart(skin, this.x, this.y, this.widthAndHeight, this.widthAndHeight, 1), 0, 0, null);
 
-            try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-                ImageIO.write(outputImage, "png", outputStream);
-                // Cleanup
-                outputStream.flush();
-                graphics.dispose();
-                log.info("Successfully got {} part bytes for {}", partName, skin.getUrl());
-                return outputStream.toByteArray();
-            }
+            return super.getBytes(outputImage, skin, partName);
         } catch (Exception ex) {
             log.error("Failed to get {} part bytes for {}", partName, skin.getUrl(), ex);
             throw new RuntimeException("Failed to get " + partName + " part for " + skin.getUrl());

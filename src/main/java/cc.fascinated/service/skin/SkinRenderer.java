@@ -13,7 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 @AllArgsConstructor @Getter @Log4j2
-public abstract class SkinPartRenderer {
+public abstract class SkinRenderer {
 
     /**
      * Gets the skin part image.
