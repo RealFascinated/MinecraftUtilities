@@ -31,45 +31,40 @@ public class IsometricHeadRenderer extends SkinRenderer {
         double x, y, z; // The x, y, and z positions
         double zOffset = scale * 3.5d;
         double xOffset = scale * 2d;
-        try {
-            BufferedImage outputImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D graphics = outputImage.createGraphics();
+        BufferedImage outputImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = outputImage.createGraphics();
 
-            // Get all the required head parts
-            BufferedImage headTop = ImageUtils.resize(this.getSkinPart(skin, Skin.PartPosition.HEAD_TOP, 1), scale);
-            BufferedImage headFront = ImageUtils.resize(this.getSkinPart(skin, Skin.PartPosition.HEAD_FRONT, 1), scale);
-            BufferedImage headRight = ImageUtils.resize(this.getSkinPart(skin, Skin.PartPosition.HEAD_RIGHT, 1), scale);
+        // Get all the required head parts
+        BufferedImage headTop = this.getSkinPart(skin, Skin.PartPosition.HEAD_TOP, scale);
+        BufferedImage headFront = this.getSkinPart(skin, Skin.PartPosition.HEAD_FRONT, scale);
+        BufferedImage headRight = this.getSkinPart(skin, Skin.PartPosition.HEAD_RIGHT, scale);
 
-            if (renderOverlay) { // Render the skin layers
-                applyOverlay(headTop, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_TOP, 1));
-                applyOverlay(headFront, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
-                applyOverlay(headRight, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_RIGHT, 1));
-            }
-
-            // Draw the head
-            x = xOffset;
-            y = -0.5;
-            z = zOffset;
-            // The head is offset by 2 pixels for whatever reason
-            drawPart(graphics, headTop, HEAD_TRANSFORM, y - z, x + z, headTop.getWidth(), headTop.getHeight() + 2);
-
-            // Draw the front of the head
-            x = xOffset + 8 * scale;
-            y = 0;
-            z = zOffset - 0.5;
-            drawPart(graphics, headFront, FRONT_TRANSFORM, y + x, x + z, headFront.getWidth(), headFront.getHeight());
-
-            // Draw the right side of the head
-            x = xOffset;
-            y = 0;
-            z = zOffset;
-            drawPart(graphics, headRight, RIGHT_TRANSFORM, x + y + 1, z - y - 0.5, headRight.getWidth(), headRight.getHeight());
-
-            return super.getBytes(outputImage, skin, partName);
-        } catch (Exception ex) {
-            log.error("Failed to get {} part bytes for {}", partName, skin.getUrl(), ex);
-            throw new RuntimeException("Failed to get " + partName + " part for " + skin.getUrl());
+        if (renderOverlay) { // Render the skin layers
+            applyOverlay(headTop, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_TOP, scale));
+            applyOverlay(headFront, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, scale));
+            applyOverlay(headRight, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_RIGHT, scale));
         }
+
+        // Draw the top of the head
+        x = xOffset;
+        y = -0.5;
+        z = zOffset;
+        // The head is offset by 2 pixels for whatever reason
+        drawPart(graphics, headTop, HEAD_TRANSFORM, y - z, x + z, headTop.getWidth(), headTop.getHeight() + 2);
+
+        // Draw the front of the head
+        x = xOffset + 8 * scale;
+        y = 0;
+        z = zOffset - 0.5;
+        drawPart(graphics, headFront, FRONT_TRANSFORM, y + x, x + z, headFront.getWidth(), headFront.getHeight());
+
+        // Draw the right side of the head
+        x = xOffset;
+        y = 0;
+        z = zOffset;
+        drawPart(graphics, headRight, RIGHT_TRANSFORM, x + y + 1, z - y - 0.5, headRight.getWidth(), headRight.getHeight());
+
+        return super.getBytes(outputImage, skin, partName);
     }
 
     /**

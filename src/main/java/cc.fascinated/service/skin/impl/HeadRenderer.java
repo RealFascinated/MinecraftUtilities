@@ -17,21 +17,16 @@ public class HeadRenderer extends SkinRenderer {
         double scale = (double) size / 8d;
         log.info("Getting {} part bytes for {} with size {} and scale {}", partName, skin.getUrl(), size, scale);
 
-        try {
-            BufferedImage outputImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D graphics = outputImage.createGraphics();
+        BufferedImage outputImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = outputImage.createGraphics();
 
-            graphics.setTransform(AffineTransform.getScaleInstance(scale, scale));
-            graphics.drawImage(this.getSkinPart(skin, Skin.PartPosition.HEAD, 1), 0, 0, null);
+        graphics.setTransform(AffineTransform.getScaleInstance(scale, scale));
+        graphics.drawImage(this.getSkinPart(skin, Skin.PartPosition.HEAD, 1), 0, 0, null);
 
-            if (renderOverlay) { // Render the skin layers
-                applyOverlay(outputImage, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
-            }
-
-            return super.getBytes(outputImage, skin, partName);
-        } catch (Exception ex) {
-            log.error("Failed to get {} part bytes for {}", partName, skin.getUrl(), ex);
-            throw new RuntimeException("Failed to get " + partName + " part for " + skin.getUrl());
+        if (renderOverlay) { // Render the skin layers
+            applyOverlay(outputImage, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
         }
+
+        return super.getBytes(outputImage, skin, partName);
     }
 }
