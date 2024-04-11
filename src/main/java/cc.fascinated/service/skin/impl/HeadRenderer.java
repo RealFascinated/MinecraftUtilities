@@ -21,10 +21,10 @@ public class HeadRenderer extends SkinRenderer {
         Graphics2D graphics = outputImage.createGraphics();
 
         graphics.setTransform(AffineTransform.getScaleInstance(scale, scale));
-        graphics.drawImage(this.getSkinPart(skin, Skin.PartPosition.HEAD, 1), 0, 0, null);
+        graphics.drawImage(this.getSkinPart(skin, Skin.PartPosition.HEAD_FACE, 1), 0, 0, null);
 
         if (renderOverlay) { // Render the skin layers
-            applyOverlay(outputImage, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
+            applyOverlay(outputImage, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FACE, 1));
         }
 
         return super.getBytes(outputImage, skin, partName);

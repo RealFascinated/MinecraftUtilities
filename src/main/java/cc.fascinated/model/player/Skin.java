@@ -146,14 +146,13 @@ public class Skin {
     @AllArgsConstructor @Getter
     public enum PartPosition {
         /**
-         * Skin postions
+         * Skin positions
          */
-        HEAD(8, 8, 8, 8, null),
+        HEAD_FACE(8, 8, 8, 8, null),
         HEAD_TOP(8, 0, 8, 8, null),
-        HEAD_FRONT(8, 8, 8, 8, null),
         HEAD_LEFT(0, 8, 8, 8, null),
 
-        BODY(20, 20, 8, 12, null),
+        BODY_FRONT(20, 20, 8, 12, null),
         BODY_BACK(20, 36, 8, 12, null),
         BODY_LEFT(32, 52, 8, 12, null),
         BODY_RIGHT(44, 20, 8, 12, null),
@@ -167,8 +166,8 @@ public class Skin {
         /**
          * Skin overlay (layer) positions
          */
+        HEAD_OVERLAY_FACE(40, 8, 8, 8, null),
         HEAD_OVERLAY_TOP(40, 0, 8, 8, null),
-        HEAD_OVERLAY_FRONT(40, 8, 8, 8, null),
         HEAD_OVERLAY_LEFT(48, 8, 8, 8, null),
 
         BODY_OVERLAY_FRONT(20, 36, 8, 12, null),
