@@ -41,14 +41,9 @@ public class IsometricHeadRenderer extends SkinRenderer {
             BufferedImage headRight = ImageUtils.resize(this.getSkinPart(skin, Skin.PartPosition.HEAD_RIGHT, 1), scale);
 
             if (renderOverlay) { // Render the skin layers
-                Graphics2D headGraphics = headTop.createGraphics();
-                applyOverlay(headGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_TOP, 1));
-
-                headGraphics = headFront.createGraphics();
-                applyOverlay(headGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
-
-                headGraphics = headRight.createGraphics();
-                applyOverlay(headGraphics, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_RIGHT, 1));
+                applyOverlay(headTop, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_TOP, 1));
+                applyOverlay(headFront, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_FRONT, 1));
+                applyOverlay(headRight, this.getSkinPart(skin, Skin.PartPosition.HEAD_OVERLAY_RIGHT, 1));
             }
 
             // Draw the head

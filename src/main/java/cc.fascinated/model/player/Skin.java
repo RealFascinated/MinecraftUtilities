@@ -84,7 +84,7 @@ public class Skin {
         }
         String url = json.get("url").getAsString();
         JsonObject metadata = json.getAsJsonObject("metadata");
-        Model model = Model.fromName(metadata == null ? "slim" : // Fall back to slim if the model is not found
+        Model model = Model.fromName(metadata == null ? "default" : // Fall back to slim if the model is not found
                 metadata.get("model").getAsString());
         return new Skin(url, model);
     }
@@ -148,37 +148,37 @@ public class Skin {
         /**
          * Skin postions
          */
-        HEAD(8, 8, 8, 8, false),
-        HEAD_TOP(8, 0, 8, 8, false),
-        HEAD_FRONT(8, 8, 8, 8, false),
-        HEAD_RIGHT(0, 8, 8, 8, false),
+        HEAD(8, 8, 8, 8, null),
+        HEAD_TOP(8, 0, 8, 8, null),
+        HEAD_FRONT(8, 8, 8, 8, null),
+        HEAD_RIGHT(0, 8, 8, 8, null),
 
-        BODY(20, 20, 8, 12, false),
-        BODY_BACK(20, 36, 8, 12, false),
-        BODY_LEFT(32, 52, 8, 12, false),
-        BODY_RIGHT(44, 20, 8, 12, false),
+        BODY(20, 20, 8, 12, null),
+        BODY_BACK(20, 36, 8, 12, null),
+        BODY_LEFT(32, 52, 8, 12, null),
+        BODY_RIGHT(44, 20, 8, 12, null),
 
-        RIGHT_ARM(44, 20, 4, 12, false),
-        LEFT_ARM(36, 52, 4, 12, true),
+        RIGHT_ARM(44, 20, 4, 12, null),
+        LEFT_ARM(36, 52, 4, 12, new LegacySkinPosition(44, 20, true)),
 
-        RIGHT_LEG(4, 20, 4, 12, false),
-        LEFT_LEG(20, 52, 4, 12, true),
+        RIGHT_LEG(4, 20, 4, 12, null),
+        LEFT_LEG(20, 52, 4, 12, new LegacySkinPosition(4, 20, true)),
 
         /**
          * Skin overlay (layer) positions
          */
-        HEAD_OVERLAY_TOP(40, 0, 8, 8, false),
-        HEAD_OVERLAY_FRONT(40, 8, 8, 8, false),
-        HEAD_OVERLAY_RIGHT(32, 8, 8, 8, false),
-        HEAD_OVERLAY_LEFT(48, 8, 8, 8, false),
+        HEAD_OVERLAY_TOP(40, 0, 8, 8, null),
+        HEAD_OVERLAY_FRONT(40, 8, 8, 8, null),
+        HEAD_OVERLAY_RIGHT(32, 8, 8, 8, null),
+        HEAD_OVERLAY_LEFT(48, 8, 8, 8, null),
 
-        BODY_OVERLAY_FRONT(20, 36, 8, 12, false),
+        BODY_OVERLAY_FRONT(20, 36, 8, 12, null),
 
-        RIGHT_ARM_OVERLAY(44, 36, 8, 12, false),
-        LEFT_ARM_OVERLAY(52, 52, 8, 12, false),
+        RIGHT_ARM_OVERLAY(44, 36, 8, 12, null),
+        LEFT_ARM_OVERLAY(52, 52, 8, 12, null),
 
-        RIGHT_LEG_OVERLAY(4, 36, 4, 12, false),
-        LEFT_LEG_OVERLAY(4, 52, 20, 12, false);
+        RIGHT_LEG_OVERLAY(4, 36, 4, 12, null),
+        LEFT_LEG_OVERLAY(4, 52, 20, 12, null);
 
         /**
          * The x, and y position of the part.
@@ -189,6 +189,20 @@ public class Skin {
          * The width and height of the part.
          */
         private final int width, height;
+
+        /**
+         * The legacy skin position of the part.
+         */
+        private final LegacySkinPosition legacySkinPosition;
+    }
+
+    @AllArgsConstructor @Getter
+    public static class LegacySkinPosition {
+
+        /**
+         * The x, and y position of the part.
+         */
+        private final int x, y;
 
         /*
          * Should the part be flipped horizontally?

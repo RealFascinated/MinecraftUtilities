@@ -45,12 +45,15 @@ public abstract class SkinRenderer {
                 return null;
             }
             int width = skin.getModel() == Skin.Model.SLIM && position.name().contains("ARM") ? position.getWidth() - 1 : position.getWidth();
-            BufferedImage part = skinImage.getSubimage(position.getX(), position.getY(), width, position.getHeight());
-            if (part == null) {
-                return null;
-            }
-            if (position.isFlipped()) { // Flip the part horizontally
-                part = ImageUtils.flip(part);
+            BufferedImage part;
+            Skin.LegacySkinPosition legacySkinPosition = position.getLegacySkinPosition();
+            if (legacySkinPosition != null) {
+                part = skinImage.getSubimage(legacySkinPosition.getX(), legacySkinPosition.getY(), width, position.getHeight());
+                if (legacySkinPosition.isFlipped()) {
+                    part = ImageUtils.flip(part);
+                }
+            } else {
+                part = skinImage.getSubimage(position.getX(), position.getY(), width, position.getHeight());
             }
             return ImageUtils.resize(part, scale);
         } catch (Exception ex) {
@@ -81,15 +84,18 @@ public abstract class SkinRenderer {
     /**
      * Applies an overlay (skin layer) to the head part.
      *
-     * @param graphics the graphics
+     * @param originalImage the original image
      * @param part the part
      */
-    public void applyOverlay(Graphics2D graphics, BufferedImage part) {
+    public void applyOverlay(BufferedImage originalImage, BufferedImage part) {
         if (part == null) {
             return;
         }
-        graphics.drawImage(part, 0, 0, null);
-        graphics.dispose();
+        try {
+            Graphics2D graphics = originalImage.createGraphics();
+            graphics.drawImage(part, 0, 0, null);
+            graphics.dispose();
+        } catch (Exception ignored) {} // We can safely ignore this
     }
 
     /**
