@@ -49,7 +49,7 @@ class PlayerControllerTests {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(testPlayer))
-                .andExpect(jsonPath("$.uuid").value(testPlayerUuid));
+                .andExpect(jsonPath("$.uniqueId").value(testPlayerUuid));
     }
 
     @Test
