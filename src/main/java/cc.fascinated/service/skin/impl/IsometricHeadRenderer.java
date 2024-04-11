@@ -50,8 +50,8 @@ public class IsometricHeadRenderer extends SkinRenderer {
             x = xOffset;
             y = -0.5;
             z = zOffset;
-            // The head is offset by 1 pixel for whatever reason
-            drawPart(graphics, headTop, HEAD_TRANSFORM, y - z, x + z, headTop.getWidth(), headTop.getHeight() + 1);
+            // The head is offset by 2 pixels for whatever reason
+            drawPart(graphics, headTop, HEAD_TRANSFORM, y - z, x + z, headTop.getWidth(), headTop.getHeight() + 2);
 
             // Draw the front of the head
             x = xOffset + 8 * scale;
