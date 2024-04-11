@@ -10,7 +10,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 @Getter @Log4j2
-public class FlatRenderer extends SkinRenderer {
+public class SquareRenderer extends SkinRenderer {
 
     /**
      * The x and y position of the part.
@@ -23,13 +23,13 @@ public class FlatRenderer extends SkinRenderer {
     private final int widthAndHeight;
 
     /**
-     * Constructs a new {@link FlatRenderer}.
+     * Constructs a new {@link SquareRenderer}.
      *
      * @param x the x position of the part
      * @param y the y position of the part
      * @param widthAndHeight the width and height of the part
      */
-    public FlatRenderer(int x, int y, int widthAndHeight) {
+    public SquareRenderer(int x, int y, int widthAndHeight) {
         this.x = x;
         this.y = y;
         this.widthAndHeight = widthAndHeight;

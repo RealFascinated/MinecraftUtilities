@@ -4,7 +4,7 @@ import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.config.Config;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.service.skin.SkinRenderer;
-import cc.fascinated.service.skin.impl.FlatRenderer;
+import cc.fascinated.service.skin.impl.SquareRenderer;
 import cc.fascinated.service.skin.impl.IsometricHeadRenderer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -95,7 +95,7 @@ public class Skin {
         /**
          * Head parts
          */
-        HEAD(new FlatRenderer(8, 8, 8)),
+        HEAD(new SquareRenderer(8, 8, 8)),
         HEAD_ISOMETRIC(new IsometricHeadRenderer());
 
         /**
