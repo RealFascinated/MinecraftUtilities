@@ -124,9 +124,9 @@ public class PlayerService {
      * @return the skin part
      */
     public CachedPlayerSkinPart getSkinPart(Player player, Skin.Parts part, boolean renderOverlay, int size) {
-        if (size > 1024) {
-            log.info("Size {} is too large, setting to 1024", size);
-            size = 1024;
+        if (size > 512) {
+            log.info("Size {} is too large, setting to 512", size);
+            size = 512;
         }
         log.info("Getting skin part {} for player: {}", part.getName(), player.getUniqueId());
         String key = "%s-%s-%s".formatted(player.getUniqueId(), part.getName(), size);
