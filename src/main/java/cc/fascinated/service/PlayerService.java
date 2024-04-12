@@ -5,6 +5,7 @@ import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.common.Tuple;
 import cc.fascinated.common.UUIDUtils;
 import cc.fascinated.config.Config;
+import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.MojangAPIRateLimitException;
 import cc.fascinated.exception.impl.RateLimitException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
@@ -132,9 +133,8 @@ public class PlayerService {
             size = 512;
         }
         ISkinPart part = ISkinPart.getByName(partName); // The skin part to get
-        if (part == null) { // Default to the face
-            part = ISkinPart.Vanilla.FACE;
-            log.warn("Invalid skin part {}, defaulting to {}", partName, part.name());
+        if (part == null) {
+            throw new BadRequestException("Invalid skin part: %s".formatted(partName));
         }
 
         log.info("Getting skin part {} for player: {}", part.name(), player.getUniqueId());
