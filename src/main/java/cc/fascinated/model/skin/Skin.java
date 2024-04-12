@@ -80,7 +80,7 @@ public class Skin {
         JsonObject metadata = json.getAsJsonObject("metadata");
         return new Skin(
                 url,
-                EnumUtils.getEnumConstant(Model.class, metadata != null ? metadata.get("model").getAsString() : "DEFAULT")
+                EnumUtils.getEnumConstant(Model.class, metadata != null ? metadata.get("model").getAsString().toUpperCase() : "DEFAULT")
         );
     }
 
