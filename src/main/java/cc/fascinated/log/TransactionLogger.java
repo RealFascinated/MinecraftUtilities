@@ -22,14 +22,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 @ControllerAdvice
-@Slf4j(topic = "Req/Res Transaction")
+@Slf4j(topic = "Req Transaction")
 public class TransactionLogger implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, @NonNull MethodParameter returnType, @NonNull MediaType selectedContentType,
                                   @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType, @NonNull ServerHttpRequest rawRequest,
                                   @NonNull ServerHttpResponse rawResponse) {
         HttpServletRequest request = ((ServletServerHttpRequest) rawRequest).getServletRequest();
-        HttpServletResponse response = ((ServletServerHttpResponse) rawResponse).getServletResponse();
 
         // Get the request ip ip
         String ip = IPUtils.getRealIp(request);
@@ -40,33 +39,12 @@ public class TransactionLogger implements ResponseBodyAdvice<Object> {
             params.put(entry.getKey(), Arrays.toString(entry.getValue()));
         }
 
-        // Getting headers
-        Map<String, String> headers = new HashMap<>();
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            headers.put(headerName, request.getHeader(headerName));
-        }
-
-        // Log the request
-        log.info(String.format("[Req] %s | %s | '%s', params=%s, headers=%s",
+        // Logging the request
+        log.info(String.format("[Req] %s | %s | '%s', params=%s",
                 request.getMethod(),
                 ip,
                 request.getRequestURI(),
-                params,
-                headers
-        ));
-
-        // Getting response headers
-        headers = new HashMap<>();
-        for (String headerName : response.getHeaderNames()) {
-            headers.put(headerName, response.getHeader(headerName));
-        }
-
-        // Log the response
-        log.info(String.format("[Res] %s, headers=%s",
-                response.getStatus(),
-                headers
+                params
         ));
         return body;
     }
