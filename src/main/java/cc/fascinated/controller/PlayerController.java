@@ -2,7 +2,6 @@ package cc.fascinated.controller;
 
 import cc.fascinated.model.cache.CachedPlayer;
 import cc.fascinated.model.cache.CachedPlayerName;
-import cc.fascinated.model.skin.Skin;
 import cc.fascinated.service.PlayerService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

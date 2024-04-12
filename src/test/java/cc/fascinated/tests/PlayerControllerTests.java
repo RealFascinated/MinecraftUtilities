@@ -1,7 +1,7 @@
 package cc.fascinated.tests;
 
 import cc.fascinated.config.TestRedisConfig;
-import cc.fascinated.model.skin.Skin;
+import cc.fascinated.model.skin.ISkinPart;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -70,11 +70,14 @@ class PlayerControllerTests {
 
     @Test
     public void ensurePlayerSkinPartsLookupSuccess() throws Exception {
-        for (Skin.Parts part : Skin.Parts.values()) {
-            mockMvc.perform(get("/player/" + part.getName() + "/" + testPlayerUuid)
-                    .accept(MediaType.IMAGE_PNG)
-                    .contentType(MediaType.IMAGE_PNG))
-                    .andExpect(status().isOk());
+        for (Enum<?>[] type : ISkinPart.TYPES) {
+            for (Enum<?> part : type) {
+                mockMvc.perform(get("/player/" + part.name().toLowerCase() + "/" + testPlayer)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk());
+            }
+
         }
     }
 
