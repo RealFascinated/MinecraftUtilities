@@ -28,9 +28,9 @@ public class IsometricHeadRenderer extends IsometricSkinRenderer<ISkinPart.Custo
         Graphics2D graphics = texture.createGraphics(); // Create the graphics for drawing
 
         // Get the Vanilla skin parts to draw
-        BufferedImage headTop = getVanillaSkinPart(skin, ISkinPart.Vanilla.HEAD_TOP, scale);
-        BufferedImage face = getVanillaSkinPart(skin, ISkinPart.Vanilla.FACE, scale);
-        BufferedImage headLeft = getVanillaSkinPart(skin, ISkinPart.Vanilla.HEAD_LEFT, scale);
+        BufferedImage headTop = getVanillaSkinPart(skin, ISkinPart.Vanilla.HEAD_TOP, scale, renderOverlays);
+        BufferedImage face = getVanillaSkinPart(skin, ISkinPart.Vanilla.FACE, scale, renderOverlays);
+        BufferedImage headLeft = getVanillaSkinPart(skin, ISkinPart.Vanilla.HEAD_LEFT, scale, renderOverlays);
 
         // Draw the top head part
         drawPart(graphics, headTop, HEAD_TOP_TRANSFORM, -0.5 - zOffset, xOffset + zOffset, headTop.getWidth(), headTop.getHeight() + 2);

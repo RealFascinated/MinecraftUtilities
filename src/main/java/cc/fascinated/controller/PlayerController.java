@@ -48,7 +48,7 @@ public class PlayerController {
             @Parameter(description = "The part of the skin", example = "head") @PathVariable String part,
             @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id,
             @Parameter(description = "The size of the image", example = "256") @RequestParam(required = false, defaultValue = "256") int size,
-            @Parameter(description = "Whether to render the skin overlay (skin layers)", example = "false") @RequestParam(required = false, defaultValue = "false") boolean overlay,
+            @Parameter(description = "Whether to render the skin overlay (skin layers)", example = "false") @RequestParam(required = false, defaultValue = "false") boolean overlays,
             @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download) {
         CachedPlayer player = playerService.getPlayer(id);
         String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
@@ -58,6 +58,6 @@ public class PlayerController {
                 .cacheControl(cacheControl)
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(player.getUsername()))
-                .body(playerService.getSkinPart(player, part, overlay, size).getBytes());
+                .body(playerService.getSkinPart(player, part, overlays, size).getBytes());
     }
 }

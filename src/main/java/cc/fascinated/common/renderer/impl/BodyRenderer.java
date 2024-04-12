@@ -21,12 +21,12 @@ public class BodyRenderer extends SkinRenderer<ISkinPart.Custom> {
         Graphics2D graphics = texture.createGraphics(); // Create the graphics for drawing
 
         // Get the Vanilla skin parts to draw
-        BufferedImage face = getVanillaSkinPart(skin, ISkinPart.Vanilla.FACE, -1);
-        BufferedImage body = getVanillaSkinPart(skin, ISkinPart.Vanilla.BODY_FRONT, -1);
-        BufferedImage leftArm = getVanillaSkinPart(skin, ISkinPart.Vanilla.LEFT_ARM_FRONT, -1);
-        BufferedImage rightArm = getVanillaSkinPart(skin, ISkinPart.Vanilla.RIGHT_ARM_FRONT, -1);
-        BufferedImage leftLeg = getVanillaSkinPart(skin, ISkinPart.Vanilla.LEFT_LEG_FRONT, -1);
-        BufferedImage rightLeg = getVanillaSkinPart(skin, ISkinPart.Vanilla.RIGHT_LEG_FRONT, -1);
+        BufferedImage face = getVanillaSkinPart(skin, ISkinPart.Vanilla.FACE, -1, renderOverlays);
+        BufferedImage body = getVanillaSkinPart(skin, ISkinPart.Vanilla.BODY_FRONT, -1, renderOverlays);
+        BufferedImage leftArm = getVanillaSkinPart(skin, ISkinPart.Vanilla.LEFT_ARM_FRONT, -1, renderOverlays);
+        BufferedImage rightArm = getVanillaSkinPart(skin, ISkinPart.Vanilla.RIGHT_ARM_FRONT, -1, renderOverlays);
+        BufferedImage leftLeg = getVanillaSkinPart(skin, ISkinPart.Vanilla.LEFT_LEG_FRONT, -1, renderOverlays);
+        BufferedImage rightLeg = getVanillaSkinPart(skin, ISkinPart.Vanilla.RIGHT_LEG_FRONT, -1, renderOverlays);
 
         // Draw the body parts
         graphics.drawImage(face, 4, 0, null);

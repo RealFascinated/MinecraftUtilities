@@ -1,5 +1,6 @@
 package cc.fascinated.model.skin;
 
+import cc.fascinated.common.EnumUtils;
 import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.config.Config;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -77,9 +78,10 @@ public class Skin {
         }
         String url = json.get("url").getAsString();
         JsonObject metadata = json.getAsJsonObject("metadata");
-        Model model = Model.fromName(metadata == null ? "default" : // Fall back to slim if the model is not found
-                metadata.get("model").getAsString());
-        return new Skin(url, model);
+        return new Skin(
+                url,
+                EnumUtils.getEnumConstant(Model.class, metadata != null ? metadata.get("model").getAsString() : "DEFAULT")
+        );
     }
 
     /**
@@ -106,21 +108,6 @@ public class Skin {
      */
     public enum Model {
         DEFAULT,
-        SLIM;
-
-        /**
-         * Gets the model from its name.
-         *
-         * @param name the name of the model
-         * @return the model
-         */
-        public static Model fromName(String name) {
-            for (Model model : values()) {
-                if (model.name().equalsIgnoreCase(name)) {
-                    return model;
-                }
-            }
-            return null;
-        }
+        SLIM
     }
 }

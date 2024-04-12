@@ -4,24 +4,29 @@ import cc.fascinated.common.ImageUtils;
 import cc.fascinated.model.skin.ISkinPart;
 import cc.fascinated.model.skin.Skin;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 
+@Log4j2
 public abstract class SkinRenderer<T extends ISkinPart> {
 
     /**
-     * Get the texture of a part of a skin.
+     * Get the texture of a part of the skin.
      *
      * @param skin the skin to get the part texture from
      * @param part the part of the skin to get
      * @param size the size to scale the texture to
+     * @param renderOverlays should the overlays be rendered
      * @return the texture of the skin part
      */
     @SneakyThrows
-    public BufferedImage getVanillaSkinPart(Skin skin, ISkinPart.Vanilla part, double size) {
+    public BufferedImage getVanillaSkinPart(Skin skin, ISkinPart.Vanilla part, double size, boolean renderOverlays) {
         ISkinPart.Vanilla.Coordinates coordinates = part.getCoordinates(); // The coordinates of the part
 
         // The skin texture is legacy, use legacy coordinates
@@ -37,6 +42,16 @@ public abstract class SkinRenderer<T extends ISkinPart> {
         if (coordinates instanceof ISkinPart.Vanilla.LegacyCoordinates legacyCoordinates && legacyCoordinates.isFlipped()) {
             partTexture = ImageUtils.flip(partTexture);
         }
+
+        // Draw part overlays
+        ISkinPart.Vanilla[] overlayParts = part.getOverlays();
+        if (overlayParts != null && renderOverlays) {
+            log.info("Applying overlays to part: {}", part.name());
+            for (ISkinPart.Vanilla overlay : overlayParts) {
+                applyOverlay(partTexture.createGraphics(), getVanillaSkinPart(skin, overlay, size, false));
+            }
+        }
+
         return partTexture;
     }
 

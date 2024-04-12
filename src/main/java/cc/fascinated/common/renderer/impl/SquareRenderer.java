@@ -17,7 +17,7 @@ public class SquareRenderer extends SkinRenderer<ISkinPart.Vanilla> {
     @Override
     public BufferedImage render(Skin skin, ISkinPart.Vanilla part, boolean renderOverlays, int size) {
         double scale = size / 8D;
-        BufferedImage partImage = getVanillaSkinPart(skin, part, scale); // Get the part image
+        BufferedImage partImage = getVanillaSkinPart(skin, part, scale, renderOverlays); // Get the part image
         if (!renderOverlays) { // Not rendering overlays
             return partImage;
         }
@@ -26,13 +26,6 @@ public class SquareRenderer extends SkinRenderer<ISkinPart.Vanilla> {
         Graphics2D graphics = texture.createGraphics(); // Create the graphics for drawing
         graphics.drawImage(partImage, 0, 0, null);
 
-        // Draw part overlays
-        ISkinPart.Vanilla[] overlayParts = part.getOverlays();
-        if (overlayParts != null) {
-            for (ISkinPart.Vanilla overlay : overlayParts) {
-                applyOverlay(graphics, getVanillaSkinPart(skin, overlay, scale));
-            }
-        }
         graphics.dispose();
         return texture;
     }

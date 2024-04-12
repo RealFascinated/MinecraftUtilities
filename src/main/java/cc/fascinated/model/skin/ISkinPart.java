@@ -59,12 +59,14 @@ public interface ISkinPart {
     @Getter
     enum Vanilla implements ISkinPart {
         // Overlays
+        HEAD_OVERLAY_TOP(true, new Coordinates(40, 0), 8, 8),
         HEAD_OVERLAY_FACE(true, new Coordinates(40, 8), 8, 8),
+        HEAD_OVERLAY_LEFT(true, new Coordinates(48, 8), 8, 8),
 
         // Head
-        HEAD_TOP(true, new Coordinates(8, 0), 8, 8),
+        HEAD_TOP(true, new Coordinates(8, 0), 8, 8, HEAD_OVERLAY_TOP),
         FACE(false, new Coordinates(8, 8), 8, 8, HEAD_OVERLAY_FACE),
-        HEAD_LEFT(true, new Coordinates(0, 8), 8, 8),
+        HEAD_LEFT(true, new Coordinates(0, 8), 8, 8, HEAD_OVERLAY_LEFT),
         HEAD_RIGHT(true, new Coordinates(16, 8), 8, 8),
         HEAD_BOTTOM(true, new Coordinates(16, 0), 8, 8),
         HEAD_BACK(true, new Coordinates(24, 8), 8, 8),
