@@ -132,6 +132,10 @@ public class PlayerService {
             log.info("Size {} is too large, setting to 512", size);
             size = 512;
         }
+        if (size < 32) {
+            log.info("Size {} is too small, setting to 32", size);
+            size = 32;
+        }
         ISkinPart part = ISkinPart.getByName(partName); // The skin part to get
         if (part == null) {
             throw new BadRequestException("Invalid skin part: %s".formatted(partName));
