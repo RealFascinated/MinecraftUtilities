@@ -38,7 +38,7 @@ public class Skin {
     /**
      * The legacy status of the skin
      */
-    private boolean isLegacy = false;
+    private boolean legacy;
 
     /**
      * The skin image for the skin
@@ -60,9 +60,7 @@ public class Skin {
         if (this.skinImage != null) {
             try {
                 BufferedImage image = ImageIO.read(new ByteArrayInputStream(this.skinImage));
-                if (image.getWidth() == 64 && image.getHeight() == 32) { // Using the old skin format
-                    this.isLegacy = true;
-                }
+                this.legacy = image.getWidth() == 64 && image.getHeight() == 32;
             } catch (Exception ignored) {}
         }
     }

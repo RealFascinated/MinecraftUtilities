@@ -137,26 +137,26 @@ public class PlayerService {
             throw new BadRequestException("Invalid skin part: %s".formatted(partName));
         }
 
-        log.info("Getting skin part {} for player: {}", part.name(), player.getUniqueId());
-        String key = "%s-%s-%s-%s".formatted(player.getUniqueId(), part.name(), size, renderOverlay);
+        String name = part.name();
+        log.info("Getting skin part {} for player: {}", name, player.getUniqueId());
+        String key = "%s-%s-%s-%s".formatted(player.getUniqueId(), name, size, renderOverlay);
         Optional<CachedPlayerSkinPart> cache = playerSkinPartCacheRepository.findById(key);
 
         // The skin part is cached
         if (cache.isPresent() && Config.INSTANCE.isProduction()) {
-            log.info("Skin part {} for player {} is cached", part.name(), player.getUniqueId());
+            log.info("Skin part {} for player {} is cached", name, player.getUniqueId());
             return cache.get();
         }
 
         long before = System.currentTimeMillis();
         BufferedImage renderedPart = part.render(player.getSkin(), renderOverlay, size); // Render the skin part
-        log.info("Took {}ms to render skin part {} for player: {}", System.currentTimeMillis() - before, part.name(), player.getUniqueId());
+        log.info("Took {}ms to render skin part {} for player: {}", System.currentTimeMillis() - before, name, player.getUniqueId());
 
-        byte[] skinPartBytes = ImageUtils.imageToBytes(renderedPart); // Convert the image to bytes
         CachedPlayerSkinPart skinPart = new CachedPlayerSkinPart(
                 key,
-                skinPartBytes
+                ImageUtils.imageToBytes(renderedPart)
         );
-        log.info("Fetched skin part {} for player: {}", part.name(), player.getUniqueId());
+        log.info("Fetched skin part {} for player: {}", name, player.getUniqueId());
 
         playerSkinPartCacheRepository.save(skinPart);
         return skinPart;

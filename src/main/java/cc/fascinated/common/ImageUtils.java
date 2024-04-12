@@ -52,6 +52,8 @@ public class ImageUtils {
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             ImageIO.write(image, "png", outputStream);
             return outputStream.toByteArray();
+        } catch (Exception e) {
+            throw new Exception("Failed to convert image to bytes", e);
         }
     }
 }
