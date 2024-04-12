@@ -4,7 +4,7 @@ import cc.fascinated.Main;
 import cc.fascinated.common.Tuple;
 import cc.fascinated.common.UUIDUtils;
 import cc.fascinated.model.player.Cape;
-import cc.fascinated.model.player.Skin;
+import cc.fascinated.model.skin.Skin;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;

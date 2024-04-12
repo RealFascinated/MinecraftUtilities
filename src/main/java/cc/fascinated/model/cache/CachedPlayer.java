@@ -3,7 +3,7 @@ package cc.fascinated.model.cache;
 import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.model.player.Cape;
 import cc.fascinated.model.player.Player;
-import cc.fascinated.model.player.Skin;
+import cc.fascinated.model.skin.Skin;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

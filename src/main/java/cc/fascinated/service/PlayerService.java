@@ -1,5 +1,6 @@
 package cc.fascinated.service;
 
+import cc.fascinated.common.ImageUtils;
 import cc.fascinated.common.PlayerUtils;
 import cc.fascinated.common.Tuple;
 import cc.fascinated.common.UUIDUtils;
@@ -14,7 +15,8 @@ import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.model.mojang.MojangUsernameToUuid;
 import cc.fascinated.model.player.Cape;
 import cc.fascinated.model.player.Player;
-import cc.fascinated.model.player.Skin;
+import cc.fascinated.model.skin.ISkinPart;
+import cc.fascinated.model.skin.Skin;
 import cc.fascinated.repository.PlayerCacheRepository;
 import cc.fascinated.repository.PlayerNameCacheRepository;
 import cc.fascinated.repository.PlayerSkinPartCacheRepository;
@@ -22,6 +24,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.image.BufferedImage;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -119,33 +122,41 @@ public class PlayerService {
      * Gets a skin part from the player's skin.
      *
      * @param player the player
-     * @param part the part of the skin
+     * @param partName the name of the part
      * @param renderOverlay whether to render the overlay
      * @return the skin part
      */
-    public CachedPlayerSkinPart getSkinPart(Player player, Skin.Parts part, boolean renderOverlay, int size) {
+    public CachedPlayerSkinPart getSkinPart(Player player, String partName, boolean renderOverlay, int size) {
         if (size > 512) {
             log.info("Size {} is too large, setting to 512", size);
             size = 512;
         }
-        log.info("Getting skin part {} for player: {}", part.getName(), player.getUniqueId());
-        String key = "%s-%s-%s".formatted(player.getUniqueId(), part.getName(), size);
+        ISkinPart part = ISkinPart.getByName(partName); // The skin part to get
+        if (part == null) { // Default to the face
+            part = ISkinPart.Vanilla.FACE;
+            log.warn("Invalid skin part {}, defaulting to {}", partName, part.name());
+        }
+
+        log.info("Getting skin part {} for player: {}", part.name(), player.getUniqueId());
+        String key = "%s-%s-%s-%s".formatted(player.getUniqueId(), part.name(), size, renderOverlay);
         Optional<CachedPlayerSkinPart> cache = playerSkinPartCacheRepository.findById(key);
 
         // The skin part is cached
         if (cache.isPresent() && Config.INSTANCE.isProduction()) {
-            log.info("Skin part {} for player {} is cached", part.getName(), player.getUniqueId());
+            log.info("Skin part {} for player {} is cached", part.name(), player.getUniqueId());
             return cache.get();
         }
 
         long before = System.currentTimeMillis();
-        byte[] skinPartBytes = part.getRenderer().renderPart(player.getSkin(), part.getName(), renderOverlay, size);
-        log.info("Took {}ms to render skin part {} for player: {}", System.currentTimeMillis() - before, part.getName(), player.getUniqueId());
+        BufferedImage renderedPart = part.render(player.getSkin(), renderOverlay, size); // Render the skin part
+        log.info("Took {}ms to render skin part {} for player: {}", System.currentTimeMillis() - before, part.name(), player.getUniqueId());
+
+        byte[] skinPartBytes = ImageUtils.imageToBytes(renderedPart); // Convert the image to bytes
         CachedPlayerSkinPart skinPart = new CachedPlayerSkinPart(
                 key,
                 skinPartBytes
         );
-        log.info("Fetched skin part {} for player: {}", part.getName(), player.getUniqueId());
+        log.info("Fetched skin part {} for player: {}", part.name(), player.getUniqueId());
 
         playerSkinPartCacheRepository.save(skinPart);
         return skinPart;
