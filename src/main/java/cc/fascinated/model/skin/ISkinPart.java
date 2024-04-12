@@ -56,6 +56,12 @@ public interface ISkinPart {
         return null;
     }
 
+    /**
+     * The vanilla skin parts.
+     * <p>
+     *     <a href="https://cdn.fascinated.cc/sXwEKAxm.png">Skin Format</a>
+     * </p>
+     */
     @Getter
     enum Vanilla implements ISkinPart {
         // Overlays

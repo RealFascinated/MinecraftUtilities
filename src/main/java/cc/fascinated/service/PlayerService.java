@@ -54,24 +54,23 @@ public class PlayerService {
      * @return the player
      */
     public CachedPlayer getPlayer(String id) {
-        String originalId = id;
-        id = id.toUpperCase(); // Convert the id to uppercase to prevent case sensitivity
-        log.info("Getting player: {}", originalId);
-        UUID uuid = PlayerUtils.getUuidFromString(originalId);
+        // Convert the id to uppercase to prevent case sensitivity
+        log.info("Getting player: {}", id);
+        UUID uuid = PlayerUtils.getUuidFromString(id);
         if (uuid == null) { // If the id is not a valid uuid, get the uuid from the username
-            uuid = usernameToUuid(originalId).getUniqueId();
+            uuid = usernameToUuid(id).getUniqueId();
         }
 
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
         if (cachedPlayer.isPresent() && Config.INSTANCE.isProduction()) { // Return the cached player if it exists
-            log.info("Player {} is cached", originalId);
+            log.info("Player {} is cached", id);
             return cachedPlayer.get();
         }
 
         try {
-            log.info("Getting player profile from Mojang: {}", originalId);
+            log.info("Getting player profile from Mojang: {}", id);
             MojangProfile mojangProfile = mojangAPIService.getProfile(uuid.toString()); // Get the player profile from Mojang
-            log.info("Got player profile from Mojang: {}", originalId);
+            log.info("Got player profile from Mojang: {}", id);
             Tuple<Skin, Cape> skinAndCape = mojangProfile.getSkinAndCape();
             CachedPlayer player = new CachedPlayer(
                     uuid, // Player UUID
@@ -136,6 +135,7 @@ public class PlayerService {
             log.info("Size {} is too small, setting to 32", size);
             size = 32;
         }
+
         ISkinPart part = ISkinPart.getByName(partName); // The skin part to get
         if (part == null) {
             throw new BadRequestException("Invalid skin part: %s".formatted(partName));
@@ -144,6 +144,7 @@ public class PlayerService {
         String name = part.name();
         log.info("Getting skin part {} for player: {} (size: {}, renderOverlays: {})", name, player.getUniqueId(), size, renderOverlay);
         String key = "%s-%s-%s-%s".formatted(player.getUniqueId(), name, size, renderOverlay);
+
         Optional<CachedPlayerSkinPart> cache = playerSkinPartCacheRepository.findById(key);
 
         // The skin part is cached
@@ -161,7 +162,6 @@ public class PlayerService {
                 ImageUtils.imageToBytes(renderedPart)
         );
         log.info("Fetched skin part {} for player: {}", name, player.getUniqueId());
-
         playerSkinPartCacheRepository.save(skinPart);
         return skinPart;
     }
