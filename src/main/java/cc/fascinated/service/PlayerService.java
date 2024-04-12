@@ -142,7 +142,7 @@ public class PlayerService {
         }
 
         String name = part.name();
-        log.info("Getting skin part {} for player: {} (size: {}, renderOverlays: {})", name, player.getUniqueId(), size, renderOverlay);
+        log.info("Getting skin part {} for player: {} (size: {}, overlays: {})", name, player.getUniqueId(), size, renderOverlay);
         String key = "%s-%s-%s-%s".formatted(player.getUniqueId(), name, size, renderOverlay);
 
         Optional<CachedPlayerSkinPart> cache = playerSkinPartCacheRepository.findById(key);
