@@ -15,17 +15,23 @@ import java.util.UUID;
 @RedisHash(value = "playerName", timeToLive = 60L * 60L * 6) // 6 hours (in seconds)
 public final class CachedPlayerName extends CachedResponse {
     /**
+     * The id of the player.
+     */
+    @Id private final String id;
+
+    /**
      * The username of the player.
      */
-    @Id private final String username;
+    private final String username;
 
     /**
      * The unique id of the player.
      */
     private final UUID uniqueId;
 
-    public CachedPlayerName(String username, UUID uniqueId) {
+    public CachedPlayerName(String id, String username, UUID uniqueId) {
         super(CacheInformation.defaultCache());
+        this.id = id;
         this.username = username;
         this.uniqueId = uniqueId;
     }

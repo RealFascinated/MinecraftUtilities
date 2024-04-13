@@ -100,7 +100,8 @@ public class PlayerService {
      */
     public CachedPlayerName usernameToUuid(String username) {
         log.info("Getting UUID from username: {}", username);
-        Optional<CachedPlayerName> cachedPlayerName = playerNameCacheRepository.findById(username.toUpperCase());
+        String id = username.toUpperCase();
+        Optional<CachedPlayerName> cachedPlayerName = playerNameCacheRepository.findById(id);
         if (cachedPlayerName.isPresent() && Config.INSTANCE.isProduction()) {
             return cachedPlayerName.get();
         }
@@ -111,7 +112,7 @@ public class PlayerService {
                 throw new ResourceNotFoundException("Player with username '%s' not found".formatted(username));
             }
             UUID uuid = UUIDUtils.addDashes(mojangUsernameToUuid.getUuid());
-            CachedPlayerName player = new CachedPlayerName(username, uuid);
+            CachedPlayerName player = new CachedPlayerName(id, username, uuid);
             playerNameCacheRepository.save(player);
             log.info("Got UUID from username: {} -> {}", username, uuid);
             player.getCache().setCached(false);
