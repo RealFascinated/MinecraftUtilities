@@ -115,6 +115,7 @@ public class PlayerService {
             CachedPlayerName player = new CachedPlayerName(username, uuid);
             playerNameCacheRepository.save(player);
             log.info("Got UUID from username: {} -> {}", username, uuid);
+            player.getCache().setCached(false);
             return player;
         } catch (RateLimitException exception) {
             throw new MojangAPIRateLimitException();

@@ -9,19 +9,23 @@ import java.util.UUID;
 /**
  * @author Braydon
  */
-@AllArgsConstructor
 @Getter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @RedisHash(value = "playerName", timeToLive = 60L * 60L * 6) // 6 hours (in seconds)
-public final class CachedPlayerName {
+public final class CachedPlayerName extends CachedResponse {
     /**
      * The username of the player.
      */
-    @Id @NonNull private String username;
+    @Id private final String username;
 
     /**
      * The unique id of the player.
      */
-    @NonNull private UUID uniqueId;
+    private final UUID uniqueId;
+
+    public CachedPlayerName(String username, UUID uniqueId) {
+        super(CacheInformation.defaultCache());
+        this.username = username;
+        this.uniqueId = uniqueId;
+    }
 }
