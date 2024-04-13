@@ -22,7 +22,7 @@ public class Main {
             .setDateFormat("MM-dd-yyyy HH:mm:ss")
             .create();
     public static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
-    public static final ExecutorService EXECUTOR_POOL = Executors.newFixedThreadPool(8); // Adjust the thread pool size as per your requirement
+    public static final ExecutorService EXECUTOR_POOL = Executors.newFixedThreadPool(8);
 
     @SneakyThrows
     public static void main(String[] args) {
