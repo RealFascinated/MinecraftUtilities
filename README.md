@@ -4,4 +4,4 @@ Wrapper for the Minecraft APIs to make them easier to use.
 
 ## Usage
 
-View the [documentation](https://mc.fascinated.cc/swagger-ui/index.html) or visit the [website](https://mc.fascinated.cc) for more information.
+View the [documentation](https://api.mcutils.xyz/swagger-ui/index.html) or visit the [website](https://api.mcutils.xyz) for more information.
