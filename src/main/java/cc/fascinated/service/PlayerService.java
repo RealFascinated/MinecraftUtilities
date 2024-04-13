@@ -9,7 +9,6 @@ import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.MojangAPIRateLimitException;
 import cc.fascinated.exception.impl.RateLimitException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
-import cc.fascinated.model.cache.CacheInformation;
 import cc.fascinated.model.cache.CachedPlayer;
 import cc.fascinated.model.cache.CachedPlayerName;
 import cc.fascinated.model.cache.CachedPlayerSkinPart;

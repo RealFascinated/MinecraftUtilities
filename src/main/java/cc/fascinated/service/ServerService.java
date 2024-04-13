@@ -5,7 +5,6 @@ import cc.fascinated.common.EnumUtils;
 import cc.fascinated.config.Config;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
-import cc.fascinated.model.cache.CacheInformation;
 import cc.fascinated.model.cache.CachedMinecraftServer;
 import cc.fascinated.model.dns.DNSRecord;
 import cc.fascinated.model.dns.impl.ARecord;

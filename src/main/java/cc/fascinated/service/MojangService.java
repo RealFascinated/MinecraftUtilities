@@ -5,7 +5,6 @@ import cc.fascinated.common.EndpointStatus;
 import cc.fascinated.common.ExpiringSet;
 import cc.fascinated.common.WebRequest;
 import cc.fascinated.config.Config;
-import cc.fascinated.model.cache.CacheInformation;
 import cc.fascinated.model.cache.CachedEndpointStatus;
 import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.model.mojang.MojangUsernameToUuid;
