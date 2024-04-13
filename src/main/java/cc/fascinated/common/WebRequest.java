@@ -18,7 +18,7 @@ public class WebRequest {
 
     static {
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-        requestFactory.setConnectTimeout(5000); // 5 seconds
+        requestFactory.setConnectTimeout(2500); // 2.5 seconds
         CLIENT = RestClient.builder()
                 .requestFactory(requestFactory)
                 .build();

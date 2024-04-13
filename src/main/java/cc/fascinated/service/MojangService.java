@@ -55,6 +55,10 @@ public class MojangService {
     private static final String MOJANG_ENDPOINT_STATUS_KEY = "mojang";
     private static final List<EndpointStatus> MOJANG_ENDPOINTS = List.of(
             new EndpointStatus("https://textures.minecraft.net", List.of(HttpStatus.BAD_REQUEST)),
+            new EndpointStatus("https://session.minecraft.net", List.of(HttpStatus.NOT_FOUND)),
+            new EndpointStatus("https://libraries.minecraft.net", List.of(HttpStatus.NOT_FOUND)),
+            new EndpointStatus("https://assets.mojang.com", List.of(HttpStatus.NOT_FOUND)),
+            new EndpointStatus("https://api.minecraftservices.com", List.of(HttpStatus.FORBIDDEN)),
             new EndpointStatus(API_ENDPOINT, List.of(HttpStatus.OK)),
             new EndpointStatus(SESSION_SERVER_ENDPOINT, List.of(HttpStatus.FORBIDDEN))
     );
