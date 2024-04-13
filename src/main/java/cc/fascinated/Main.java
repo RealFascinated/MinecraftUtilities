@@ -40,18 +40,4 @@ public class Main {
 
         SpringApplication.run(Main.class, args); // Start the application
     }
-
-    @Bean
-    public WebMvcConfigurer configureCors() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(@NonNull CorsRegistry registry) {
-                // Allow all origins to access the API
-                registry.addMapping("/**")
-                        .allowedOrigins("*") // Allow all origins
-                        .allowedMethods("*") // Allow all methods
-                        .allowedHeaders("*"); // Allow all headers
-            }
-        };
-    }
 }
