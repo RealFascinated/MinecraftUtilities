@@ -1,17 +1,25 @@
 package cc.fascinated.service;
 
+import cc.fascinated.common.EndpointStatus;
 import cc.fascinated.common.ExpiringSet;
 import cc.fascinated.common.WebRequest;
+import cc.fascinated.config.Config;
+import cc.fascinated.model.cache.CachedEndpointStatus;
 import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.model.mojang.MojangUsernameToUuid;
+import cc.fascinated.repository.EndpointStatusRepository;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.hash.Hashing;
 import io.micrometer.common.lang.NonNull;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import net.jodah.expiringmap.ExpirationPolicy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -20,15 +28,39 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-@Service @Log4j2
+@Service @Log4j2 @Getter
 public class MojangService {
 
+    /**
+     * The splitter and joiner for dots.
+     */
+    private static final Splitter DOT_SPLITTER = Splitter.on('.');
+    private static final Joiner DOT_JOINER = Joiner.on('.');
+
+    /**
+     * The Mojang API endpoints.
+     */
     private static final String SESSION_SERVER_ENDPOINT = "https://sessionserver.mojang.com";
     private static final String API_ENDPOINT = "https://api.mojang.com";
     private static final String FETCH_BLOCKED_SERVERS = SESSION_SERVER_ENDPOINT + "/blockedservers";
-    private static final Splitter DOT_SPLITTER = Splitter.on('.');
-    private static final Joiner DOT_JOINER = Joiner.on('.');
+
+    /**
+     * The interval to fetch the blocked servers from Mojang.
+     */
     private static final long FETCH_BLOCKED_SERVERS_INTERVAL = TimeUnit.HOURS.toMillis(1L);
+
+    /**
+     * Information about the Mojang API endpoints.
+     */
+    private static final String MOJANG_ENDPOINT_STATUS_KEY = "mojang";
+    private static final List<EndpointStatus> MOJANG_ENDPOINTS = List.of(
+            new EndpointStatus("https://textures.minecraft.net", List.of(HttpStatus.BAD_REQUEST)),
+            new EndpointStatus(API_ENDPOINT, List.of(HttpStatus.OK)),
+            new EndpointStatus(SESSION_SERVER_ENDPOINT, List.of(HttpStatus.FORBIDDEN))
+    );
+
+    @Autowired
+    private EndpointStatusRepository mojangEndpointStatusRepository;
 
     /**
      * A list of banned server hashes provided by Mojang.
@@ -62,6 +94,7 @@ public class MojangService {
      */
     @SneakyThrows
     private void fetchBlockedServers() {
+        log.info("Fetching blocked servers from Mojang");
         try (
                 InputStream inputStream = new URL(FETCH_BLOCKED_SERVERS).openStream();
                 Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8).useDelimiter("\n");
@@ -140,6 +173,41 @@ public class MojangService {
             blockedServersCache.add(hostname);
         }
         return blocked;
+    }
+
+    /**
+     * Gets the status of the Mojang API.
+     *
+     * @return the status of the Mojang API
+     */
+    public CachedEndpointStatus getMojangApiStatus() {
+        log.info("Getting Mojang API status");
+        Optional<CachedEndpointStatus> endpointStatus = mojangEndpointStatusRepository.findById(MOJANG_ENDPOINT_STATUS_KEY);
+        if (endpointStatus.isPresent() && Config.INSTANCE.isProduction()) {
+            log.info("Got cached Mojang API status");
+            return endpointStatus.get();
+        }
+
+        // Fetch the status of the Mojang APIs
+        Map<String, Boolean> endpoints = new HashMap<>();
+        for (EndpointStatus endpoint : MOJANG_ENDPOINTS) {
+            boolean online = false;
+            ResponseEntity<?> response = WebRequest.getAndIgnoreErrors(endpoint.getEndpoint());
+            if (endpoint.getAllowedStatuses().contains(response.getStatusCode())) {
+                online = true;
+            }
+            endpoints.put(endpoint.getEndpoint(), online);
+        }
+        log.info("Fetched Mojang API status for {} endpoints", endpoints.size());
+
+        CachedEndpointStatus status = new CachedEndpointStatus(
+                MOJANG_ENDPOINT_STATUS_KEY,
+                endpoints,
+                System.currentTimeMillis()
+        );
+        mojangEndpointStatusRepository.save(status);
+        status.setCached(-1L); // Indicate that the status is not cached
+        return status;
     }
 
     /**

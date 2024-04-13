@@ -16,7 +16,6 @@ import java.util.Objects;
 @Log4j2
 @SpringBootApplication
 public class Main {
-
     public static final Gson GSON = new GsonBuilder()
             .setDateFormat("MM-dd-yyyy HH:mm:ss")
             .create();
