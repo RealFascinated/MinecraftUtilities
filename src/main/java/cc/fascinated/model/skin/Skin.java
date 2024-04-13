@@ -21,16 +21,6 @@ import java.util.Map;
 @Getter @Log4j2
 public class Skin {
     /**
-     * The default skins, usually used when the skin is not found.
-     */
-    public static final Map<Model, Skin> DEFAULT_SKINS = new HashMap<>();
-
-    static {
-        DEFAULT_SKINS.put(Model.DEFAULT, new Skin(Config.INSTANCE.getWebPublicUrl() + "/assets/steve.png", Model.DEFAULT));
-        DEFAULT_SKINS.put(Model.SLIM, new Skin(Config.INSTANCE.getWebPublicUrl() + "/assets/alex.png", Model.SLIM));
-    }
-
-    /**
      * The URL for the skin
      */
     private String url;
@@ -62,9 +52,6 @@ public class Skin {
         this.model = model;
 
         this.skinImage = PlayerUtils.getSkinImage(url);
-        if (skinImage == null) { // Use the default skin if the skin is not found
-            this.skinImage = PlayerUtils.getSkinImage(DEFAULT_SKINS.get(model).getUrl());
-        }
         if (this.skinImage != null) {
             try {
                 BufferedImage image = ImageIO.read(new ByteArrayInputStream(this.skinImage));
