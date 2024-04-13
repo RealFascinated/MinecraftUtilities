@@ -35,7 +35,6 @@ public class WebRequest {
         ResponseEntity<T> profile = CLIENT.get()
                 .uri(url)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, (request, response) -> {}) // Don't throw exceptions on error
                 .toEntity(clazz);
 
         if (profile.getStatusCode().isError()) {
@@ -53,11 +52,11 @@ public class WebRequest {
      * @param url the url
      * @return the response
      */
-    public static ResponseEntity<?> getAndIgnoreErrors(String url) {
+    public static ResponseEntity<?> get(String url, Class<?> clazz) {
         return CLIENT.get()
                 .uri(url)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, (request, response) -> {}) // Don't throw exceptions on error
-                .toEntity(String.class);
+                .toEntity(clazz);
     }
 }

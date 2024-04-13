@@ -192,7 +192,7 @@ public class MojangService {
         Map<String, Boolean> endpoints = new HashMap<>();
         for (EndpointStatus endpoint : MOJANG_ENDPOINTS) {
             boolean online = false;
-            ResponseEntity<?> response = WebRequest.getAndIgnoreErrors(endpoint.getEndpoint());
+            ResponseEntity<?> response = WebRequest.get(endpoint.getEndpoint(), String.class);
             if (endpoint.getAllowedStatuses().contains(response.getStatusCode())) {
                 online = true;
             }
