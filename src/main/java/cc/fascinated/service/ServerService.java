@@ -89,8 +89,7 @@ public class ServerService {
 
         CachedMinecraftServer server = new CachedMinecraftServer(
                 key,
-                platform.getPinger().ping(hostname, ip, port, records.toArray(new DNSRecord[0])),
-                CacheInformation.defaultCache()
+                platform.getPinger().ping(hostname, ip, port, records.toArray(new DNSRecord[0]))
         );
 
         // Check if the server is blocked by Mojang

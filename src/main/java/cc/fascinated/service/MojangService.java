@@ -231,8 +231,7 @@ public class MojangService {
         log.info("Fetched Mojang API status for {} endpoints", endpoints.size());
         CachedEndpointStatus status = new CachedEndpointStatus(
                 MOJANG_ENDPOINT_STATUS_KEY,
-                endpoints,
-                CacheInformation.defaultCache()
+                endpoints
         );
         mojangEndpointStatusRepository.save(status);
         status.getCache().setCached(false);

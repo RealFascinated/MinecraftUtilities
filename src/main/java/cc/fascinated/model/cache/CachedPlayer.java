@@ -4,6 +4,7 @@ import cc.fascinated.model.player.Player;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
@@ -17,9 +18,9 @@ import java.util.UUID;
  * @author Braydon
  */
 @Setter @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 @RedisHash(value = "player", timeToLive = 60L * 60L) // 1 hour (in seconds)
-public final class CachedPlayer implements Serializable {
+public final class CachedPlayer extends CachedResponse implements Serializable {
     /**
      * The unique id of the player.
      */
@@ -31,8 +32,9 @@ public final class CachedPlayer implements Serializable {
      */
     private Player player;
 
-    /**
-     * The cache information about the request.
-     */
-    private CacheInformation cache;
+    public CachedPlayer(UUID uniqueId, Player player) {
+        super(CacheInformation.defaultCache());
+        this.uniqueId = uniqueId;
+        this.player = player;
+    }
 }

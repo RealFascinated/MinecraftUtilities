@@ -8,25 +8,27 @@ import org.springframework.data.redis.core.RedisHash;
 import java.io.Serializable;
 import java.util.Map;
 
-@AllArgsConstructor @Setter @Getter @ToString
+@Setter @Getter @ToString
+@NoArgsConstructor
 @RedisHash(value = "mojangEndpointStatus", timeToLive = 60L) // 1 minute (in seconds)
-public final class CachedEndpointStatus implements Serializable {
+public final class CachedEndpointStatus extends CachedResponse implements Serializable {
 
     /**
      * The id for this endpoint cache.
      */
     @Id @NonNull @JsonIgnore
-    private final String id;
+    private String id;
 
     /**
      * The list of endpoints and their status.
      */
-    private final Map<String, Status> endpoints;
+    private Map<String, Status> endpoints;
 
-    /**
-     * The cache information about the request.
-     */
-    private CacheInformation cache;
+    public CachedEndpointStatus(@NonNull String id, Map<String, Status> endpoints) {
+        super(CacheInformation.defaultCache());
+        this.id = id;
+        this.endpoints = endpoints;
+    }
 
     public enum Status {
         /**

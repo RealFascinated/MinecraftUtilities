@@ -82,8 +82,7 @@ public class PlayerService {
                             skinAndCape.getLeft(), // Skin
                             skinAndCape.getRight(), // Cape
                             mojangProfile.getProperties() // Raw properties
-                    ),
-                    CacheInformation.defaultCache() // Cache time
+                    )
             );
 
             playerCacheRepository.save(player);

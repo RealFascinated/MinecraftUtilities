@@ -6,26 +6,27 @@ import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.model.skin.Skin;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Getter @AllArgsConstructor
+@Getter @AllArgsConstructor @NoArgsConstructor
 public class Player {
 
     /**
      * The UUID of the player
      */
-    private final UUID uniqueId;
+    private UUID uniqueId;
 
     /**
      * The trimmed UUID of the player
      */
-    private final String trimmedUniqueId;
+    private String trimmedUniqueId;
 
     /**
      * The username of the player
      */
-    private final String username;
+    private String username;
 
     /**
      * The skin of the player, null if the
