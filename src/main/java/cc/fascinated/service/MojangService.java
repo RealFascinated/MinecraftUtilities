@@ -6,8 +6,8 @@ import cc.fascinated.common.ExpiringSet;
 import cc.fascinated.common.WebRequest;
 import cc.fascinated.config.Config;
 import cc.fascinated.model.cache.CachedEndpointStatus;
-import cc.fascinated.model.mojang.MojangProfile;
-import cc.fascinated.model.mojang.MojangUsernameToUuid;
+import cc.fascinated.model.token.MojangProfileToken;
+import cc.fascinated.model.token.MojangUsernameToUuidToken;
 import cc.fascinated.repository.EndpointStatusRepository;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
@@ -244,8 +244,8 @@ public class MojangService {
      * @param id the uuid or name of the player
      * @return the profile
      */
-    public MojangProfile getProfile(String id) {
-        return WebRequest.getAsEntity(SESSION_SERVER_ENDPOINT + "/session/minecraft/profile/" + id, MojangProfile.class);
+    public MojangProfileToken getProfile(String id) {
+        return WebRequest.getAsEntity(SESSION_SERVER_ENDPOINT + "/session/minecraft/profile/" + id, MojangProfileToken.class);
     }
 
     /**
@@ -255,7 +255,7 @@ public class MojangService {
      * @param id the name of the player
      * @return the profile
      */
-    public MojangUsernameToUuid getUuidFromUsername(String id) {
-        return WebRequest.getAsEntity(API_ENDPOINT + "/users/profiles/minecraft/" + id, MojangUsernameToUuid.class);
+    public MojangUsernameToUuidToken getUuidFromUsername(String id) {
+        return WebRequest.getAsEntity(API_ENDPOINT + "/users/profiles/minecraft/" + id, MojangUsernameToUuidToken.class);
     }
 }

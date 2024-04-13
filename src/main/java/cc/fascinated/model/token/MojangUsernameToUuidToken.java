@@ -1,11 +1,11 @@
-package cc.fascinated.model.mojang;
+package cc.fascinated.model.token;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter @NoArgsConstructor
-public class MojangUsernameToUuid {
+public class MojangUsernameToUuidToken {
 
     /**
      * The UUID of the player.

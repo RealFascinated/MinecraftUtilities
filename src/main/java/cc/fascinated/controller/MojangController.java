@@ -5,6 +5,7 @@ import cc.fascinated.service.MojangService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ public class MojangController {
     private MojangService mojangService;
 
     @ResponseBody
-    @RequestMapping(value = "/status")
+    @GetMapping(value = "/status")
     public CachedEndpointStatus getStatus() {
         return mojangService.getMojangApiStatus();
     }

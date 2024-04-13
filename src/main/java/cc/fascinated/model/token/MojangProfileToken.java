@@ -1,4 +1,4 @@
-package cc.fascinated.model.mojang;
+package cc.fascinated.model.token;
 
 import cc.fascinated.Main;
 import cc.fascinated.common.Tuple;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import java.util.Base64;
 
 @Getter @NoArgsConstructor @AllArgsConstructor
-public class MojangProfile {
+public class MojangProfileToken {
 
     /**
      * The UUID of the player.

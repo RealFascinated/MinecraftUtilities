@@ -2,7 +2,7 @@ package cc.fascinated.model.player;
 
 import cc.fascinated.common.Tuple;
 import cc.fascinated.common.UUIDUtils;
-import cc.fascinated.model.mojang.MojangProfile;
+import cc.fascinated.model.token.MojangProfileToken;
 import cc.fascinated.model.skin.Skin;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,9 +43,9 @@ public class Player {
     /**
      * The raw properties of the player
      */
-    private MojangProfile.ProfileProperty[] rawProperties;
+    private MojangProfileToken.ProfileProperty[] rawProperties;
 
-    public Player(MojangProfile profile) {
+    public Player(MojangProfileToken profile) {
         this.uniqueId = UUIDUtils.addDashes(profile.getId());
         this.trimmedUniqueId = UUIDUtils.removeDashes(this.uniqueId);
         this.username = profile.getName();

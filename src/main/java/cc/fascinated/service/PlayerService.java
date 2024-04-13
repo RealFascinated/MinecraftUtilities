@@ -12,8 +12,8 @@ import cc.fascinated.exception.impl.ResourceNotFoundException;
 import cc.fascinated.model.cache.CachedPlayer;
 import cc.fascinated.model.cache.CachedPlayerName;
 import cc.fascinated.model.cache.CachedPlayerSkinPart;
-import cc.fascinated.model.mojang.MojangProfile;
-import cc.fascinated.model.mojang.MojangUsernameToUuid;
+import cc.fascinated.model.token.MojangProfileToken;
+import cc.fascinated.model.token.MojangUsernameToUuidToken;
 import cc.fascinated.model.player.Cape;
 import cc.fascinated.model.player.Player;
 import cc.fascinated.model.skin.ISkinPart;
@@ -69,7 +69,7 @@ public class PlayerService {
 
         try {
             log.info("Getting player profile from Mojang: {}", id);
-            MojangProfile mojangProfile = mojangAPIService.getProfile(uuid.toString()); // Get the player profile from Mojang
+            MojangProfileToken mojangProfile = mojangAPIService.getProfile(uuid.toString()); // Get the player profile from Mojang
             log.info("Got player profile from Mojang: {}", id);
             Tuple<Skin, Cape> skinAndCape = mojangProfile.getSkinAndCape();
             CachedPlayer player = new CachedPlayer(
@@ -106,7 +106,7 @@ public class PlayerService {
             return cachedPlayerName.get();
         }
         try {
-            MojangUsernameToUuid mojangUsernameToUuid = mojangAPIService.getUuidFromUsername(username);
+            MojangUsernameToUuidToken mojangUsernameToUuid = mojangAPIService.getUuidFromUsername(username);
             if (mojangUsernameToUuid == null) {
                 log.info("Player with username '{}' not found", username);
                 throw new ResourceNotFoundException("Player with username '%s' not found".formatted(username));
