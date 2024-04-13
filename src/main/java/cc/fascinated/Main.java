@@ -12,6 +12,8 @@ import java.net.http.HttpClient;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Log4j2
 @SpringBootApplication
@@ -20,6 +22,7 @@ public class Main {
             .setDateFormat("MM-dd-yyyy HH:mm:ss")
             .create();
     public static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
+    public static final ExecutorService EXECUTOR_POOL = Executors.newFixedThreadPool(8); // Adjust the thread pool size as per your requirement
 
     @SneakyThrows
     public static void main(String[] args) {

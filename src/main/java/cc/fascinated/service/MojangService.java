@@ -1,5 +1,6 @@
 package cc.fascinated.service;
 
+import cc.fascinated.Main;
 import cc.fascinated.common.EndpointStatus;
 import cc.fascinated.common.ExpiringSet;
 import cc.fascinated.common.WebRequest;
@@ -26,6 +27,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 @Service @Log4j2 @Getter
@@ -180,9 +182,9 @@ public class MojangService {
     }
 
     /**
-     * Gets the status of the Mojang API.
+     * Gets the status of the Mojang APIs.
      *
-     * @return the status of the Mojang API
+     * @return the status
      */
     public CachedEndpointStatus getMojangApiStatus() {
         log.info("Getting Mojang API status");
@@ -192,18 +194,40 @@ public class MojangService {
             return endpointStatus.get();
         }
 
-        // Fetch the status of the Mojang APIs
-        Map<String, Boolean> endpoints = new HashMap<>();
+        // Fetch the status of the Mojang API endpoints
+        List<CompletableFuture<Boolean>> futures = new ArrayList<>();
         for (EndpointStatus endpoint : MOJANG_ENDPOINTS) {
-            boolean online = false;
-            ResponseEntity<?> response = WebRequest.get(endpoint.getEndpoint(), String.class);
-            if (endpoint.getAllowedStatuses().contains(response.getStatusCode())) {
-                online = true;
-            }
+            CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
+                boolean online = false;
+                ResponseEntity<?> response = WebRequest.get(endpoint.getEndpoint(), String.class);
+                if (endpoint.getAllowedStatuses().contains(response.getStatusCode())) {
+                    online = true;
+                }
+                return online;
+            }, Main.EXECUTOR_POOL);
+
+            futures.add(future);
+        }
+
+        //
+        CompletableFuture<Void> allFutures = CompletableFuture.allOf(
+                futures.toArray(new CompletableFuture[0]));
+
+        try {
+            allFutures.get(5, TimeUnit.SECONDS); // Timeout in 10 seconds
+        } catch (Exception e) {
+            log.error("Timeout while fetching Mojang API status: {}", e.getMessage());
+        }
+
+        // Process the results
+        Map<String, Boolean> endpoints = new HashMap<>();
+        for (int i = 0; i < MOJANG_ENDPOINTS.size(); i++) {
+            EndpointStatus endpoint = MOJANG_ENDPOINTS.get(i);
+            boolean online = futures.get(i).join();
             endpoints.put(endpoint.getEndpoint(), online);
         }
-        log.info("Fetched Mojang API status for {} endpoints", endpoints.size());
 
+        log.info("Fetched Mojang API status for {} endpoints", endpoints.size());
         CachedEndpointStatus status = new CachedEndpointStatus(
                 MOJANG_ENDPOINT_STATUS_KEY,
                 endpoints,
