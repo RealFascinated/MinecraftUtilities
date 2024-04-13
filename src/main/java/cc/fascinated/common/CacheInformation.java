@@ -1,4 +1,4 @@
-package cc.fascinated.model.cache;
+package cc.fascinated.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

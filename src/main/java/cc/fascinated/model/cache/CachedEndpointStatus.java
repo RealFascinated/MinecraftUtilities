@@ -1,5 +1,6 @@
 package cc.fascinated.model.cache;
 
+import cc.fascinated.common.CacheInformation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -11,7 +12,7 @@ import java.util.Map;
 @Setter @Getter @ToString
 @NoArgsConstructor
 @RedisHash(value = "mojangEndpointStatus", timeToLive = 60L) // 1 minute (in seconds)
-public final class CachedEndpointStatus extends CachedResponse implements Serializable {
+public class CachedEndpointStatus extends CachedResponse implements Serializable {
 
     /**
      * The id for this endpoint cache.

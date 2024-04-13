@@ -1,5 +1,6 @@
 package cc.fascinated.model.cache;
 
+import cc.fascinated.common.CacheInformation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.ToString;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Getter
 @ToString
 @RedisHash(value = "playerName", timeToLive = 60L * 60L * 6) // 6 hours (in seconds)
-public final class CachedPlayerName extends CachedResponse {
+public class CachedPlayerName extends CachedResponse {
     /**
      * The id of the player.
      */

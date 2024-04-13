@@ -1,5 +1,6 @@
 package cc.fascinated.model.cache;
 
+import cc.fascinated.common.CacheInformation;
 import cc.fascinated.model.server.MinecraftServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -14,7 +15,7 @@ import java.io.Serializable;
 @Setter @Getter @ToString
 @NoArgsConstructor
 @RedisHash(value = "server", timeToLive = 60L) // 1 minute (in seconds)
-public final class CachedMinecraftServer extends CachedResponse implements Serializable {
+public class CachedMinecraftServer extends CachedResponse implements Serializable {
     /**
      * The id of this cached server.
      */
