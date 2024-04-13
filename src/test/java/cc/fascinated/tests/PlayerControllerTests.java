@@ -30,7 +30,7 @@ class PlayerControllerTests {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value(testPlayer));
+                .andExpect(jsonPath("$.player.username").value(testPlayer));
     }
 
     @Test
@@ -39,7 +39,7 @@ class PlayerControllerTests {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value(testPlayer));
+                .andExpect(jsonPath("$.player.username").value(testPlayer));
     }
 
     @Test
@@ -48,8 +48,8 @@ class PlayerControllerTests {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value(testPlayer))
-                .andExpect(jsonPath("$.uniqueId").value(testPlayerUuid));
+                .andExpect(jsonPath("$.player.username").value(testPlayer))
+                .andExpect(jsonPath("$.player.uniqueId").value(testPlayerUuid));
     }
 
     @Test
