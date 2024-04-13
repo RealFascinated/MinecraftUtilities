@@ -1,5 +1,6 @@
 package cc.fascinated.model.cache;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
@@ -17,6 +18,7 @@ public final class CachedPlayerName extends CachedResponse {
     /**
      * The id of the player.
      */
+    @JsonIgnore
     @Id private final String id;
 
     /**
