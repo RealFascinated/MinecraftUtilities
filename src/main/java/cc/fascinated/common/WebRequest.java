@@ -60,4 +60,18 @@ public class WebRequest {
                 .onStatus(HttpStatusCode::isError, (request, response) -> {}) // Don't throw exceptions on error
                 .toEntity(clazz);
     }
+
+    /**
+     * Gets a response from the given URL.
+     *
+     * @param url the url
+     * @return the response
+     */
+    public static ResponseEntity<?> head(String url, Class<?> clazz) {
+        return CLIENT.head()
+                .uri(url)
+                .retrieve()
+                .onStatus(HttpStatusCode::isError, (request, response) -> {}) // Don't throw exceptions on error
+                .toEntity(clazz);
+    }
 }

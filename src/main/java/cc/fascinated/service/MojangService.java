@@ -199,7 +199,7 @@ public class MojangService {
         for (EndpointStatus endpoint : MOJANG_ENDPOINTS) {
             CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
                 boolean online = false;
-                ResponseEntity<?> response = WebRequest.get(endpoint.getEndpoint(), String.class);
+                ResponseEntity<?> response = WebRequest.head(endpoint.getEndpoint(), String.class);
                 if (endpoint.getAllowedStatuses().contains(response.getStatusCode())) {
                     online = true;
                 }
