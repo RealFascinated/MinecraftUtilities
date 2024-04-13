@@ -195,15 +195,19 @@ public class MojangService {
         }
 
         // Fetch the status of the Mojang API endpoints
-        List<CompletableFuture<Boolean>> futures = new ArrayList<>();
+        List<CompletableFuture<CachedEndpointStatus.Status>> futures = new ArrayList<>();
         for (EndpointStatus endpoint : MOJANG_ENDPOINTS) {
-            CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<CachedEndpointStatus.Status> future = CompletableFuture.supplyAsync(() -> {
                 boolean online = false;
+                long start = System.currentTimeMillis();
                 ResponseEntity<?> response = WebRequest.head(endpoint.getEndpoint(), String.class);
                 if (endpoint.getAllowedStatuses().contains(response.getStatusCode())) {
                     online = true;
                 }
-                return online;
+                if (online && System.currentTimeMillis() - start > 500) { // If the response took longer than 500ms
+                    return CachedEndpointStatus.Status.DEGRADED;
+                }
+                return online ? CachedEndpointStatus.Status.ONLINE : CachedEndpointStatus.Status.OFFLINE;
             }, Main.EXECUTOR_POOL);
 
             futures.add(future);
@@ -216,11 +220,11 @@ public class MojangService {
         }
 
         // Process the results
-        Map<String, Boolean> endpoints = new HashMap<>();
+        Map<String, CachedEndpointStatus.Status> endpoints = new HashMap<>();
         for (int i = 0; i < MOJANG_ENDPOINTS.size(); i++) {
             EndpointStatus endpoint = MOJANG_ENDPOINTS.get(i);
-            boolean online = futures.get(i).join();
-            endpoints.put(endpoint.getEndpoint(), online);
+            CachedEndpointStatus.Status status = futures.get(i).join();
+            endpoints.put(endpoint.getEndpoint(), status);
         }
 
         log.info("Fetched Mojang API status for {} endpoints", endpoints.size());

@@ -21,11 +21,17 @@ public final class CachedEndpointStatus implements Serializable {
     /**
      * The list of endpoints and their status.
      */
-    private final Map<String, Boolean> endpoints;
+    private final Map<String, Status> endpoints;
 
     /**
      * The unix timestamp of when this
      * server was cached, -1 if not cached.
      */
     private long cached;
+
+    public enum Status {
+        ONLINE,
+        DEGRADED,
+        OFFLINE
+    }
 }
