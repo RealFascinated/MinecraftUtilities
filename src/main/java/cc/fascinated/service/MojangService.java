@@ -28,6 +28,7 @@ public class MojangService {
     private static final String FETCH_BLOCKED_SERVERS = SESSION_SERVER_ENDPOINT + "/blockedservers";
     private static final Splitter DOT_SPLITTER = Splitter.on('.');
     private static final Joiner DOT_JOINER = Joiner.on('.');
+    private static final long FETCH_BLOCKED_SERVERS_INTERVAL = TimeUnit.HOURS.toMillis(1L);
 
     /**
      * A list of banned server hashes provided by Mojang.
@@ -53,7 +54,7 @@ public class MojangService {
             public void run() {
                 fetchBlockedServers();
             }
-        }, 0L, 60L * 15L * 1000L);
+        }, 0L, FETCH_BLOCKED_SERVERS_INTERVAL);
     }
 
     /**
