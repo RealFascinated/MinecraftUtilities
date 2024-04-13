@@ -1,6 +1,5 @@
-package cc.fascinated.log;
+package xyz.mcutils.backend.log;
 
-import cc.fascinated.common.IPUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +11,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import xyz.mcutils.backend.common.IPUtils;
 
 import java.util.Arrays;
 import java.util.HashMap;

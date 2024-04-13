@@ -1,15 +1,15 @@
-package cc.fascinated.model.server;
+package xyz.mcutils.backend.model.server;
 
-import cc.fascinated.common.ColorUtils;
-import cc.fascinated.model.dns.DNSRecord;
-import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
-import xyz.mcutils.backend.service.pinger.impl.BedrockMinecraftServerPinger;
-import xyz.mcutils.backend.service.pinger.impl.JavaMinecraftServerPinger;
 import io.micrometer.common.lang.NonNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import xyz.mcutils.backend.common.ColorUtils;
+import xyz.mcutils.backend.model.dns.DNSRecord;
+import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
+import xyz.mcutils.backend.service.pinger.impl.BedrockMinecraftServerPinger;
+import xyz.mcutils.backend.service.pinger.impl.JavaMinecraftServerPinger;
 
 import java.util.Arrays;
 import java.util.UUID;

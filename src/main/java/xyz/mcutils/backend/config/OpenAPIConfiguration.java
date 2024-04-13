@@ -1,4 +1,4 @@
-package cc.fascinated.config;
+package xyz.mcutils.backend.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;

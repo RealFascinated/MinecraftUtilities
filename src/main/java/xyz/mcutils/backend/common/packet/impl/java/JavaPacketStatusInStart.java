@@ -1,8 +1,8 @@
-package cc.fascinated.common.packet.impl.java;
+package xyz.mcutils.backend.common.packet.impl.java;
 
-import cc.fascinated.common.packet.MinecraftJavaPacket;
 import lombok.Getter;
 import lombok.NonNull;
+import xyz.mcutils.backend.common.packet.MinecraftJavaPacket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

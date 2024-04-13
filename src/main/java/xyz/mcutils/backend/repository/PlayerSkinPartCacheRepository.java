@@ -1,7 +1,7 @@
 package xyz.mcutils.backend.repository;
 
-import cc.fascinated.model.cache.CachedPlayerSkinPart;
 import org.springframework.data.repository.CrudRepository;
+import xyz.mcutils.backend.model.cache.CachedPlayerSkinPart;
 
 /**
  * A cache repository for player skin parts.

@@ -1,4 +1,4 @@
-package cc.fascinated.tests;
+package xyz.mcutils.backend.tests;
 
 import cc.fascinated.config.TestRedisConfig;
 import cc.fascinated.model.skin.ISkinPart;

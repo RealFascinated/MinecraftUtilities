@@ -1,14 +1,5 @@
 package xyz.mcutils.backend.service;
 
-import xyz.mcutils.backend.Main;
-import cc.fascinated.common.EndpointStatus;
-import cc.fascinated.common.ExpiringSet;
-import cc.fascinated.common.WebRequest;
-import cc.fascinated.config.Config;
-import cc.fascinated.model.cache.CachedEndpointStatus;
-import cc.fascinated.model.token.MojangProfileToken;
-import cc.fascinated.model.token.MojangUsernameToUuidToken;
-import xyz.mcutils.backend.repository.EndpointStatusRepository;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -22,6 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import xyz.mcutils.backend.Main;
+import xyz.mcutils.backend.common.EndpointStatus;
+import xyz.mcutils.backend.common.ExpiringSet;
+import xyz.mcutils.backend.common.WebRequest;
+import xyz.mcutils.backend.config.Config;
+import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
+import xyz.mcutils.backend.model.token.MojangProfileToken;
+import xyz.mcutils.backend.model.token.MojangUsernameToUuidToken;
+import xyz.mcutils.backend.repository.EndpointStatusRepository;
 
 import java.io.InputStream;
 import java.net.URL;

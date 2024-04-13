@@ -1,4 +1,4 @@
-package cc.fascinated.config;
+package xyz.mcutils.backend.config;
 
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;

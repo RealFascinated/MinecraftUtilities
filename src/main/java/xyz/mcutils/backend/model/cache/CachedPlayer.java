@@ -1,13 +1,13 @@
-package cc.fascinated.model.cache;
+package xyz.mcutils.backend.model.cache;
 
-import cc.fascinated.common.CachedResponse;
-import cc.fascinated.model.player.Player;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import xyz.mcutils.backend.common.CachedResponse;
+import xyz.mcutils.backend.model.player.Player;
 
 import java.io.Serializable;
 import java.util.UUID;

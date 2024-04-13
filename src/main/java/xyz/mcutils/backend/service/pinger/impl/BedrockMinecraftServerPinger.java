@@ -1,13 +1,13 @@
 package xyz.mcutils.backend.service.pinger.impl;
 
-import cc.fascinated.common.packet.impl.bedrock.BedrockPacketUnconnectedPing;
-import cc.fascinated.common.packet.impl.bedrock.BedrockPacketUnconnectedPong;
-import cc.fascinated.exception.impl.BadRequestException;
-import cc.fascinated.exception.impl.ResourceNotFoundException;
-import cc.fascinated.model.dns.DNSRecord;
-import cc.fascinated.model.server.BedrockMinecraftServer;
-import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
 import lombok.extern.log4j.Log4j2;
+import xyz.mcutils.backend.common.packet.impl.bedrock.BedrockPacketUnconnectedPing;
+import xyz.mcutils.backend.common.packet.impl.bedrock.BedrockPacketUnconnectedPong;
+import xyz.mcutils.backend.exception.impl.BadRequestException;
+import xyz.mcutils.backend.exception.impl.ResourceNotFoundException;
+import xyz.mcutils.backend.model.dns.DNSRecord;
+import xyz.mcutils.backend.model.server.BedrockMinecraftServer;
+import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
 
 import java.io.IOException;
 import java.net.DatagramSocket;

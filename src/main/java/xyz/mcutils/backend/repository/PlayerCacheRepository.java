@@ -1,7 +1,7 @@
 package xyz.mcutils.backend.repository;
 
-import cc.fascinated.model.cache.CachedPlayer;
 import org.springframework.data.repository.CrudRepository;
+import xyz.mcutils.backend.model.cache.CachedPlayer;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package cc.fascinated.config;
+package xyz.mcutils.backend.config;
 
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;

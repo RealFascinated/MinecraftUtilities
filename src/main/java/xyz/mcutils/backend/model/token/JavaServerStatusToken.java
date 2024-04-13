@@ -1,11 +1,11 @@
-package cc.fascinated.model.token;
+package xyz.mcutils.backend.model.token;
 
-import cc.fascinated.model.server.JavaMinecraftServer;
-import cc.fascinated.model.server.MinecraftServer;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+import xyz.mcutils.backend.model.server.JavaMinecraftServer;
+import xyz.mcutils.backend.model.server.MinecraftServer;
 
 /**
  * @author Braydon

@@ -1,4 +1,4 @@
-package cc.fascinated.exception.impl;
+package xyz.mcutils.backend.exception.impl;
 
 
 public class MojangAPIRateLimitException extends RateLimitException {

@@ -1,4 +1,4 @@
-package cc.fascinated.common;
+package xyz.mcutils.backend.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

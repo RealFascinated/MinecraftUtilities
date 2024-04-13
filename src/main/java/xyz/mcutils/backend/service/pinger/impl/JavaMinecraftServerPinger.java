@@ -1,17 +1,17 @@
 package xyz.mcutils.backend.service.pinger.impl;
 
-import xyz.mcutils.backend.Main;
-import cc.fascinated.common.JavaMinecraftVersion;
-import cc.fascinated.common.ServerUtils;
-import cc.fascinated.common.packet.impl.java.JavaPacketHandshakingInSetProtocol;
-import cc.fascinated.common.packet.impl.java.JavaPacketStatusInStart;
-import cc.fascinated.exception.impl.BadRequestException;
-import cc.fascinated.exception.impl.ResourceNotFoundException;
-import cc.fascinated.model.dns.DNSRecord;
-import cc.fascinated.model.server.JavaMinecraftServer;
-import cc.fascinated.model.token.JavaServerStatusToken;
-import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
 import lombok.extern.log4j.Log4j2;
+import xyz.mcutils.backend.Main;
+import xyz.mcutils.backend.common.JavaMinecraftVersion;
+import xyz.mcutils.backend.common.ServerUtils;
+import xyz.mcutils.backend.common.packet.impl.java.JavaPacketHandshakingInSetProtocol;
+import xyz.mcutils.backend.common.packet.impl.java.JavaPacketStatusInStart;
+import xyz.mcutils.backend.exception.impl.BadRequestException;
+import xyz.mcutils.backend.exception.impl.ResourceNotFoundException;
+import xyz.mcutils.backend.model.dns.DNSRecord;
+import xyz.mcutils.backend.model.server.JavaMinecraftServer;
+import xyz.mcutils.backend.model.token.JavaServerStatusToken;
+import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

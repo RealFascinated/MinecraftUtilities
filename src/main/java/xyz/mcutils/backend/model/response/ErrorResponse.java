@@ -1,4 +1,4 @@
-package cc.fascinated.model.response;
+package xyz.mcutils.backend.model.response;
 
 import io.micrometer.common.lang.NonNull;
 import lombok.Getter;

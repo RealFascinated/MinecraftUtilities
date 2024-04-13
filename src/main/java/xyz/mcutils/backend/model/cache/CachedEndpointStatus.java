@@ -1,10 +1,10 @@
-package cc.fascinated.model.cache;
+package xyz.mcutils.backend.model.cache;
 
-import cc.fascinated.common.CachedResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import xyz.mcutils.backend.common.CachedResponse;
 
 import java.io.Serializable;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package cc.fascinated.exception.impl;
+package xyz.mcutils.backend.exception.impl;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

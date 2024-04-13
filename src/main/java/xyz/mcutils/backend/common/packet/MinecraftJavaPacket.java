@@ -1,4 +1,4 @@
-package cc.fascinated.common.packet;
+package xyz.mcutils.backend.common.packet;
 
 import lombok.NonNull;
 

@@ -1,4 +1,4 @@
-package cc.fascinated.common;
+package xyz.mcutils.backend.common;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.SneakyThrows;

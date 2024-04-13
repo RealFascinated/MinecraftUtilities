@@ -1,7 +1,7 @@
-package cc.fascinated.model.server;
+package xyz.mcutils.backend.model.server;
 
-import cc.fascinated.model.dns.DNSRecord;
 import lombok.*;
+import xyz.mcutils.backend.model.dns.DNSRecord;
 
 /**
  * A Bedrock edition {@link MinecraftServer}.

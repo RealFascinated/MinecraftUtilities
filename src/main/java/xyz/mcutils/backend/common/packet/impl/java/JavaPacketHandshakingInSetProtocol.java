@@ -1,9 +1,9 @@
-package cc.fascinated.common.packet.impl.java;
+package xyz.mcutils.backend.common.packet.impl.java;
 
-import cc.fascinated.common.packet.MinecraftJavaPacket;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
+import xyz.mcutils.backend.common.packet.MinecraftJavaPacket;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;

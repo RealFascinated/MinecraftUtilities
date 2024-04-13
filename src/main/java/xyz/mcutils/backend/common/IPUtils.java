@@ -1,4 +1,4 @@
-package cc.fascinated.common;
+package xyz.mcutils.backend.common;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;

@@ -1,4 +1,4 @@
-package cc.fascinated.model.player;
+package xyz.mcutils.backend.model.player;
 
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;

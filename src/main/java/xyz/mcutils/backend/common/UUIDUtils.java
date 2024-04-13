@@ -1,4 +1,4 @@
-package cc.fascinated.common;
+package xyz.mcutils.backend.common;
 
 import io.micrometer.common.lang.NonNull;
 import lombok.experimental.UtilityClass;

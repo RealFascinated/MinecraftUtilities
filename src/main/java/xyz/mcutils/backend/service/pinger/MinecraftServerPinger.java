@@ -1,7 +1,7 @@
 package xyz.mcutils.backend.service.pinger;
 
-import cc.fascinated.model.dns.DNSRecord;
-import cc.fascinated.model.server.MinecraftServer;
+import xyz.mcutils.backend.model.dns.DNSRecord;
+import xyz.mcutils.backend.model.server.MinecraftServer;
 
 /**
  * @author Braydon

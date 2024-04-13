@@ -1,6 +1,6 @@
-package cc.fascinated.common.renderer;
+package xyz.mcutils.backend.common.renderer;
 
-import cc.fascinated.model.skin.ISkinPart;
+import xyz.mcutils.backend.model.skin.ISkinPart;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

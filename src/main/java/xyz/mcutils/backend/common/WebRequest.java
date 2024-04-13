@@ -1,12 +1,12 @@
-package cc.fascinated.common;
+package xyz.mcutils.backend.common;
 
-import cc.fascinated.exception.impl.RateLimitException;
 import lombok.experimental.UtilityClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
+import xyz.mcutils.backend.exception.impl.RateLimitException;
 
 @UtilityClass
 public class WebRequest {

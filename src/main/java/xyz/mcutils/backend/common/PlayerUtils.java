@@ -1,11 +1,11 @@
-package cc.fascinated.common;
+package xyz.mcutils.backend.common;
 
-import xyz.mcutils.backend.Main;
-import cc.fascinated.exception.impl.BadRequestException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
+import xyz.mcutils.backend.Main;
+import xyz.mcutils.backend.exception.impl.BadRequestException;
 
 import java.net.URI;
 import java.net.http.HttpRequest;

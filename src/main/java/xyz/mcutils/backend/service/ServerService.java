@@ -1,20 +1,20 @@
 package xyz.mcutils.backend.service;
 
-import cc.fascinated.common.DNSUtils;
-import cc.fascinated.common.EnumUtils;
-import cc.fascinated.config.Config;
-import cc.fascinated.exception.impl.BadRequestException;
-import cc.fascinated.exception.impl.ResourceNotFoundException;
-import cc.fascinated.model.cache.CachedMinecraftServer;
-import cc.fascinated.model.dns.DNSRecord;
-import cc.fascinated.model.dns.impl.ARecord;
-import cc.fascinated.model.dns.impl.SRVRecord;
-import cc.fascinated.model.server.JavaMinecraftServer;
-import cc.fascinated.model.server.MinecraftServer;
-import xyz.mcutils.backend.repository.MinecraftServerCacheRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.mcutils.backend.common.DNSUtils;
+import xyz.mcutils.backend.common.EnumUtils;
+import xyz.mcutils.backend.config.Config;
+import xyz.mcutils.backend.exception.impl.BadRequestException;
+import xyz.mcutils.backend.exception.impl.ResourceNotFoundException;
+import xyz.mcutils.backend.model.cache.CachedMinecraftServer;
+import xyz.mcutils.backend.model.dns.DNSRecord;
+import xyz.mcutils.backend.model.dns.impl.ARecord;
+import xyz.mcutils.backend.model.dns.impl.SRVRecord;
+import xyz.mcutils.backend.model.server.JavaMinecraftServer;
+import xyz.mcutils.backend.model.server.MinecraftServer;
+import xyz.mcutils.backend.repository.MinecraftServerCacheRepository;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;

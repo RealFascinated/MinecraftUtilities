@@ -1,8 +1,5 @@
-package cc.fascinated.controller;
+package xyz.mcutils.backend.controller;
 
-import cc.fascinated.model.cache.CachedMinecraftServer;
-import xyz.mcutils.backend.service.MojangService;
-import xyz.mcutils.backend.service.ServerService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +7,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import xyz.mcutils.backend.model.cache.CachedMinecraftServer;
+import xyz.mcutils.backend.service.MojangService;
+import xyz.mcutils.backend.service.ServerService;
 
 import java.util.Map;
 

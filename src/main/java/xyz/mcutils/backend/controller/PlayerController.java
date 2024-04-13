@@ -1,9 +1,5 @@
-package cc.fascinated.controller;
+package xyz.mcutils.backend.controller;
 
-import cc.fascinated.model.cache.CachedPlayer;
-import cc.fascinated.model.cache.CachedPlayerName;
-import cc.fascinated.model.player.Player;
-import xyz.mcutils.backend.service.PlayerService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +8,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import xyz.mcutils.backend.model.cache.CachedPlayer;
+import xyz.mcutils.backend.model.cache.CachedPlayerName;
+import xyz.mcutils.backend.model.player.Player;
+import xyz.mcutils.backend.service.PlayerService;
 
 import java.util.concurrent.TimeUnit;
 

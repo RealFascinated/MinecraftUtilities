@@ -1,7 +1,7 @@
 package xyz.mcutils.backend.repository;
 
-import cc.fascinated.model.cache.CachedEndpointStatus;
 import org.springframework.data.repository.CrudRepository;
+import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
 
 /**
  * A cache repository for {@link CachedEndpointStatus}'s.

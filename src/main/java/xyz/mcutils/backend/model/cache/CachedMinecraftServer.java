@@ -1,11 +1,11 @@
-package cc.fascinated.model.cache;
+package xyz.mcutils.backend.model.cache;
 
-import cc.fascinated.common.CachedResponse;
-import cc.fascinated.model.server.MinecraftServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import xyz.mcutils.backend.common.CachedResponse;
+import xyz.mcutils.backend.model.server.MinecraftServer;
 
 import java.io.Serializable;
 
@@ -29,7 +29,7 @@ public class CachedMinecraftServer extends CachedResponse implements Serializabl
     private MinecraftServer server;
 
     public CachedMinecraftServer(@NonNull String id, @NonNull MinecraftServer server) {
-        super(Cache.defaultCache());
+        super(CachedResponse.Cache.defaultCache());
         this.id = id;
         this.server = server;
     }

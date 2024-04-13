@@ -1,4 +1,4 @@
-package cc.fascinated.tests;
+package xyz.mcutils.backend.tests;
 
 import cc.fascinated.config.TestRedisConfig;
 import org.junit.jupiter.api.Test;

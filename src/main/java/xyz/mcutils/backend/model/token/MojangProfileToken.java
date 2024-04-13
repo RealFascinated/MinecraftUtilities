@@ -1,15 +1,15 @@
-package cc.fascinated.model.token;
+package xyz.mcutils.backend.model.token;
 
-import xyz.mcutils.backend.Main;
-import cc.fascinated.common.Tuple;
-import cc.fascinated.common.UUIDUtils;
-import cc.fascinated.model.player.Cape;
-import cc.fascinated.model.skin.Skin;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import xyz.mcutils.backend.Main;
+import xyz.mcutils.backend.common.Tuple;
+import xyz.mcutils.backend.common.UUIDUtils;
+import xyz.mcutils.backend.model.player.Cape;
+import xyz.mcutils.backend.model.skin.Skin;
 
 import java.util.Base64;
 

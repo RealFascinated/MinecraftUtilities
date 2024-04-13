@@ -1,4 +1,4 @@
-package cc.fascinated.model.token;
+package xyz.mcutils.backend.model.token;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

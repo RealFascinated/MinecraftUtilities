@@ -1,8 +1,8 @@
-package cc.fascinated.common.renderer.impl;
+package xyz.mcutils.backend.common.renderer.impl;
 
-import cc.fascinated.common.renderer.IsometricSkinRenderer;
-import cc.fascinated.model.skin.ISkinPart;
-import cc.fascinated.model.skin.Skin;
+import xyz.mcutils.backend.common.renderer.IsometricSkinRenderer;
+import xyz.mcutils.backend.model.skin.ISkinPart;
+import xyz.mcutils.backend.model.skin.Skin;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

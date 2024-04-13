@@ -1,9 +1,9 @@
-package cc.fascinated.common.packet.impl.bedrock;
+package xyz.mcutils.backend.common.packet.impl.bedrock;
 
-import cc.fascinated.common.packet.MinecraftBedrockPacket;
-import cc.fascinated.model.server.BedrockMinecraftServer;
 import lombok.Getter;
 import lombok.NonNull;
+import xyz.mcutils.backend.common.packet.MinecraftBedrockPacket;
+import xyz.mcutils.backend.model.server.BedrockMinecraftServer;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

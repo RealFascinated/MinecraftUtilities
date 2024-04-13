@@ -1,15 +1,15 @@
-package cc.fascinated.model.server;
+package xyz.mcutils.backend.model.server;
 
-import xyz.mcutils.backend.Main;
-import cc.fascinated.common.JavaMinecraftVersion;
-import cc.fascinated.common.ServerUtils;
-import cc.fascinated.config.Config;
-import cc.fascinated.model.dns.DNSRecord;
-import cc.fascinated.model.token.JavaServerStatusToken;
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
+import xyz.mcutils.backend.Main;
+import xyz.mcutils.backend.common.JavaMinecraftVersion;
+import xyz.mcutils.backend.common.ServerUtils;
+import xyz.mcutils.backend.config.Config;
+import xyz.mcutils.backend.model.dns.DNSRecord;
+import xyz.mcutils.backend.model.token.JavaServerStatusToken;
 
 /**
  * @author Braydon

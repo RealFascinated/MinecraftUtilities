@@ -1,4 +1,4 @@
-package cc.fascinated.model.dns;
+package xyz.mcutils.backend.model.dns;
 
 import io.micrometer.common.lang.NonNull;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package cc.fascinated.model.cache;
+package xyz.mcutils.backend.model.cache;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

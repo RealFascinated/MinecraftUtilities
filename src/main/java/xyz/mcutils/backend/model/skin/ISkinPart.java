@@ -1,11 +1,11 @@
-package cc.fascinated.model.skin;
+package xyz.mcutils.backend.model.skin;
 
-import cc.fascinated.common.renderer.SkinRenderer;
-import cc.fascinated.common.renderer.impl.BodyRenderer;
-import cc.fascinated.common.renderer.impl.IsometricHeadRenderer;
-import cc.fascinated.common.renderer.impl.SquareRenderer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import xyz.mcutils.backend.common.renderer.SkinRenderer;
+import xyz.mcutils.backend.common.renderer.impl.BodyRenderer;
+import xyz.mcutils.backend.common.renderer.impl.IsometricHeadRenderer;
+import xyz.mcutils.backend.common.renderer.impl.SquareRenderer;
 
 import java.awt.image.BufferedImage;
 

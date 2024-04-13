@@ -1,7 +1,7 @@
 package xyz.mcutils.backend.repository;
 
-import cc.fascinated.model.cache.CachedMinecraftServer;
 import org.springframework.data.repository.CrudRepository;
+import xyz.mcutils.backend.model.cache.CachedMinecraftServer;
 
 /**
  * A cache repository for {@link CachedMinecraftServer}'s.

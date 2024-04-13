@@ -1,7 +1,7 @@
 package xyz.mcutils.backend.repository;
 
-import cc.fascinated.model.cache.CachedPlayerName;
 import org.springframework.data.repository.CrudRepository;
+import xyz.mcutils.backend.model.cache.CachedPlayerName;
 
 /**
  * A cache repository for player usernames.

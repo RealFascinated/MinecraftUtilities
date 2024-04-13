@@ -1,10 +1,10 @@
-package cc.fascinated.common.renderer;
+package xyz.mcutils.backend.common.renderer;
 
-import cc.fascinated.common.ImageUtils;
-import cc.fascinated.model.skin.ISkinPart;
-import cc.fascinated.model.skin.Skin;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import xyz.mcutils.backend.common.ImageUtils;
+import xyz.mcutils.backend.model.skin.ISkinPart;
+import xyz.mcutils.backend.model.skin.Skin;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

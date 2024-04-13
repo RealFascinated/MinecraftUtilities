@@ -1,11 +1,11 @@
-package cc.fascinated.model.dns.impl;
+package xyz.mcutils.backend.model.dns.impl;
 
-import cc.fascinated.model.dns.DNSRecord;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.micrometer.common.lang.NonNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import xyz.mcutils.backend.model.dns.DNSRecord;
 
 import java.net.InetSocketAddress;
 

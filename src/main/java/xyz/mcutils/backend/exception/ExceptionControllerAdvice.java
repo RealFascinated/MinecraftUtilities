@@ -1,6 +1,5 @@
-package cc.fascinated.exception;
+package xyz.mcutils.backend.exception;
 
-import cc.fascinated.model.response.ErrorResponse;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import xyz.mcutils.backend.model.response.ErrorResponse;
 
 @ControllerAdvice
 public final class ExceptionControllerAdvice {

@@ -1,12 +1,12 @@
-package cc.fascinated.model.player;
+package xyz.mcutils.backend.model.player;
 
-import cc.fascinated.common.Tuple;
-import cc.fascinated.common.UUIDUtils;
-import cc.fascinated.model.skin.Skin;
-import cc.fascinated.model.token.MojangProfileToken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import xyz.mcutils.backend.common.Tuple;
+import xyz.mcutils.backend.common.UUIDUtils;
+import xyz.mcutils.backend.model.skin.Skin;
+import xyz.mcutils.backend.model.token.MojangProfileToken;
 
 import java.util.UUID;
 

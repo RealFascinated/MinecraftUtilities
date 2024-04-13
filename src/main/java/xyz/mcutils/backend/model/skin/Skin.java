@@ -1,8 +1,5 @@
-package cc.fascinated.model.skin;
+package xyz.mcutils.backend.model.skin;
 
-import cc.fascinated.common.EnumUtils;
-import cc.fascinated.common.PlayerUtils;
-import cc.fascinated.config.Config;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.JsonObject;
@@ -10,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import xyz.mcutils.backend.common.EnumUtils;
+import xyz.mcutils.backend.common.PlayerUtils;
+import xyz.mcutils.backend.config.Config;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

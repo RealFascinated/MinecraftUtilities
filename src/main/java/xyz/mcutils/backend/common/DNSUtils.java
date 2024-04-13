@@ -1,13 +1,13 @@
-package cc.fascinated.common;
+package xyz.mcutils.backend.common;
 
-import cc.fascinated.model.dns.impl.ARecord;
-import cc.fascinated.model.dns.impl.SRVRecord;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import org.xbill.DNS.Lookup;
 import org.xbill.DNS.Record;
 import org.xbill.DNS.Type;
+import xyz.mcutils.backend.model.dns.impl.ARecord;
+import xyz.mcutils.backend.model.dns.impl.SRVRecord;
 
 /**
  * @author Braydon
