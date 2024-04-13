@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-@RedisHash(value = "playerName", timeToLive = 60L * 60L) // 1 hour (in seconds)
+@RedisHash(value = "playerName", timeToLive = 60L * 60L * 6) // 6 hours (in seconds)
 public final class CachedPlayerName {
     /**
      * The username of the player.
