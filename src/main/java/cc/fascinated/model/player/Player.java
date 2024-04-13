@@ -2,8 +2,8 @@ package cc.fascinated.model.player;
 
 import cc.fascinated.common.Tuple;
 import cc.fascinated.common.UUIDUtils;
-import cc.fascinated.model.token.MojangProfileToken;
 import cc.fascinated.model.skin.Skin;
+import cc.fascinated.model.token.MojangProfileToken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
