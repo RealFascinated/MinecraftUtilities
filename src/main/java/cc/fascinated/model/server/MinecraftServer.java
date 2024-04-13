@@ -39,7 +39,7 @@ public class MinecraftServer {
     /**
      * The DNS records for the server.
      */
-    private final DNSRecord[] dnsRecords;
+    private final DNSRecord[] records;
 
     /**
      * The motd for the server.
