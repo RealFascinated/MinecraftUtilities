@@ -2,6 +2,7 @@ package cc.fascinated.controller;
 
 import cc.fascinated.model.cache.CachedPlayer;
 import cc.fascinated.model.cache.CachedPlayerName;
+import cc.fascinated.model.player.Player;
 import cc.fascinated.service.PlayerService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -50,7 +51,8 @@ public class PlayerController {
             @Parameter(description = "The size of the image", example = "256") @RequestParam(required = false, defaultValue = "256") int size,
             @Parameter(description = "Whether to render the skin overlay (skin layers)", example = "false") @RequestParam(required = false, defaultValue = "false") boolean overlays,
             @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download) {
-        CachedPlayer player = playerService.getPlayer(id);
+        CachedPlayer cachedPlayer = playerService.getPlayer(id);
+        Player player = cachedPlayer.getPlayer();
         String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
 
         // Return the part image

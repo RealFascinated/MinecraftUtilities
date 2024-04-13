@@ -5,6 +5,7 @@ import cc.fascinated.common.EndpointStatus;
 import cc.fascinated.common.ExpiringSet;
 import cc.fascinated.common.WebRequest;
 import cc.fascinated.config.Config;
+import cc.fascinated.model.cache.CacheInformation;
 import cc.fascinated.model.cache.CachedEndpointStatus;
 import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.model.mojang.MojangUsernameToUuid;
@@ -231,10 +232,10 @@ public class MojangService {
         CachedEndpointStatus status = new CachedEndpointStatus(
                 MOJANG_ENDPOINT_STATUS_KEY,
                 endpoints,
-                System.currentTimeMillis()
+                CacheInformation.defaultCache()
         );
         mojangEndpointStatusRepository.save(status);
-        status.setCached(-1L); // Indicate that the status is not cached
+        status.getCache().setCached(false);
         return status;
     }
 

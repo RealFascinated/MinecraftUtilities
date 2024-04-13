@@ -6,7 +6,6 @@ import cc.fascinated.model.mojang.MojangProfile;
 import cc.fascinated.model.skin.Skin;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
 
@@ -16,7 +15,7 @@ public class Player {
     /**
      * The UUID of the player
      */
-    @Id private final UUID uniqueId;
+    private final UUID uniqueId;
 
     /**
      * The trimmed UUID of the player

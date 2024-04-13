@@ -9,6 +9,7 @@ import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.MojangAPIRateLimitException;
 import cc.fascinated.exception.impl.RateLimitException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
+import cc.fascinated.model.cache.CacheInformation;
 import cc.fascinated.model.cache.CachedPlayer;
 import cc.fascinated.model.cache.CachedPlayerName;
 import cc.fascinated.model.cache.CachedPlayerSkinPart;
@@ -74,16 +75,19 @@ public class PlayerService {
             Tuple<Skin, Cape> skinAndCape = mojangProfile.getSkinAndCape();
             CachedPlayer player = new CachedPlayer(
                     uuid, // Player UUID
-                    UUIDUtils.removeDashes(uuid), // Trimmed UUID
-                    mojangProfile.getName(), // Player Name
-                    skinAndCape.getLeft(), // Skin
-                    skinAndCape.getRight(), // Cape
-                    mojangProfile.getProperties(), // Raw properties
-                    System.currentTimeMillis() // Cache time
+                    new Player(
+                            uuid, // Player UUID
+                            UUIDUtils.removeDashes(uuid), // Trimmed UUID
+                            mojangProfile.getName(), // Player Name
+                            skinAndCape.getLeft(), // Skin
+                            skinAndCape.getRight(), // Cape
+                            mojangProfile.getProperties() // Raw properties
+                    ),
+                    CacheInformation.defaultCache() // Cache time
             );
 
             playerCacheRepository.save(player);
-            player.setCached(-1); // Indicate that the player is not cached
+            player.getCache().setCached(false);
             return player;
         } catch (RateLimitException exception) {
             throw new MojangAPIRateLimitException();

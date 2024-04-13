@@ -24,10 +24,9 @@ public final class CachedEndpointStatus implements Serializable {
     private final Map<String, Status> endpoints;
 
     /**
-     * The unix timestamp of when this
-     * server was cached, -1 if not cached.
+     * The cache information about the request.
      */
-    private long cached;
+    private CacheInformation cache;
 
     public enum Status {
         /**
@@ -36,10 +35,8 @@ public final class CachedEndpointStatus implements Serializable {
         ONLINE,
 
         /**
-         * The service is degraded and may not be fully operational.
-         * <p>
-         *     This could be due to high load or other issues.
-         * </p>
+         * The service is online, but may be experiencing issues.
+         * This could be due to high load or other issues.
          */
         DEGRADED,
 

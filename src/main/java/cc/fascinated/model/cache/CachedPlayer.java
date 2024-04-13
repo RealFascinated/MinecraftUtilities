@@ -1,12 +1,11 @@
 package cc.fascinated.model.cache;
 
-import cc.fascinated.model.mojang.MojangProfile;
-import cc.fascinated.model.player.Cape;
 import cc.fascinated.model.player.Player;
-import cc.fascinated.model.skin.Skin;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
@@ -18,17 +17,22 @@ import java.util.UUID;
  * @author Braydon
  */
 @Setter @Getter
-@ToString(callSuper = true)
+@AllArgsConstructor
 @RedisHash(value = "player", timeToLive = 60L * 60L) // 1 hour (in seconds)
-public final class CachedPlayer extends Player implements Serializable {
+public final class CachedPlayer implements Serializable {
     /**
-     * The unix timestamp of when this
-     * player was cached, -1 if not cached.
+     * The unique id of the player.
      */
-    private long cached;
+    @JsonIgnore
+    @Id private UUID uniqueId;
 
-    public CachedPlayer(UUID uniqueId, String trimmedUniqueId, String username, Skin skin, Cape cape, MojangProfile.ProfileProperty[] rawProperties, long cached) {
-        super(uniqueId, trimmedUniqueId, username, skin, cape, rawProperties);
-        this.cached = cached;
-    }
+    /**
+     * The player to cache.
+     */
+    private Player player;
+
+    /**
+     * The cache information about the request.
+     */
+    private CacheInformation cache;
 }

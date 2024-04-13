@@ -5,6 +5,7 @@ import cc.fascinated.common.EnumUtils;
 import cc.fascinated.config.Config;
 import cc.fascinated.exception.impl.BadRequestException;
 import cc.fascinated.exception.impl.ResourceNotFoundException;
+import cc.fascinated.model.cache.CacheInformation;
 import cc.fascinated.model.cache.CachedMinecraftServer;
 import cc.fascinated.model.dns.DNSRecord;
 import cc.fascinated.model.dns.impl.ARecord;
@@ -89,7 +90,7 @@ public class ServerService {
         CachedMinecraftServer server = new CachedMinecraftServer(
                 key,
                 platform.getPinger().ping(hostname, ip, port, records.toArray(new DNSRecord[0])),
-                System.currentTimeMillis()
+                CacheInformation.defaultCache()
         );
 
         // Check if the server is blocked by Mojang
@@ -99,7 +100,7 @@ public class ServerService {
 
         log.info("Found server: {}:{}", hostname, port);
         serverCacheRepository.save(server);
-        server.setCached(-1); // Indicate that the server is not cached
+        server.getCache().setCached(false);
         return server;
     }
 
