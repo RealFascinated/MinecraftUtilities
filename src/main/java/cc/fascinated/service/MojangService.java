@@ -208,13 +208,9 @@ public class MojangService {
 
             futures.add(future);
         }
-
-        //
-        CompletableFuture<Void> allFutures = CompletableFuture.allOf(
-                futures.toArray(new CompletableFuture[0]));
-
+        CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
         try {
-            allFutures.get(5, TimeUnit.SECONDS); // Timeout in 10 seconds
+            allFutures.get(5, TimeUnit.SECONDS); // Wait for the futures to complete
         } catch (Exception e) {
             log.error("Timeout while fetching Mojang API status: {}", e.getMessage());
         }
