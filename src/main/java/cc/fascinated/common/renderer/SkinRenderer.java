@@ -5,8 +5,6 @@ import cc.fascinated.model.skin.ISkinPart;
 import cc.fascinated.model.skin.Skin;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
