@@ -35,6 +35,7 @@ public class WebRequest {
         ResponseEntity<T> profile = CLIENT.get()
                 .uri(url)
                 .retrieve()
+                .onStatus(HttpStatusCode::isError, (request, response) -> {}) // Don't throw exceptions on error
                 .toEntity(clazz);
 
         if (profile.getStatusCode().isError()) {

@@ -4,7 +4,7 @@ import cc.fascinated.model.cache.CachedEndpointStatus;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * A cache repository for the Mojang endpoint status.
+ * A cache repository for {@link CachedEndpointStatus}'s.
  *
  * @author Braydon
  */
