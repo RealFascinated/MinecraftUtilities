@@ -32,19 +32,19 @@ public class WebRequest {
      * @param <T> the type of the response
      */
     public static <T> T getAsEntity(String url, Class<T> clazz) throws RateLimitException {
-        ResponseEntity<T> profile = CLIENT.get()
+        ResponseEntity<T> responseEntity = CLIENT.get()
                 .uri(url)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, (request, response) -> {}) // Don't throw exceptions on error
                 .toEntity(clazz);
 
-        if (profile.getStatusCode().isError()) {
+        if (responseEntity.getStatusCode().isError()) {
             return null;
         }
-        if (profile.getStatusCode().isSameCodeAs(HttpStatus.TOO_MANY_REQUESTS)) {
+        if (responseEntity.getStatusCode().isSameCodeAs(HttpStatus.TOO_MANY_REQUESTS)) {
             throw new RateLimitException("Rate limit reached");
         }
-        return profile.getBody();
+        return responseEntity.getBody();
     }
 
     /**

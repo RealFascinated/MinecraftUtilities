@@ -21,10 +21,14 @@ import java.util.Map;
 @Getter @Log4j2
 public class Skin {
     /**
-     * The default skin, usually used when the skin is not found.
+     * The default skins, usually used when the skin is not found.
      */
-    public static final Skin DEFAULT_SKIN = new Skin("http://textures.minecraft.net/texture/60a5bd016b3c9a1b9272e4929e30827a67be4ebb219017adbbc4a4d22ebd5b1",
-            Model.DEFAULT);
+    public static final Map<Model, Skin> DEFAULT_SKINS = new HashMap<>();
+
+    static {
+        DEFAULT_SKINS.put(Model.DEFAULT, new Skin(Config.INSTANCE.getWebPublicUrl() + "/assets/steve.png", Model.DEFAULT));
+        DEFAULT_SKINS.put(Model.SLIM, new Skin(Config.INSTANCE.getWebPublicUrl() + "/assets/alex.png", Model.SLIM));
+    }
 
     /**
      * The URL for the skin
@@ -58,6 +62,9 @@ public class Skin {
         this.model = model;
 
         this.skinImage = PlayerUtils.getSkinImage(url);
+        if (skinImage == null) { // Use the default skin if the skin is not found
+            this.skinImage = PlayerUtils.getSkinImage(DEFAULT_SKINS.get(model).getUrl());
+        }
         if (this.skinImage != null) {
             try {
                 BufferedImage image = ImageIO.read(new ByteArrayInputStream(this.skinImage));
