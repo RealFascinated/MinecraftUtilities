@@ -1,6 +1,6 @@
 package cc.fascinated.model.cache;
 
-import cc.fascinated.common.CacheInformation;
+import cc.fascinated.common.CachedResponse;
 import cc.fascinated.model.server.MinecraftServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -29,7 +29,7 @@ public class CachedMinecraftServer extends CachedResponse implements Serializabl
     private MinecraftServer server;
 
     public CachedMinecraftServer(@NonNull String id, @NonNull MinecraftServer server) {
-        super(CacheInformation.defaultCache());
+        super(Cache.defaultCache());
         this.id = id;
         this.server = server;
     }

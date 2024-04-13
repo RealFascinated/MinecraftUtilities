@@ -1,6 +1,6 @@
 package cc.fascinated.model.cache;
 
-import cc.fascinated.common.CacheInformation;
+import cc.fascinated.common.CachedResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.ToString;
@@ -33,7 +33,7 @@ public class CachedPlayerName extends CachedResponse {
     private final UUID uniqueId;
 
     public CachedPlayerName(String id, String username, UUID uniqueId) {
-        super(CacheInformation.defaultCache());
+        super(Cache.defaultCache());
         this.id = id;
         this.username = username;
         this.uniqueId = uniqueId;

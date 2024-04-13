@@ -1,6 +1,6 @@
 package cc.fascinated.model.cache;
 
-import cc.fascinated.common.CacheInformation;
+import cc.fascinated.common.CachedResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -26,7 +26,7 @@ public class CachedEndpointStatus extends CachedResponse implements Serializable
     private Map<String, Status> endpoints;
 
     public CachedEndpointStatus(@NonNull String id, Map<String, Status> endpoints) {
-        super(CacheInformation.defaultCache());
+        super(Cache.defaultCache());
         this.id = id;
         this.endpoints = endpoints;
     }

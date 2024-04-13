@@ -1,6 +1,6 @@
 package cc.fascinated.model.cache;
 
-import cc.fascinated.common.CacheInformation;
+import cc.fascinated.common.CachedResponse;
 import cc.fascinated.model.player.Player;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -33,7 +33,7 @@ public class CachedPlayer extends CachedResponse implements Serializable {
     private Player player;
 
     public CachedPlayer(UUID uniqueId, Player player) {
-        super(CacheInformation.defaultCache());
+        super(Cache.defaultCache());
         this.uniqueId = uniqueId;
         this.player = player;
     }
