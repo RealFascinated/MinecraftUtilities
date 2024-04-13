@@ -204,7 +204,7 @@ public class MojangService {
                 if (endpoint.getAllowedStatuses().contains(response.getStatusCode())) {
                     online = true;
                 }
-                if (online && System.currentTimeMillis() - start > 500) { // If the response took longer than 500ms
+                if (online && System.currentTimeMillis() - start > 1000) { // If the response took longer than 1 second
                     return CachedEndpointStatus.Status.DEGRADED;
                 }
                 return online ? CachedEndpointStatus.Status.ONLINE : CachedEndpointStatus.Status.OFFLINE;

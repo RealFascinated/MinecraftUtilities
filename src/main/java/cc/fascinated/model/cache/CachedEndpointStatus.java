@@ -30,8 +30,22 @@ public final class CachedEndpointStatus implements Serializable {
     private long cached;
 
     public enum Status {
+        /**
+         * The service is online and operational.
+         */
         ONLINE,
+
+        /**
+         * The service is degraded and may not be fully operational.
+         * <p>
+         *     This could be due to high load or other issues.
+         * </p>
+         */
         DEGRADED,
+
+        /**
+         * The service is offline and not operational.
+         */
         OFFLINE
     }
 }
