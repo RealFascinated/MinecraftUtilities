@@ -39,8 +39,6 @@ public class MetricService {
         registerMetric(new TotalRequestsMetric());
         registerMetric(new RequestsPerRouteMetric());
 
-        // todo: don't bother saving and loading metrics when running tests
-
         // Load the metrics from Redis
         loadMetrics();
 

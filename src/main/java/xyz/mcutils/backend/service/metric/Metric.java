@@ -11,7 +11,6 @@ import org.springframework.data.redis.core.RedisHash;
 @AllArgsConstructor
 @Getter @Setter
 @RedisHash(value = "metric")
-@Measurement(name = "metric")
 public abstract class Metric<T> {
     /**
      * The id of the metric.
