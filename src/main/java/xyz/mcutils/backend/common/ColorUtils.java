@@ -60,6 +60,7 @@ public final class ColorUtils {
     @NonNull
     public static String toHTML(@NonNull String input) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span>"); // Open the span tag
         boolean nextIsColor = false; // Is the next char a color code?
 
         for (char character : input.toCharArray()) {
@@ -76,6 +77,7 @@ public final class ColorUtils {
             }
             builder.append(character); // Append the char...
         }
+        builder.append("</span>"); // Close the span tag
         return builder.toString();
     }
 }
