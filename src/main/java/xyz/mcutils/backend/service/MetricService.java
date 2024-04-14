@@ -25,12 +25,7 @@ public class MetricService {
     /**
      * The interval in which the metrics are saved.
      */
-    private final long saveInterval = TimeUnit.MINUTES.toMillis(1);
-
-    /**
-     * The interval in which the metrics are written to InfluxDB.
-     */
-    private final long writeInfluxInterval = TimeUnit.SECONDS.toMillis(30);
+    private final long saveInterval = TimeUnit.SECONDS.toMillis(15);
 
     private final WriteApiBlocking influxWriteApi;
     private final MetricsRepository metricsRepository;
@@ -49,8 +44,10 @@ public class MetricService {
         // Load the metrics from Redis
         loadMetrics();
 
-        Timer.scheduleRepeating(this::saveMetrics, saveInterval, saveInterval);
-        Timer.scheduleRepeating(this::writeToInflux, writeInfluxInterval, writeInfluxInterval);
+        Timer.scheduleRepeating(() -> {
+            saveMetrics();
+            writeToInflux();
+        }, saveInterval, saveInterval);
     }
 
     /**
