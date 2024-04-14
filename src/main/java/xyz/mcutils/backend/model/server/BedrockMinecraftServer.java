@@ -42,6 +42,9 @@ public final class BedrockMinecraftServer extends MinecraftServer {
 
     /**
      * Create a new Bedrock Minecraft server.
+     * <p>
+     *     <a href="https://wiki.vg/Raknet_Protocol#Unconnected_Pong">Token Format</a>
+     * </p>
      *
      * @param hostname the hostname of the server
      * @param ip the IP address of the server
@@ -51,12 +54,13 @@ public final class BedrockMinecraftServer extends MinecraftServer {
      */
     @NonNull
     public static BedrockMinecraftServer create(@NonNull String hostname, String ip, int port, DNSRecord[] records, @NonNull String token) {
+        System.out.println(token);
         String[] split = token.split(";"); // Split the token
         Edition edition = Edition.valueOf(split[0]);
         Version version = new Version(Integer.parseInt(split[2]), split[3]);
         Players players = new Players(Integer.parseInt(split[4]), Integer.parseInt(split[5]), null);
         MOTD motd = MOTD.create(split[1] + "\n" + split[7]);
-        GameMode gameMode = new GameMode(split[8], Integer.parseInt(split[9]));
+        GameMode gameMode = new GameMode(split[8], split.length > 9 ? Integer.parseInt(split[9]) : -1);
         return new BedrockMinecraftServer(
                 split[6],
                 hostname,
