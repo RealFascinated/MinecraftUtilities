@@ -91,11 +91,10 @@ public class MetricService {
      * Save all metrics to Redis.
      */
     private void saveMetrics() {
-        log.info("Saving metrics to Redis");
         for (Metric<?> metric : metrics.values()) {
             saveMetric(metric);
         }
-        log.info("Saved {} metrics", metrics.size());
+        log.info("Saved {} metrics to Redis", metrics.size());
     }
 
     /**
@@ -111,10 +110,9 @@ public class MetricService {
      * Push all metrics to InfluxDB.
      */
     private void writeToInflux() {
-        log.info("Writing metrics to InfluxDB");
         for (Metric<?> metric : metrics.values()) {
             influxWriteApi.writePoint(metric.toPoint());
         }
-        log.info("Wrote {} metrics", metrics.size());
+        log.info("Wrote {} metrics to Influx", metrics.size());
     }
 }
