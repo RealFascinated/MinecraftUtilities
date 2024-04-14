@@ -54,7 +54,6 @@ public final class BedrockMinecraftServer extends MinecraftServer {
      */
     @NonNull
     public static BedrockMinecraftServer create(@NonNull String hostname, String ip, int port, DNSRecord[] records, @NonNull String token) {
-        System.out.println(token);
         String[] split = token.split(";"); // Split the token
         Edition edition = Edition.valueOf(split[0]);
         Version version = new Version(Integer.parseInt(split[2]), split[3]);
