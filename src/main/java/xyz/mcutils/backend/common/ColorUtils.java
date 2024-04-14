@@ -60,11 +60,10 @@ public final class ColorUtils {
     @NonNull
     public static String toHTML(@NonNull String input) {
         StringBuilder builder = new StringBuilder();
-        builder.append("<p>"); // Open the span tag
         boolean nextIsColor = false; // Is the next char a color code?
 
         for (char character : input.toCharArray()) {
-            // Found color symbol, next color is the color
+            // Found color symbol, next character is the color
             if (character == '§') {
                 nextIsColor = true;
                 continue;
@@ -75,9 +74,13 @@ public final class ColorUtils {
                 nextIsColor = false;
                 continue;
             }
-            builder.append(character); // Append the char...
+            if (character == ' ') { // Preserve space character
+                builder.append("&nbsp;");
+            } else {
+                builder.append(character); // Append the char...
+            }
         }
-        builder.append("</p>"); // Close the span tag
         return builder.toString();
     }
+
 }
