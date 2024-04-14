@@ -24,7 +24,7 @@
     <meta property="og:image" content="https://git.fascinated.cc/MinecraftUtilities/Assets/raw/branch/master/logo.png" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:card" content="summary" />
     <meta property="twitter:url" th:content="${public_url}" />
     <meta property="twitter:title" content="Minecraft Utilities - Wrapper for the Minecraft APIs" />
     <meta property="twitter:description" content="Minecraft Utilities provides a convenient wrapper for the Minecraft APIs, simplifying their usage for developers." />
@@ -35,8 +35,8 @@
   <body class="flex flex-col h-screen mt-5 items-center bg-neutral-900 text-white text-center">
     <h1 class="font-bold">Minecraft Utilities - Hello!</h1>
     <p>Minecraft Utilities provide a convenient wrapper for the Minecraft APIs, simplifying their usage for developers.</p>
-    <a class="text-blue-600" target="”_blank”" href="https://git.fascinated.cc/MinecraftUtilities/Backend">Source Code</a>
-    <a class="text-blue-600" target="”_blank”" th:href="${swagger_url}">Documentation / Swagger</a>
+    <a class="text-blue-400" target="”_blank”" href="https://git.fascinated.cc/MinecraftUtilities/Backend">Source Code</a>
+    <a class="text-blue-400" target="”_blank”" th:href="${swagger_url}">Documentation / Swagger</a>
 
     <!-- Examples Table -->
     <table class="table-fixed text-left mt-3 border-separate border-spacing-x-8">
@@ -49,15 +49,15 @@
       <tbody>
         <tr>
           <td>Player Data</td>
-          <td><a class="text-blue-600" th:text="${player_example_url}" th:href="${player_example_url}">???</a></td>
+          <td><a class="text-blue-400" th:text="${player_example_url}" th:href="${player_example_url}">???</a></td>
         </tr>
         <tr>
           <td>Server Data</td>
-          <td><a class="text-blue-600" th:text="${java_server_example_url}" th:href="${java_server_example_url}">???</a></td>
+          <td><a class="text-blue-400" th:text="${java_server_example_url}" th:href="${java_server_example_url}">???</a></td>
         </tr>
         <tr>
           <td>Mojang Endpoint Status</td>
-          <td><a class="text-blue-600" th:text="${mojang_endpoint_status_url}" th:href="${mojang_endpoint_status_url}">???</a></td>
+          <td><a class="text-blue-400" th:text="${mojang_endpoint_status_url}" th:href="${mojang_endpoint_status_url}">???</a></td>
         </tr>
       </tbody>
     </table>
