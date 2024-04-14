@@ -1,5 +1,6 @@
 package xyz.mcutils.backend.service;
 
+import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.WriteApiBlocking;
 import com.influxdb.spring.influx.InfluxDB2AutoConfiguration;
 import lombok.extern.log4j.Log4j2;
@@ -32,7 +33,9 @@ public class MetricService {
 
     @Autowired
     public MetricService(InfluxDB2AutoConfiguration influxAutoConfiguration, MetricsRepository metricsRepository) {
-        this.influxWriteApi = influxAutoConfiguration.influxDBClient().getWriteApiBlocking();
+        try (InfluxDBClient client = influxAutoConfiguration.influxDBClient()) {
+            this.influxWriteApi = client.getWriteApiBlocking();
+        }
         this.metricsRepository = metricsRepository;
 
         // Register the metrics
