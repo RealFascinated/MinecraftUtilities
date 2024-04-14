@@ -1,6 +1,7 @@
 package xyz.mcutils.backend.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
 
 /**
@@ -8,4 +9,5 @@ import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
  *
  * @author Braydon
  */
+@Repository
 public interface EndpointStatusRepository extends CrudRepository<CachedEndpointStatus, String> { }

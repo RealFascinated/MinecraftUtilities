@@ -1,6 +1,7 @@
 package xyz.mcutils.backend.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import xyz.mcutils.backend.model.cache.CachedPlayerName;
 
 /**
@@ -12,4 +13,5 @@ import xyz.mcutils.backend.model.cache.CachedPlayerName;
  *
  * @author Braydon
  */
+@Repository
 public interface PlayerNameCacheRepository extends CrudRepository<CachedPlayerName, String> { }

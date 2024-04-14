@@ -4,20 +4,36 @@ server:
   servlet:
     context-path: /
 
-# The public URL of the application
-public-url: http://localhost:80
-
 # Spring Configuration
 spring:
+  # Don't include null properties in JSON
+  jackson:
+    default-property-inclusion: non_null
   data:
     # Redis - This is used for caching
     redis:
-      host: "localhost"
+      host: "127.0.0.1"
       port: 6379
-      database: 0
+      database: 1
       auth: "" # Leave blank for no auth
 
-  # Don't serialize null values
-  jackson:
-    default-property-inclusion: non_null
+# Disable default metrics
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude:
+          - "*"
+  influx:
+    metrics:
+      export:
+        enabled: false
 
+# InfluxDB Configuration
+influx:
+  url: http://localhost
+  token: token
+  org: org
+  bucket: bucket
+
+public-url: http://localhost

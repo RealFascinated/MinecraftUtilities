@@ -1,6 +1,7 @@
 package xyz.mcutils.backend.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import xyz.mcutils.backend.model.cache.CachedMinecraftServer;
 
 /**
@@ -8,4 +9,5 @@ import xyz.mcutils.backend.model.cache.CachedMinecraftServer;
  *
  * @author Braydon
  */
+@Repository
 public interface MinecraftServerCacheRepository extends CrudRepository<CachedMinecraftServer, String> { }

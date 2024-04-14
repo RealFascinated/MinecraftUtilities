@@ -1,6 +1,7 @@
 package xyz.mcutils.backend.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import xyz.mcutils.backend.model.cache.CachedPlayer;
 
 import java.util.UUID;
@@ -10,4 +11,5 @@ import java.util.UUID;
  *
  * @author Braydon
  */
+@Repository
 public interface PlayerCacheRepository extends CrudRepository<CachedPlayer, UUID> { }
