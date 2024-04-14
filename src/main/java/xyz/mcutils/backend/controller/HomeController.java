@@ -18,6 +18,7 @@ public class HomeController {
 
     @GetMapping(value = "/")
     public String home(Model model) {
+        model.addAttribute("public_url", Config.INSTANCE.getWebPublicUrl());
         model.addAttribute("player_example_url", Config.INSTANCE.getWebPublicUrl() + "/player/" + exampleUuid);
         model.addAttribute("java_server_example_url", Config.INSTANCE.getWebPublicUrl() + "/server/java/" + exampleServer);
         model.addAttribute("mojang_endpoint_status_url", Config.INSTANCE.getWebPublicUrl() + "/mojang/status");
