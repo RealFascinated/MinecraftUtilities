@@ -70,32 +70,15 @@ public final class ColorUtils {
         }
 
         for (char character : input.toCharArray()) {
-            if (character == '§') { // Found color symbol
+            // Found color symbol, next color is the color
+            if (character == '§') {
                 nextIsColor = true;
                 continue;
             }
-            if (nextIsColor) { // Apply color formatting
-                // Map the current color to its hex code
+            if (nextIsColor) { // Map the current color to its hex code
                 String color = COLOR_MAP.getOrDefault(Character.toLowerCase(character), "");
-                // Check if the current character is a valid color code
-                if (!color.isEmpty()) {
-                    builder.append("<span style=\"color:").append(color);
-                    // Apply additional formatting if necessary
-                    if (character == 'l') { // Make the char bold
-                        builder.append(";font-weight:bold");
-                    }
-                    if (character == 'n') { // Make the char underlined
-                        builder.append(";text-decoration:underline");
-                    }
-                    if (character == 'o') { // Make the char italic
-                        builder.append(";font-style:italic");
-                    }
-                    if (character == 'm') { // Make the char strikethrough
-                        builder.append(";text-decoration:line-through");
-                    }
-                    builder.append("\">");
-                }
-                nextIsColor = false; // Reset the flag
+                builder.append("<span style=\"color:").append(color).append("\">");
+                nextIsColor = false;
                 continue;
             }
             if (character == ' ') { // Preserve space character
