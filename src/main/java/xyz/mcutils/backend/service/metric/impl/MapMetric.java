@@ -9,11 +9,14 @@ import java.util.Map;
 public class MapMetric <A, B> extends Metric<Map<A, B>> {
 
     public MapMetric(String id) {
-        super(id, new HashMap<>());
+        super(id, new HashMap<>(), false);
     }
 
     @Override
     public Point toPoint() {
+        if (getValue().isEmpty()) { // The map is empty
+            return null;
+        }
         Point point = Point.measurement(getId());
         for (Map.Entry<A, B> entry : getValue().entrySet()) {
             switch (entry.getValue().getClass().getSimpleName()) {
@@ -22,6 +25,9 @@ public class MapMetric <A, B> extends Metric<Map<A, B>> {
                     break;
                 case "Double":
                     point.addField(entry.getKey().toString(), (double) entry.getValue());
+                    break;
+                case "Long":
+                    point.addField(entry.getKey().toString(), (long) entry.getValue());
                     break;
                 default:
                     point.addField(entry.getKey().toString(), entry.getValue().toString());

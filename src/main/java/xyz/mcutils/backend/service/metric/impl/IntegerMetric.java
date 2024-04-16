@@ -6,7 +6,7 @@ import xyz.mcutils.backend.service.metric.Metric;
 public class IntegerMetric extends Metric<Integer> {
 
     public IntegerMetric(String id) {
-        super(id, 0);
+        super(id, 0, false);
     }
 
     /**

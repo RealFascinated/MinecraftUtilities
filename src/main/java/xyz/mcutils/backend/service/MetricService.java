@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 import xyz.mcutils.backend.common.Timer;
 import xyz.mcutils.backend.repository.MetricsRepository;
 import xyz.mcutils.backend.service.metric.Metric;
+import xyz.mcutils.backend.service.metric.impl.IntegerMetric;
+import xyz.mcutils.backend.service.metric.impl.MapMetric;
 import xyz.mcutils.backend.service.metric.metrics.RequestsPerRouteMetric;
 import xyz.mcutils.backend.service.metric.metrics.TotalRequestsMetric;
+import xyz.mcutils.backend.service.metric.metrics.process.MemoryMetric;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +44,7 @@ public class MetricService {
         // Register the metrics
         registerMetric(new TotalRequestsMetric());
         registerMetric(new RequestsPerRouteMetric());
+        registerMetric(new MemoryMetric());
 
         // Load the metrics from Redis
         loadMetrics();
@@ -82,8 +86,8 @@ public class MetricService {
      */
     public void loadMetrics() {
         log.info("Loading metrics");
-        for (Metric<?> metric : metricsRepository.findAll()) {
-            metrics.put(metric.getClass(), metric);
+        for (Metric<?> metricToLoad : metricsRepository.findAll()) {
+
         }
         log.info("Loaded {} metrics", metrics.size());
     }
@@ -113,7 +117,13 @@ public class MetricService {
     private void writeToInflux() {
         List<Point> points = new ArrayList<>();
         for (Metric<?> metric : metrics.values()) {
-            points.add(metric.toPoint());
+            if (metric.isCollector()) {
+                metric.collect();
+            }
+            Point point = metric.toPoint();
+            if (point != null) {
+                points.add(point);
+            }
         }
         influxWriteApi.writePoints(points);
         log.info("Wrote {} metrics to Influx", metrics.size());
