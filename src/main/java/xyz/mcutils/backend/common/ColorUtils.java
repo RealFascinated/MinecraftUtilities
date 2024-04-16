@@ -49,7 +49,7 @@ public final class ColorUtils {
     /**
      * Convert the given input
      * into HTML.
-     * 
+     *
      * @param input the input to convert
      * @return the HTML converted input
      */
@@ -83,15 +83,10 @@ public final class ColorUtils {
                 continue;
             }
             if (character == 'l') { // Start bold
-                isBold = true;
-                builder.append("<b>");
+                builder.append("<span style=\"font-weight: bold;\">");
                 continue;
             }
             if (character == 'r') { // Reset formatting
-                if (isBold) {
-                    builder.append("</b>");
-                    isBold = false;
-                }
                 builder.append("</span>");
                 continue;
             }
@@ -107,5 +102,4 @@ public final class ColorUtils {
 
         return builder.toString();
     }
-
 }
