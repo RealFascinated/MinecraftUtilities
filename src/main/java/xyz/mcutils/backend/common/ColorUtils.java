@@ -57,7 +57,6 @@ public final class ColorUtils {
     public static String toHTML(@NonNull String input) {
         StringBuilder builder = new StringBuilder();
         boolean nextIsColor = false; // Is the next char a color code?
-        boolean isBold = false; // Is the text currently bold?
 
         // Get the leading spaces from the first line
         int leadingSpaces = 0;
@@ -71,31 +70,22 @@ public final class ColorUtils {
         }
 
         for (char character : input.toCharArray()) {
-            // Found color symbol, next character is the color
+            // Found color symbol, next color is the color
             if (character == '§') {
                 nextIsColor = true;
                 continue;
             }
             if (nextIsColor) { // Map the current color to its hex code
                 String color = COLOR_MAP.getOrDefault(Character.toLowerCase(character), "");
-                builder.append("<span style=\"color:").append(color).append("\">");
+                builder.append("<span style=\"color:").append(color);
+                if (character == 'l') { // Bold
+                    builder.append(";font-weight:bold");
+                }
+                builder.append("\">");
                 nextIsColor = false;
-
-                if (character == 'l') { // Start bold
-                    builder.append("<span style=\"font-weight: bold;\">");
-                    continue;
-                }
-                if (character == 'r') { // Reset formatting
-                    builder.append("</span>");
-                    continue;
-                }
                 continue;
             }
-            if (character == ' ') { // Preserve space character
-                builder.append("&nbsp;");
-            } else {
-                builder.append(character); // Append the char...
-            }
+            builder.append(character); // Append the char...
         }
 
         // Add leading spaces to the end of the HTML string
