@@ -80,14 +80,15 @@ public final class ColorUtils {
                 String color = COLOR_MAP.getOrDefault(Character.toLowerCase(character), "");
                 builder.append("<span style=\"color:").append(color).append("\">");
                 nextIsColor = false;
-                continue;
-            }
-            if (character == 'l') { // Start bold
-                builder.append("<span style=\"font-weight: bold;\">");
-                continue;
-            }
-            if (character == 'r') { // Reset formatting
-                builder.append("</span>");
+
+                if (character == 'l') { // Start bold
+                    builder.append("<span style=\"font-weight: bold;\">");
+                    continue;
+                }
+                if (character == 'r') { // Reset formatting
+                    builder.append("</span>");
+                    continue;
+                }
                 continue;
             }
             if (character == ' ') { // Preserve space character
