@@ -86,8 +86,8 @@ public class MetricService {
      */
     public void loadMetrics() {
         log.info("Loading metrics");
-        for (Metric<?> metricToLoad : metricsRepository.findAll()) {
-
+        for (Metric<?> metric : metricsRepository.findAll()) {
+            metrics.put(metric.getClass(), metric);
         }
         log.info("Loaded {} metrics", metrics.size());
     }
