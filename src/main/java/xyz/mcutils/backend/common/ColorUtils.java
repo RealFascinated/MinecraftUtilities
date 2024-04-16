@@ -78,11 +78,15 @@ public final class ColorUtils {
             if (nextIsColor) { // Map the current color to its hex code
                 String color = COLOR_MAP.getOrDefault(Character.toLowerCase(character), "");
                 builder.append("<span style=\"color:").append(color);
-                if (character == 'l') { // Bold
+                if (character == 'l') { // Make the char bold
                     builder.append(";font-weight:bold");
                 }
                 builder.append("\">");
                 nextIsColor = false;
+                continue;
+            }
+            if (character == ' ') { // Preserve space character
+                builder.append("&nbsp;");
                 continue;
             }
             builder.append(character); // Append the char...
