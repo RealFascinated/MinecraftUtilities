@@ -75,11 +75,20 @@ public final class ColorUtils {
                 nextIsColor = true;
                 continue;
             }
-            if (nextIsColor) { // Map the current color to its hex code
+            if (nextIsColor && !String.valueOf(character).equals("|")) { // Map the current color to its hex code
                 String color = COLOR_MAP.getOrDefault(Character.toLowerCase(character), "");
                 builder.append("<span style=\"color:").append(color);
                 if (character == 'l') { // Make the char bold
                     builder.append(";font-weight:bold");
+                }
+                if (character == 'n') { // Make the char underlined
+                    builder.append(";text-decoration:underline");
+                }
+                if (character == 'o') { // Make the char italic
+                    builder.append(";font-style:italic");
+                }
+                if (character == 'm') { // Make the char strikethrough
+                    builder.append(";text-decoration:line-through");
                 }
                 builder.append("\">");
                 nextIsColor = false;
