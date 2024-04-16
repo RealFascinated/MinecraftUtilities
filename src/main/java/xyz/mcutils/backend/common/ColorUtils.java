@@ -46,21 +46,21 @@ public final class ColorUtils {
         return STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
     }
 
-    /**
-     * Convert the given input into HTML format.
-     * <p>
-     * This will replace each color code with
-     * a span tag with the respective color in
-     * hex format.
-     * </p>
-     *
-     * @param input the input to convert
-     * @return the converted input
-     */
     @NonNull
     public static String toHTML(@NonNull String input) {
         StringBuilder builder = new StringBuilder();
         boolean nextIsColor = false; // Is the next char a color code?
+
+        // Get the leading spaces from the first line
+        int leadingSpaces = 0;
+        boolean foundNonSpace = false;
+        for (char character : input.toCharArray()) {
+            if (character == ' ' && !foundNonSpace) {
+                leadingSpaces++;
+            } else {
+                foundNonSpace = true;
+            }
+        }
 
         for (char character : input.toCharArray()) {
             // Found color symbol, next character is the color
@@ -80,7 +80,10 @@ public final class ColorUtils {
                 builder.append(character); // Append the char...
             }
         }
+
+        // Add leading spaces to the end of the HTML string
+        builder.append("&nbsp;".repeat(Math.max(0, leadingSpaces)));
+
         return builder.toString();
     }
-
 }
