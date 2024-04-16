@@ -46,10 +46,18 @@ public final class ColorUtils {
         return STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
     }
 
+    /**
+     * Convert the given input
+     * into HTML.
+     * 
+     * @param input the input to convert
+     * @return the HTML converted input
+     */
     @NonNull
     public static String toHTML(@NonNull String input) {
         StringBuilder builder = new StringBuilder();
         boolean nextIsColor = false; // Is the next char a color code?
+        boolean isBold = false; // Is the text currently bold?
 
         // Get the leading spaces from the first line
         int leadingSpaces = 0;
@@ -74,6 +82,19 @@ public final class ColorUtils {
                 nextIsColor = false;
                 continue;
             }
+            if (character == 'l') { // Start bold
+                isBold = true;
+                builder.append("<b>");
+                continue;
+            }
+            if (character == 'r') { // Reset formatting
+                if (isBold) {
+                    builder.append("</b>");
+                    isBold = false;
+                }
+                builder.append("</span>");
+                continue;
+            }
             if (character == ' ') { // Preserve space character
                 builder.append("&nbsp;");
             } else {
@@ -86,4 +107,5 @@ public final class ColorUtils {
 
         return builder.toString();
     }
+
 }
