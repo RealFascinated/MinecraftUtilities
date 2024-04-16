@@ -1,6 +1,7 @@
 package xyz.mcutils.backend.service;
 
 import com.influxdb.client.WriteApiBlocking;
+import com.influxdb.client.write.Point;
 import com.influxdb.spring.influx.InfluxDB2AutoConfiguration;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import xyz.mcutils.backend.service.metric.Metric;
 import xyz.mcutils.backend.service.metric.metrics.RequestsPerRouteMetric;
 import xyz.mcutils.backend.service.metric.metrics.TotalRequestsMetric;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -108,9 +111,11 @@ public class MetricService {
      * Push all metrics to InfluxDB.
      */
     private void writeToInflux() {
+        List<Point> points = new ArrayList<>();
         for (Metric<?> metric : metrics.values()) {
-            influxWriteApi.writePoint(metric.toPoint());
+            points.add(metric.toPoint());
         }
+        influxWriteApi.writePoints(points);
         log.info("Wrote {} metrics to Influx", metrics.size());
     }
 }
