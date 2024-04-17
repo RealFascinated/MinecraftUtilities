@@ -1,7 +1,6 @@
 package xyz.mcutils.backend.service.metric;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.influxdb.annotations.Measurement;
 import com.influxdb.client.write.Point;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

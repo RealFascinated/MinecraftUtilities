@@ -1,6 +1,5 @@
 package xyz.mcutils.backend.service.metric.metrics.process;
 
-import xyz.mcutils.backend.service.metric.impl.IntegerMetric;
 import xyz.mcutils.backend.service.metric.impl.MapMetric;
 
 public class MemoryMetric extends MapMetric<String, Long> {
