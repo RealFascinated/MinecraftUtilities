@@ -16,6 +16,11 @@ public class CpuUsageMetric extends DoubleMetric {
     }
 
     @Override
+    public boolean isCollector() {
+        return true;
+    }
+
+    @Override
     public void collect() {
         this.setValue(OS_BEAN.getProcessCpuLoad() * 100);
     }
