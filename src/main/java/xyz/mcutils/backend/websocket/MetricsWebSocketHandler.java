@@ -1,0 +1,54 @@
+package xyz.mcutils.backend.websocket;
+
+import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+import xyz.mcutils.backend.Main;
+import xyz.mcutils.backend.common.Timer;
+import xyz.mcutils.backend.model.metric.WebsocketMetrics;
+import xyz.mcutils.backend.service.MetricService;
+import xyz.mcutils.backend.service.metric.metrics.TotalRequestsMetric;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+@Log4j2(topic = "WebSocket/Metrics")
+public class MetricsWebSocketHandler extends TextWebSocketHandler {
+    private final long interval = TimeUnit.SECONDS.toMillis(5); 
+    public final List<WebSocketSession> sessions = new ArrayList<>();
+
+    public MetricsWebSocketHandler(MetricService metricService) {
+        Timer.scheduleRepeating(() -> {
+            try {
+                WebsocketMetrics metrics = new WebsocketMetrics(Map.of(
+                        "totalRequests", metricService.getMetric(TotalRequestsMetric.class).getValue())
+                );
+
+                for (WebSocketSession session : sessions) {
+                    session.sendMessage(new TextMessage(Main.GSON.toJson(metrics)));
+                }
+            } catch (Exception e) {
+                log.error("An error occurred while sending metrics to the client", e);
+            }
+        }, interval, interval);
+    }
+
+    @Override
+    public void afterConnectionEstablished(WebSocketSession session) {
+        log.info("WebSocket connection established with session id: {}", session.getId());
+
+        sessions.add(session);
+    }
+
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, @NotNull CloseStatus status) {
+        log.info("WebSocket connection closed with session id: {}", session.getId());
+
+        sessions.remove(session);
+    }
+}

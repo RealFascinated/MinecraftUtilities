@@ -1,12 +1,7 @@
 package xyz.mcutils.backend.model.mojang;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
-import org.springframework.data.annotation.Id;
-import xyz.mcutils.backend.common.CachedResponse;
-import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
 
 import java.util.Map;
 
