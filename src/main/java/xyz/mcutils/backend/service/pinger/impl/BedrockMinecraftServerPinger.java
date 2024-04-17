@@ -10,10 +10,7 @@ import xyz.mcutils.backend.model.server.BedrockMinecraftServer;
 import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
 
 import java.io.IOException;
-import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
+import java.net.*;
 
 /**
  * The {@link MinecraftServerPinger} for pinging
@@ -56,11 +53,13 @@ public final class BedrockMinecraftServerPinger implements MinecraftServerPinger
                 throw new ResourceNotFoundException("Server didn't respond to ping");
             }
             return BedrockMinecraftServer.create(hostname, ip, port, records, response); // Return the server
-        } catch (IOException ex) {
+        } catch (IOException ex ) {
             if (ex instanceof UnknownHostException) {
                 throw new BadRequestException("Unknown hostname: %s".formatted(hostname));
             } else if (ex instanceof SocketTimeoutException) {
                 throw new ResourceNotFoundException(ex);
+            } else if (ex instanceof SocketException) {
+                throw new BadRequestException("An error occurred pinging %s:%s".formatted(hostname, port));
             }
             log.error("An error occurred pinging %s:%s:".formatted(hostname, port), ex);
         }

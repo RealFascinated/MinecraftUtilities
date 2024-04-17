@@ -1,5 +1,6 @@
 package xyz.mcutils.backend.common;
 
+import com.google.gson.JsonObject;
 import lombok.experimental.UtilityClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
