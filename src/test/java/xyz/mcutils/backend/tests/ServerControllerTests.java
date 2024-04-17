@@ -28,7 +28,7 @@ class ServerControllerTests {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.server.hostname").value(testServer));
+                .andExpect(jsonPath("$.hostname").value(testServer));
     }
 
     @Test
