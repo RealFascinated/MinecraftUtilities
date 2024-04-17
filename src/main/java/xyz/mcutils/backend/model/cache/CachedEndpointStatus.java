@@ -1,16 +1,17 @@
 package xyz.mcutils.backend.model.cache;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import xyz.mcutils.backend.common.CachedResponse;
+import xyz.mcutils.backend.model.mojang.EndpointStatus;
 
 import java.io.Serializable;
 import java.util.Map;
 
 @Setter @Getter @ToString
-@NoArgsConstructor
 @RedisHash(value = "mojangEndpointStatus", timeToLive = 60L) // 1 minute (in seconds)
 public class CachedEndpointStatus extends CachedResponse implements Serializable {
 
@@ -18,34 +19,17 @@ public class CachedEndpointStatus extends CachedResponse implements Serializable
      * The id for this endpoint cache.
      */
     @Id @NonNull @JsonIgnore
-    private String id;
+    private final String id;
 
     /**
-     * The list of endpoints and their status.
+     * The endpoint cache.
      */
-    private Map<String, Status> endpoints;
+    @JsonUnwrapped
+    private final EndpointStatus value;
 
-    public CachedEndpointStatus(@NonNull String id, Map<String, Status> endpoints) {
+    public CachedEndpointStatus(@NonNull String id, EndpointStatus value) {
         super(Cache.defaultCache());
         this.id = id;
-        this.endpoints = endpoints;
-    }
-
-    public enum Status {
-        /**
-         * The service is online and operational.
-         */
-        ONLINE,
-
-        /**
-         * The service is online, but may be experiencing issues.
-         * This could be due to high load or other issues.
-         */
-        DEGRADED,
-
-        /**
-         * The service is offline and not operational.
-         */
-        OFFLINE
+        this.value = value;
     }
 }

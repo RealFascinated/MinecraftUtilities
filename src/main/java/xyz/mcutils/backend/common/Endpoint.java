@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatusCode;
 import java.util.List;
 
 @AllArgsConstructor @Getter
-public class EndpointStatus {
+public class Endpoint {
 
     /**
      * The endpoint.

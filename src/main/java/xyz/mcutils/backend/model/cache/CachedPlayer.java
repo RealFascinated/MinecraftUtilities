@@ -1,6 +1,7 @@
 package xyz.mcutils.backend.model.cache;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public class CachedPlayer extends CachedResponse implements Serializable {
     /**
      * The player to cache.
      */
+    @JsonUnwrapped
     private Player player;
 
     public CachedPlayer(UUID uniqueId, Player player) {

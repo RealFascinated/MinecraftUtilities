@@ -1,6 +1,7 @@
 package xyz.mcutils.backend.model.cache;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
@@ -25,7 +26,7 @@ public class CachedMinecraftServer extends CachedResponse implements Serializabl
     /**
      * The cached server.
      */
-    @NonNull
+    @NonNull @JsonUnwrapped
     private MinecraftServer server;
 
     public CachedMinecraftServer(@NonNull String id, @NonNull MinecraftServer server) {

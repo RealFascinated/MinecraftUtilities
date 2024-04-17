@@ -14,11 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import xyz.mcutils.backend.Main;
-import xyz.mcutils.backend.common.EndpointStatus;
+import xyz.mcutils.backend.common.Endpoint;
 import xyz.mcutils.backend.common.ExpiringSet;
 import xyz.mcutils.backend.common.WebRequest;
 import xyz.mcutils.backend.config.Config;
 import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
+import xyz.mcutils.backend.model.mojang.EndpointStatus;
 import xyz.mcutils.backend.model.token.MojangProfileToken;
 import xyz.mcutils.backend.model.token.MojangUsernameToUuidToken;
 import xyz.mcutils.backend.repository.EndpointStatusRepository;
@@ -55,14 +56,14 @@ public class MojangService {
      * Information about the Mojang API endpoints.
      */
     private static final String MOJANG_ENDPOINT_STATUS_KEY = "mojang";
-    private static final List<EndpointStatus> MOJANG_ENDPOINTS = List.of(
-            new EndpointStatus("https://textures.minecraft.net", List.of(HttpStatus.BAD_REQUEST)),
-            new EndpointStatus("https://session.minecraft.net", List.of(HttpStatus.NOT_FOUND)),
-            new EndpointStatus("https://libraries.minecraft.net", List.of(HttpStatus.NOT_FOUND)),
-            new EndpointStatus("https://assets.mojang.com", List.of(HttpStatus.NOT_FOUND)),
-            new EndpointStatus("https://api.minecraftservices.com", List.of(HttpStatus.FORBIDDEN)),
-            new EndpointStatus(API_ENDPOINT, List.of(HttpStatus.OK)),
-            new EndpointStatus(SESSION_SERVER_ENDPOINT, List.of(HttpStatus.FORBIDDEN))
+    private static final List<Endpoint> MOJANG_ENDPOINTS = List.of(
+            new Endpoint("https://textures.minecraft.net", List.of(HttpStatus.BAD_REQUEST)),
+            new Endpoint("https://session.minecraft.net", List.of(HttpStatus.NOT_FOUND)),
+            new Endpoint("https://libraries.minecraft.net", List.of(HttpStatus.NOT_FOUND)),
+            new Endpoint("https://assets.mojang.com", List.of(HttpStatus.NOT_FOUND)),
+            new Endpoint("https://api.minecraftservices.com", List.of(HttpStatus.FORBIDDEN)),
+            new Endpoint(API_ENDPOINT, List.of(HttpStatus.OK)),
+            new Endpoint(SESSION_SERVER_ENDPOINT, List.of(HttpStatus.FORBIDDEN))
     );
 
     @Autowired
@@ -195,9 +196,9 @@ public class MojangService {
         }
 
         // Fetch the status of the Mojang API endpoints
-        List<CompletableFuture<CachedEndpointStatus.Status>> futures = new ArrayList<>();
-        for (EndpointStatus endpoint : MOJANG_ENDPOINTS) {
-            CompletableFuture<CachedEndpointStatus.Status> future = CompletableFuture.supplyAsync(() -> {
+        List<CompletableFuture<EndpointStatus.Status>> futures = new ArrayList<>();
+        for (Endpoint endpoint : MOJANG_ENDPOINTS) {
+            CompletableFuture<EndpointStatus.Status> future = CompletableFuture.supplyAsync(() -> {
                 boolean online = false;
                 long start = System.currentTimeMillis();
                 ResponseEntity<?> response = WebRequest.head(endpoint.getEndpoint(), String.class);
@@ -205,9 +206,9 @@ public class MojangService {
                     online = true;
                 }
                 if (online && System.currentTimeMillis() - start > 1000) { // If the response took longer than 1 second
-                    return CachedEndpointStatus.Status.DEGRADED;
+                    return EndpointStatus.Status.DEGRADED;
                 }
-                return online ? CachedEndpointStatus.Status.ONLINE : CachedEndpointStatus.Status.OFFLINE;
+                return online ? EndpointStatus.Status.ONLINE : EndpointStatus.Status.OFFLINE;
             }, Main.EXECUTOR_POOL);
 
             futures.add(future);
@@ -220,17 +221,17 @@ public class MojangService {
         }
 
         // Process the results
-        Map<String, CachedEndpointStatus.Status> endpoints = new HashMap<>();
+        Map<String, EndpointStatus.Status> endpoints = new HashMap<>();
         for (int i = 0; i < MOJANG_ENDPOINTS.size(); i++) {
-            EndpointStatus endpoint = MOJANG_ENDPOINTS.get(i);
-            CachedEndpointStatus.Status status = futures.get(i).join();
+            Endpoint endpoint = MOJANG_ENDPOINTS.get(i);
+            EndpointStatus.Status status = futures.get(i).join();
             endpoints.put(endpoint.getEndpoint(), status);
         }
 
         log.info("Fetched Mojang API status for {} endpoints", endpoints.size());
         CachedEndpointStatus status = new CachedEndpointStatus(
                 MOJANG_ENDPOINT_STATUS_KEY,
-                endpoints
+                new EndpointStatus(endpoints)
         );
         mojangEndpointStatusRepository.save(status);
         status.getCache().setCached(false);

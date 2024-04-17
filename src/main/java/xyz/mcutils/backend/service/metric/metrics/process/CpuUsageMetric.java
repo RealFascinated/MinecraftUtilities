@@ -15,7 +15,6 @@ public class CpuUsageMetric extends DoubleMetric {
         super("cpu_usage");
     }
 
-
     @Override
     public void collect() {
         this.setValue(OS_BEAN.getProcessCpuLoad() * 100);
