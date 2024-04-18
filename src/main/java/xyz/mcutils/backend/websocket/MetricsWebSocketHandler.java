@@ -42,13 +42,11 @@ public class MetricsWebSocketHandler extends TextWebSocketHandler {
      */
     private void sendMetrics(WebSocketSession session) {
         try {
-            WebsocketMetrics metrics = new WebsocketMetrics(Map.of(
+            session.sendMessage(new TextMessage(Main.GSON.toJson(Map.of(
                     "totalRequests", metricService.getMetric(TotalRequestsMetric.class).getValue(),
                     "totalServerLookups", metricService.getMetric(TotalServerLookupsMetric.class).getValue(),
                     "totalPlayerLookups", metricService.getMetric(TotalPlayerLookupsMetric.class).getValue()
-            ));
-
-            session.sendMessage(new TextMessage(Main.GSON.toJson(metrics)));
+            ))));
         } catch (Exception e) {
             log.error("An error occurred while sending metrics to the client", e);
         }
