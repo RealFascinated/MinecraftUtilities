@@ -20,12 +20,12 @@ public class UniqueServerLookupsMetric extends IntegerMetric {
     /**
      * Adds a lookup to the list of unique lookups.
      *
-     * @param lookup the query that was used to look up a player
+     * @param hostname the query that was used to look up a player
      */
-    public void addLookup(String lookup) {
-        lookup = lookup.toLowerCase();
-        if (!uniqueLookups.contains(lookup)) {
-            uniqueLookups.add(lookup);
+    public void addLookup(String hostname) {
+        hostname = hostname.toLowerCase();
+        if (!uniqueLookups.contains(hostname)) {
+            uniqueLookups.add(hostname);
         }
     }
 

@@ -66,8 +66,6 @@ public class ServerService {
         String key = "%s-%s:%s".formatted(platformName, hostname, port);
         log.info("Getting server: {}:{}", hostname, port);
 
-        ((UniqueServerLookupsMetric) metricService.getMetric(UniqueServerLookupsMetric.class)).addLookup(key); // Add the server lookup to the unique server lookups
-
         // Check if the server is cached
         Optional<CachedMinecraftServer> cached = serverCacheRepository.findById(key);
         if (cached.isPresent() && EnvironmentUtils.isProduction()) {
@@ -101,6 +99,8 @@ public class ServerService {
         if (platform == MinecraftServer.Platform.JAVA) {
             ((JavaMinecraftServer) server.getServer()).setMojangBlocked(mojangService.isServerBlocked(hostname));
         }
+
+        ((UniqueServerLookupsMetric) metricService.getMetric(UniqueServerLookupsMetric.class)).addLookup(key); // Add the server lookup to the unique server lookups
 
         log.info("Found server: {}:{}", hostname, port);
         serverCacheRepository.save(server);
