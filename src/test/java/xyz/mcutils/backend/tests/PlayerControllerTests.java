@@ -3,10 +3,12 @@ package xyz.mcutils.backend.tests;
 import cc.fascinated.config.TestRedisConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import xyz.mcutils.backend.config.TestMongoConfig;
 import xyz.mcutils.backend.model.skin.ISkinPart;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -14,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-@SpringBootTest(classes = TestRedisConfig.class)
+@SpringBootTest(classes = {TestRedisConfig.class, TestMongoConfig.class})
 class PlayerControllerTests {
 
     private final String testPlayerUuid = "eeab5f8a-18dd-4d58-af78-2b3c4543da48";
