@@ -39,6 +39,8 @@ public class MetricService {
         this.influxWriteApi = influxAutoConfiguration.influxDBClient().getWriteApiBlocking();
         this.metricsRepository = metricsRepository;
 
+        Map<Metric<?>, Boolean> collectorEnabled = new HashMap<>();
+
         // Register the metrics
         registerMetric(new TotalRequestsMetric());
         registerMetric(new RequestsPerRouteMetric());
@@ -48,8 +50,17 @@ public class MetricService {
         registerMetric(new UniquePlayerLookupsMetric());
         registerMetric(new UniqueServerLookupsMetric());
 
+        // please god forgive my sins; this is the worst code I've ever written
+        for (Metric<?> metric : metrics.values()) {
+            collectorEnabled.put(metric, metric.isCollector());
+        }
+
         // Load the metrics from Redis
         loadMetrics();
+
+        for (Map.Entry<Metric<?>, Boolean> entry : collectorEnabled.entrySet()) {
+            entry.getKey().setCollector(entry.getValue());
+        }
 
         Timer.scheduleRepeating(() -> {
             saveMetrics();
