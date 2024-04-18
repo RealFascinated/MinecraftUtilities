@@ -18,7 +18,6 @@ import xyz.mcutils.backend.common.Endpoint;
 import xyz.mcutils.backend.common.EnvironmentUtils;
 import xyz.mcutils.backend.common.ExpiringSet;
 import xyz.mcutils.backend.common.WebRequest;
-import xyz.mcutils.backend.config.Config;
 import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
 import xyz.mcutils.backend.model.mojang.EndpointStatus;
 import xyz.mcutils.backend.model.token.MojangProfileToken;

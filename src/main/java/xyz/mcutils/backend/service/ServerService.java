@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import xyz.mcutils.backend.common.DNSUtils;
 import xyz.mcutils.backend.common.EnumUtils;
 import xyz.mcutils.backend.common.EnvironmentUtils;
-import xyz.mcutils.backend.config.Config;
 import xyz.mcutils.backend.exception.impl.BadRequestException;
 import xyz.mcutils.backend.exception.impl.ResourceNotFoundException;
 import xyz.mcutils.backend.model.cache.CachedMinecraftServer;

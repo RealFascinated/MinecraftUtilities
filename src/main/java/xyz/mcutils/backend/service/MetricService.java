@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.mcutils.backend.common.EnvironmentUtils;
 import xyz.mcutils.backend.common.Timer;
-import xyz.mcutils.backend.config.Config;
 import xyz.mcutils.backend.repository.mongo.MetricsRepository;
 import xyz.mcutils.backend.service.metric.Metric;
 import xyz.mcutils.backend.service.metric.metrics.*;
