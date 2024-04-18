@@ -46,6 +46,7 @@ public class MetricService {
         registerMetric(new CpuUsageMetric());
         registerMetric(new ConnectedSocketsMetric());
         registerMetric(new UniquePlayerLookupsMetric());
+        registerMetric(new UniqueServerLookupsMetric());
 
         // Load the metrics from Redis
         loadMetrics();
