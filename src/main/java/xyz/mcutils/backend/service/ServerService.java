@@ -100,7 +100,8 @@ public class ServerService {
             ((JavaMinecraftServer) server.getServer()).setMojangBlocked(mojangService.isServerBlocked(hostname));
         }
 
-        ((UniqueServerLookupsMetric) metricService.getMetric(UniqueServerLookupsMetric.class)).addLookup(key); // Add the server lookup to the unique server lookups
+        ((UniqueServerLookupsMetric) metricService.getMetric(UniqueServerLookupsMetric.class))
+                .addLookup("%s-%s:%s".formatted(platformName, hostname, port)); // Add the server lookup to the unique server lookups
 
         log.info("Found server: {}:{}", hostname, port);
         serverCacheRepository.save(server);
