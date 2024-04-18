@@ -1,7 +1,6 @@
 package xyz.mcutils.backend.service.metric.metrics.process;
 
 import com.sun.management.OperatingSystemMXBean;
-import xyz.mcutils.backend.service.MetricService;
 import xyz.mcutils.backend.service.metric.impl.DoubleMetric;
 
 import java.lang.management.ManagementFactory;

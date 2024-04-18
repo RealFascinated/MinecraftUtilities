@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.mcutils.backend.common.Timer;
+import xyz.mcutils.backend.config.Config;
 import xyz.mcutils.backend.repository.mongo.MetricsRepository;
 import xyz.mcutils.backend.service.metric.Metric;
 import xyz.mcutils.backend.service.metric.metrics.*;
@@ -55,17 +56,19 @@ public class MetricService {
             collectorEnabled.put(metric, metric.isCollector());
         }
 
-        // Load the metrics from Redis
-        loadMetrics();
+        if (Config.INSTANCE.isProduction()) {
+            // Load the metrics from Redis
+            loadMetrics();
 
-        for (Map.Entry<Metric<?>, Boolean> entry : collectorEnabled.entrySet()) {
-            entry.getKey().setCollector(entry.getValue());
+            for (Map.Entry<Metric<?>, Boolean> entry : collectorEnabled.entrySet()) {
+                entry.getKey().setCollector(entry.getValue());
+            }
+
+            Timer.scheduleRepeating(() -> {
+                saveMetrics();
+                writeToInflux();
+            }, saveInterval, saveInterval);
         }
-
-        Timer.scheduleRepeating(() -> {
-            saveMetrics();
-            writeToInflux();
-        }, saveInterval, saveInterval);
     }
 
     /**

@@ -1,6 +1,5 @@
 package xyz.mcutils.backend.service.metric.metrics;
 
-import xyz.mcutils.backend.service.MetricService;
 import xyz.mcutils.backend.service.metric.impl.IntegerMetric;
 
 import java.util.ArrayList;

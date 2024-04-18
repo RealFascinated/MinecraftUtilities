@@ -9,7 +9,6 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
-import xyz.mcutils.backend.service.MetricService;
 
 @AllArgsConstructor
 @Getter @Setter @ToString

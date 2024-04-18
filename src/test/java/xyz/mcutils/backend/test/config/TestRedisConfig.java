@@ -4,8 +4,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.NonNull;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import redis.embedded.RedisServer;
 
 import java.io.IOException;
