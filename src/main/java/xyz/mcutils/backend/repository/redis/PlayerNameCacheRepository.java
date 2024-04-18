@@ -14,6 +14,4 @@ import xyz.mcutils.backend.model.cache.CachedPlayerName;
  *
  * @author Braydon
  */
-@EnableRedisRepositories
-@Repository
 public interface PlayerNameCacheRepository extends CrudRepository<CachedPlayerName, String> { }

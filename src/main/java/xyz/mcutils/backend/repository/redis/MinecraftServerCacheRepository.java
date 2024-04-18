@@ -10,6 +10,4 @@ import xyz.mcutils.backend.model.cache.CachedMinecraftServer;
  *
  * @author Braydon
  */
-@EnableRedisRepositories
-@Repository
 public interface MinecraftServerCacheRepository extends CrudRepository<CachedMinecraftServer, String> { }

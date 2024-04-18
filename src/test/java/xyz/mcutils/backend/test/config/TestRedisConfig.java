@@ -1,9 +1,11 @@
-package cc.fascinated.config;
+package xyz.mcutils.backend.test.config;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.NonNull;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import redis.embedded.RedisServer;
 
 import java.io.IOException;
@@ -16,7 +18,8 @@ import java.io.IOException;
  */
 @TestConfiguration
 public class TestRedisConfig {
-    @NonNull private final RedisServer server;
+    @NonNull
+    private final RedisServer server;
 
     public TestRedisConfig() throws IOException {
         server = new RedisServer(); // Construct the mock server

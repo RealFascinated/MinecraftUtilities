@@ -22,7 +22,7 @@ public class CpuUsageMetric extends DoubleMetric {
     }
 
     @Override
-    public void collect(MetricService metricService) {
+    public void collect() {
         this.setValue(OS_BEAN.getProcessCpuLoad() * 100);
     }
 }

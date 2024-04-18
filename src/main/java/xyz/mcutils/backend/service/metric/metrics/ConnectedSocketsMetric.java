@@ -16,7 +16,7 @@ public class ConnectedSocketsMetric extends IntegerMetric {
     }
 
     @Override
-    public void collect(MetricService metricService) {
+    public void collect() {
         setValue(MetricsWebSocketHandler.SESSIONS.size());
     }
 }

@@ -12,6 +12,4 @@ import java.util.UUID;
  *
  * @author Braydon
  */
-@EnableRedisRepositories
-@Repository
 public interface PlayerCacheRepository extends CrudRepository<CachedPlayer, UUID> { }

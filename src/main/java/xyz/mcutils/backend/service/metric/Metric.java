@@ -35,7 +35,7 @@ public abstract class Metric<T> {
     /**
      * Collects the metric.
      */
-    public void collect(MetricService metricService) {}
+    public void collect() {}
 
     /**
      * Gets this point as a {@link Point}.

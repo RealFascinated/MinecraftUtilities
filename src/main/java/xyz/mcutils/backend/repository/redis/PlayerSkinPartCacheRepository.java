@@ -12,6 +12,4 @@ import xyz.mcutils.backend.model.cache.CachedPlayerSkinPart;
  * player skin part by it's id.
  * </p>
  */
-@EnableRedisRepositories
-@Repository
 public interface PlayerSkinPartCacheRepository extends CrudRepository<CachedPlayerSkinPart, String> { }

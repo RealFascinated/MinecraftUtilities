@@ -131,7 +131,7 @@ public class MetricService {
         List<Point> points = new ArrayList<>();
         for (Metric<?> metric : metrics.values()) {
             if (metric.isCollector()) {
-                metric.collect(this);
+                metric.collect();
             }
             Point point = metric.toPoint();
             if (point != null) {

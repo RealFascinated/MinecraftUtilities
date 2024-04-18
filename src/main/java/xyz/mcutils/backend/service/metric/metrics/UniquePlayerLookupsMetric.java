@@ -31,7 +31,7 @@ public class UniquePlayerLookupsMetric extends IntegerMetric {
     }
 
     @Override
-    public void collect(MetricService metricService) {
+    public void collect() {
         setValue(uniqueLookups.size());
     }
 }

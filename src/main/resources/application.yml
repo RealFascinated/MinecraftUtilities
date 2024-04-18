@@ -20,7 +20,8 @@ spring:
     # MongoDB - This is used for general data storage
     mongodb:
       uri: mongodb://localhost:27017
-      database: database
+      database: test
+      port: 27017
 
 # Disable default metrics
 management:
@@ -40,5 +41,11 @@ influx:
   token: token
   org: org
   bucket: bucket
+
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 7.0.8
 
 public-url: http://localhost

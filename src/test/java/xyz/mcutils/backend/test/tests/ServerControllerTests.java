@@ -1,25 +1,19 @@
-package xyz.mcutils.backend.tests;
+package xyz.mcutils.backend.test.tests;
 
-import cc.fascinated.config.TestRedisConfig;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import xyz.mcutils.backend.config.TestMongoConfig;
+import xyz.mcutils.backend.test.config.TestRedisConfig;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringBootTest(classes = { TestRedisConfig.class })
 @AutoConfigureMockMvc
-@SpringBootTest(classes = {TestRedisConfig.class})
-@DataMongoTest()
-@ExtendWith(SpringExtension.class)
 class ServerControllerTests {
 
     private final String testServer = "play.hypixel.net";

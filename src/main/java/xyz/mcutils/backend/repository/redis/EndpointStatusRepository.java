@@ -10,6 +10,4 @@ import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
  *
  * @author Braydon
  */
-@EnableRedisRepositories
-@Repository
 public interface EndpointStatusRepository extends CrudRepository<CachedEndpointStatus, String> { }

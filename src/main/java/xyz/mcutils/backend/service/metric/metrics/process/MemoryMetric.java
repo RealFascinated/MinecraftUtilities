@@ -15,7 +15,7 @@ public class MemoryMetric extends MapMetric<String, Long> {
     }
 
     @Override
-    public void collect(MetricService metricService) {
+    public void collect() {
         Runtime runtime = Runtime.getRuntime();
 
         this.getValue().put("total", runtime.maxMemory());
