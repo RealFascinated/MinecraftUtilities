@@ -8,11 +8,10 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import xyz.mcutils.backend.Main;
 import xyz.mcutils.backend.common.Timer;
-import xyz.mcutils.backend.model.metric.WebsocketMetrics;
 import xyz.mcutils.backend.service.MetricService;
-import xyz.mcutils.backend.service.metric.metrics.TotalPlayerLookupsMetric;
 import xyz.mcutils.backend.service.metric.metrics.TotalRequestsMetric;
-import xyz.mcutils.backend.service.metric.metrics.TotalServerLookupsMetric;
+import xyz.mcutils.backend.service.metric.metrics.UniquePlayerLookupsMetric;
+import xyz.mcutils.backend.service.metric.metrics.UniqueServerLookupsMetric;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +43,8 @@ public class MetricsWebSocketHandler extends TextWebSocketHandler {
         try {
             session.sendMessage(new TextMessage(Main.GSON.toJson(Map.of(
                     "totalRequests", metricService.getMetric(TotalRequestsMetric.class).getValue(),
-                    "totalServerLookups", metricService.getMetric(TotalServerLookupsMetric.class).getValue(),
-                    "totalPlayerLookups", metricService.getMetric(TotalPlayerLookupsMetric.class).getValue()
+                    "uniqueServerLookups", metricService.getMetric(UniqueServerLookupsMetric.class).getValue(),
+                    "uniquePlayerLookups", metricService.getMetric(UniquePlayerLookupsMetric.class).getValue()
             ))));
         } catch (Exception e) {
             log.error("An error occurred while sending metrics to the client", e);

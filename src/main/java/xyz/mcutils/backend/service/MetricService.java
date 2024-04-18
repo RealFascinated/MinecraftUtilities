@@ -44,9 +44,8 @@ public class MetricService {
         registerMetric(new RequestsPerRouteMetric());
         registerMetric(new MemoryMetric());
         registerMetric(new CpuUsageMetric());
-        registerMetric(new TotalPlayerLookupsMetric());
-        registerMetric(new TotalServerLookupsMetric());
         registerMetric(new ConnectedSocketsMetric());
+        registerMetric(new UniquePlayerLookupsMetric());
 
         // Load the metrics from Redis
         loadMetrics();
@@ -88,8 +87,8 @@ public class MetricService {
      */
     public void loadMetrics() {
         log.info("Loading metrics");
-        for (Metric<?> metric : metricsRepository.findAll()) {
-            metrics.put(metric.getClass(), metric);
+        for (Metric<?> metric : metrics.values()) {
+            metricsRepository.findById(metric.getId()).ifPresent(loaded -> metrics.put(loaded.getClass(), loaded));
         }
         log.info("Loaded {} metrics", metrics.size());
     }
@@ -120,7 +119,7 @@ public class MetricService {
         List<Point> points = new ArrayList<>();
         for (Metric<?> metric : metrics.values()) {
             if (metric.isCollector()) {
-                metric.collect();
+                metric.collect(this);
             }
             Point point = metric.toPoint();
             if (point != null) {

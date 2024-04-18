@@ -1,5 +1,6 @@
 package xyz.mcutils.backend.service.metric.metrics.process;
 
+import xyz.mcutils.backend.service.MetricService;
 import xyz.mcutils.backend.service.metric.impl.MapMetric;
 
 public class MemoryMetric extends MapMetric<String, Long> {
@@ -14,7 +15,7 @@ public class MemoryMetric extends MapMetric<String, Long> {
     }
 
     @Override
-    public void collect() {
+    public void collect(MetricService metricService) {
         Runtime runtime = Runtime.getRuntime();
 
         this.getValue().put("total", runtime.maxMemory());

@@ -24,8 +24,7 @@ import xyz.mcutils.backend.model.token.MojangUsernameToUuidToken;
 import xyz.mcutils.backend.repository.PlayerCacheRepository;
 import xyz.mcutils.backend.repository.PlayerNameCacheRepository;
 import xyz.mcutils.backend.repository.PlayerSkinPartCacheRepository;
-import xyz.mcutils.backend.service.metric.metrics.TotalPlayerLookupsMetric;
-import xyz.mcutils.backend.service.metric.metrics.TotalServerLookupsMetric;
+import xyz.mcutils.backend.service.metric.metrics.UniquePlayerLookupsMetric;
 
 import java.awt.image.BufferedImage;
 import java.util.Optional;
@@ -65,7 +64,7 @@ public class PlayerService {
             uuid = usernameToUuid(id).getUniqueId();
         }
 
-        ((TotalPlayerLookupsMetric) metricService.getMetric(TotalPlayerLookupsMetric.class)).increment(); // Increment the total player lookups
+        ((UniquePlayerLookupsMetric) metricService.getMetric(UniquePlayerLookupsMetric.class)).addLookup(id); // Add the lookup to the unique player lookups
 
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
         if (cachedPlayer.isPresent() && Config.INSTANCE.isProduction()) { // Return the cached player if it exists

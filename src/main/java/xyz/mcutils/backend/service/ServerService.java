@@ -15,8 +15,7 @@ import xyz.mcutils.backend.model.dns.impl.SRVRecord;
 import xyz.mcutils.backend.model.server.JavaMinecraftServer;
 import xyz.mcutils.backend.model.server.MinecraftServer;
 import xyz.mcutils.backend.repository.MinecraftServerCacheRepository;
-import xyz.mcutils.backend.service.metric.Metric;
-import xyz.mcutils.backend.service.metric.metrics.TotalServerLookupsMetric;
+import xyz.mcutils.backend.service.metric.metrics.UniqueServerLookupsMetric;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -66,7 +65,7 @@ public class ServerService {
         String key = "%s-%s:%s".formatted(platformName, hostname, port);
         log.info("Getting server: {}:{}", hostname, port);
 
-        ((TotalServerLookupsMetric) metricService.getMetric(TotalServerLookupsMetric.class)).increment(); // Increment the total server lookups
+        ((UniqueServerLookupsMetric) metricService.getMetric(UniqueServerLookupsMetric.class)).addLookup(key); // Add the server lookup to the unique server lookups
 
         // Check if the server is cached
         Optional<CachedMinecraftServer> cached = serverCacheRepository.findById(key);

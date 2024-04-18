@@ -1,5 +1,6 @@
 package xyz.mcutils.backend.service.metric.metrics;
 
+import xyz.mcutils.backend.service.MetricService;
 import xyz.mcutils.backend.service.metric.impl.IntegerMetric;
 import xyz.mcutils.backend.websocket.MetricsWebSocketHandler;
 
@@ -15,7 +16,7 @@ public class ConnectedSocketsMetric extends IntegerMetric {
     }
 
     @Override
-    public void collect() {
+    public void collect(MetricService metricService) {
         setValue(MetricsWebSocketHandler.SESSIONS.size());
     }
 }

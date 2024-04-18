@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import xyz.mcutils.backend.service.MetricService;
 
 @AllArgsConstructor
 @Getter @Setter @ToString
@@ -33,7 +34,7 @@ public abstract class Metric<T> {
     /**
      * Collects the metric.
      */
-    public void collect() {}
+    public void collect(MetricService metricService) {}
 
     /**
      * Gets this point as a {@link Point}.
