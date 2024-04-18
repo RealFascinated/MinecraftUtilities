@@ -19,29 +19,42 @@ import java.util.concurrent.TimeUnit;
 
 @Log4j2(topic = "WebSocket/Metrics")
 public class MetricsWebSocketHandler extends TextWebSocketHandler {
-    private final long interval = TimeUnit.SECONDS.toMillis(5); 
+    private final long interval = TimeUnit.SECONDS.toMillis(5);
     public final List<WebSocketSession> sessions = new ArrayList<>();
 
-    public MetricsWebSocketHandler(MetricService metricService) {
-        Timer.scheduleRepeating(() -> {
-            try {
-                WebsocketMetrics metrics = new WebsocketMetrics(Map.of(
-                        "totalRequests", metricService.getMetric(TotalRequestsMetric.class).getValue())
-                );
+    private final MetricService metricService;
 
-                for (WebSocketSession session : sessions) {
-                    session.sendMessage(new TextMessage(Main.GSON.toJson(metrics)));
-                }
-            } catch (Exception e) {
-                log.error("An error occurred while sending metrics to the client", e);
+    public MetricsWebSocketHandler(MetricService metricService) {
+        this.metricService = metricService;
+        Timer.scheduleRepeating(() -> {
+            for (WebSocketSession session : sessions) {
+                sendMetrics(session);
             }
         }, interval, interval);
+    }
+
+    /**
+     * Sends the metrics to the client.
+     *
+     * @param session the session to send the metrics to
+     */
+    private void sendMetrics(WebSocketSession session) {
+        try {
+            WebsocketMetrics metrics = new WebsocketMetrics(Map.of(
+                    "totalRequests", metricService.getMetric(TotalRequestsMetric.class).getValue())
+            );
+
+            session.sendMessage(new TextMessage(Main.GSON.toJson(metrics)));
+        } catch (Exception e) {
+            log.error("An error occurred while sending metrics to the client", e);
+        }
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         log.info("WebSocket connection established with session id: {}", session.getId());
 
+        sendMetrics(session);
         sessions.add(session);
     }
 
