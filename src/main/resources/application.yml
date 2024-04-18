@@ -17,6 +17,7 @@ spring:
       database: 1
       auth: "" # Leave blank for no auth
 
+    # MongoDB - This is used for general data storage
     mongodb:
       uri: mongodb://localhost:27017
       database: database
