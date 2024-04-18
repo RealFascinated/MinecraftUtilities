@@ -7,12 +7,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.mongodb.core.mapping.Document;
 import xyz.mcutils.backend.service.MetricService;
 
 @AllArgsConstructor
 @Getter @Setter @ToString
-@RedisHash(value = "metric")
+@Document("metrics")
 public abstract class Metric<T> {
     /**
      * The id of the metric.

@@ -83,6 +83,12 @@
             <artifactId>jedis</artifactId>
         </dependency>
 
+        <!-- MongoDB for data storage -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
         <!-- Libraries -->
         <dependency>
             <groupId>org.projectlombok</groupId>

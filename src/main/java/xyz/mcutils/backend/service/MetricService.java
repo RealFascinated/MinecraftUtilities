@@ -101,7 +101,7 @@ public class MetricService {
         for (Metric<?> metric : metrics.values()) {
             saveMetric(metric);
         }
-        log.info("Saved {} metrics to Redis", metrics.size());
+        log.info("Saved {} metrics to MongoDB", metrics.size());
     }
 
     /**

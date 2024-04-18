@@ -1,6 +1,6 @@
 package xyz.mcutils.backend.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import xyz.mcutils.backend.service.metric.Metric;
 
 /**
@@ -8,4 +8,4 @@ import xyz.mcutils.backend.service.metric.Metric;
  *
  * @author Braydon
  */
-public interface MetricsRepository extends CrudRepository<Metric<?>, String> { }
+public interface MetricsRepository extends MongoRepository<Metric<?>, String> { }

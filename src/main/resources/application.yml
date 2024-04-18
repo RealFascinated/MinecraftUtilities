@@ -17,6 +17,10 @@ spring:
       database: 1
       auth: "" # Leave blank for no auth
 
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: database
+
 # Disable default metrics
 management:
   endpoints:
