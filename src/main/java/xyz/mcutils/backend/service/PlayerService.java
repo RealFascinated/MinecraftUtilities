@@ -24,6 +24,8 @@ import xyz.mcutils.backend.model.token.MojangUsernameToUuidToken;
 import xyz.mcutils.backend.repository.PlayerCacheRepository;
 import xyz.mcutils.backend.repository.PlayerNameCacheRepository;
 import xyz.mcutils.backend.repository.PlayerSkinPartCacheRepository;
+import xyz.mcutils.backend.service.metric.metrics.TotalPlayerLookupsMetric;
+import xyz.mcutils.backend.service.metric.metrics.TotalServerLookupsMetric;
 
 import java.awt.image.BufferedImage;
 import java.util.Optional;
@@ -33,14 +35,16 @@ import java.util.UUID;
 public class PlayerService {
 
     private final MojangService mojangAPIService;
+    private final MetricService metricService;
     private final PlayerCacheRepository playerCacheRepository;
     private final PlayerNameCacheRepository playerNameCacheRepository;
     private final PlayerSkinPartCacheRepository playerSkinPartCacheRepository;
 
     @Autowired
-    public PlayerService(MojangService mojangAPIService, PlayerCacheRepository playerCacheRepository,
+    public PlayerService(MojangService mojangAPIService, MetricService metricService, PlayerCacheRepository playerCacheRepository,
                          PlayerNameCacheRepository playerNameCacheRepository, PlayerSkinPartCacheRepository playerSkinPartCacheRepository) {
         this.mojangAPIService = mojangAPIService;
+        this.metricService = metricService;
         this.playerCacheRepository = playerCacheRepository;
         this.playerNameCacheRepository = playerNameCacheRepository;
         this.playerSkinPartCacheRepository = playerSkinPartCacheRepository;
@@ -60,6 +64,8 @@ public class PlayerService {
         if (uuid == null) { // If the id is not a valid uuid, get the uuid from the username
             uuid = usernameToUuid(id).getUniqueId();
         }
+
+        ((TotalPlayerLookupsMetric) metricService.getMetric(TotalPlayerLookupsMetric.class)).increment(); // Increment the total player lookups
 
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
         if (cachedPlayer.isPresent() && Config.INSTANCE.isProduction()) { // Return the cached player if it exists

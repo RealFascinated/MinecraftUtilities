@@ -10,7 +10,9 @@ import xyz.mcutils.backend.Main;
 import xyz.mcutils.backend.common.Timer;
 import xyz.mcutils.backend.model.metric.WebsocketMetrics;
 import xyz.mcutils.backend.service.MetricService;
+import xyz.mcutils.backend.service.metric.metrics.TotalPlayerLookupsMetric;
 import xyz.mcutils.backend.service.metric.metrics.TotalRequestsMetric;
+import xyz.mcutils.backend.service.metric.metrics.TotalServerLookupsMetric;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +43,10 @@ public class MetricsWebSocketHandler extends TextWebSocketHandler {
     private void sendMetrics(WebSocketSession session) {
         try {
             WebsocketMetrics metrics = new WebsocketMetrics(Map.of(
-                    "totalRequests", metricService.getMetric(TotalRequestsMetric.class).getValue())
-            );
+                    "totalRequests", metricService.getMetric(TotalRequestsMetric.class).getValue(),
+                    "totalServerLookups", metricService.getMetric(TotalServerLookupsMetric.class).getValue(),
+                    "totalPlayerLookups", metricService.getMetric(TotalPlayerLookupsMetric.class).getValue()
+            ));
 
             session.sendMessage(new TextMessage(Main.GSON.toJson(metrics)));
         } catch (Exception e) {
