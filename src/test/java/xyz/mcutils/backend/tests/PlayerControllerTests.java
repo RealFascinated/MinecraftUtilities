@@ -18,7 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {TestRedisConfig.class, TestMongoConfig.class})
-@ExtendWith(SpringExtension.class)
 class PlayerControllerTests {
 
     private final String testPlayerUuid = "eeab5f8a-18dd-4d58-af78-2b3c4543da48";

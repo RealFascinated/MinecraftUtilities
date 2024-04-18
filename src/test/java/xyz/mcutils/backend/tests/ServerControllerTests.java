@@ -17,7 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {TestRedisConfig.class, TestMongoConfig.class})
-@ExtendWith(SpringExtension.class)
 class ServerControllerTests {
 
     private final String testServer = "play.hypixel.net";
