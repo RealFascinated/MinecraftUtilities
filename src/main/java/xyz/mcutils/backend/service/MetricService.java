@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import xyz.mcutils.backend.common.Timer;
 import xyz.mcutils.backend.repository.MetricsRepository;
 import xyz.mcutils.backend.service.metric.Metric;
-import xyz.mcutils.backend.service.metric.metrics.RequestsPerRouteMetric;
-import xyz.mcutils.backend.service.metric.metrics.TotalPlayerLookupsMetric;
-import xyz.mcutils.backend.service.metric.metrics.TotalRequestsMetric;
-import xyz.mcutils.backend.service.metric.metrics.TotalServerLookupsMetric;
+import xyz.mcutils.backend.service.metric.metrics.*;
 import xyz.mcutils.backend.service.metric.metrics.process.CpuUsageMetric;
 import xyz.mcutils.backend.service.metric.metrics.process.MemoryMetric;
 
@@ -49,6 +46,7 @@ public class MetricService {
         registerMetric(new CpuUsageMetric());
         registerMetric(new TotalPlayerLookupsMetric());
         registerMetric(new TotalServerLookupsMetric());
+        registerMetric(new ConnectedSocketsMetric());
 
         // Load the metrics from Redis
         loadMetrics();

@@ -22,14 +22,14 @@ import java.util.concurrent.TimeUnit;
 @Log4j2(topic = "WebSocket/Metrics")
 public class MetricsWebSocketHandler extends TextWebSocketHandler {
     private final long interval = TimeUnit.SECONDS.toMillis(5);
-    public final List<WebSocketSession> sessions = new ArrayList<>();
+    public static final List<WebSocketSession> SESSIONS = new ArrayList<>();
 
     private final MetricService metricService;
 
     public MetricsWebSocketHandler(MetricService metricService) {
         this.metricService = metricService;
         Timer.scheduleRepeating(() -> {
-            for (WebSocketSession session : sessions) {
+            for (WebSocketSession session : SESSIONS) {
                 sendMetrics(session);
             }
         }, interval, interval);
@@ -59,13 +59,13 @@ public class MetricsWebSocketHandler extends TextWebSocketHandler {
         log.info("WebSocket connection established with session id: {}", session.getId());
 
         sendMetrics(session);
-        sessions.add(session);
+        SESSIONS.add(session);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, @NotNull CloseStatus status) {
         log.info("WebSocket connection closed with session id: {}", session.getId());
 
-        sessions.remove(session);
+        SESSIONS.remove(session);
     }
 }
