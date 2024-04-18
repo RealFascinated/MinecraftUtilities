@@ -21,9 +21,9 @@ import xyz.mcutils.backend.model.skin.ISkinPart;
 import xyz.mcutils.backend.model.skin.Skin;
 import xyz.mcutils.backend.model.token.MojangProfileToken;
 import xyz.mcutils.backend.model.token.MojangUsernameToUuidToken;
-import xyz.mcutils.backend.repository.PlayerCacheRepository;
-import xyz.mcutils.backend.repository.PlayerNameCacheRepository;
-import xyz.mcutils.backend.repository.PlayerSkinPartCacheRepository;
+import xyz.mcutils.backend.repository.redis.PlayerCacheRepository;
+import xyz.mcutils.backend.repository.redis.PlayerNameCacheRepository;
+import xyz.mcutils.backend.repository.redis.PlayerSkinPartCacheRepository;
 import xyz.mcutils.backend.service.metric.metrics.UniquePlayerLookupsMetric;
 
 import java.awt.image.BufferedImage;

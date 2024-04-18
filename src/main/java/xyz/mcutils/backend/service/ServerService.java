@@ -14,7 +14,7 @@ import xyz.mcutils.backend.model.dns.impl.ARecord;
 import xyz.mcutils.backend.model.dns.impl.SRVRecord;
 import xyz.mcutils.backend.model.server.JavaMinecraftServer;
 import xyz.mcutils.backend.model.server.MinecraftServer;
-import xyz.mcutils.backend.repository.MinecraftServerCacheRepository;
+import xyz.mcutils.backend.repository.redis.MinecraftServerCacheRepository;
 import xyz.mcutils.backend.service.metric.metrics.UniqueServerLookupsMetric;
 
 import java.net.InetSocketAddress;

@@ -8,12 +8,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 /**
  * @author Braydon
  */
 @Configuration
 @Log4j2(topic = "Redis")
+@EnableRedisRepositories(basePackages = "xyz.mcutils.backend.repository.redis")
 public class RedisConfig {
     /**
      * The Redis server host.

@@ -7,7 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.mcutils.backend.common.Timer;
-import xyz.mcutils.backend.repository.MetricsRepository;
+import xyz.mcutils.backend.repository.mongo.MetricsRepository;
 import xyz.mcutils.backend.service.metric.Metric;
 import xyz.mcutils.backend.service.metric.metrics.*;
 import xyz.mcutils.backend.service.metric.metrics.process.CpuUsageMetric;

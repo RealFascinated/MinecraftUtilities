@@ -22,7 +22,7 @@ import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
 import xyz.mcutils.backend.model.mojang.EndpointStatus;
 import xyz.mcutils.backend.model.token.MojangProfileToken;
 import xyz.mcutils.backend.model.token.MojangUsernameToUuidToken;
-import xyz.mcutils.backend.repository.EndpointStatusRepository;
+import xyz.mcutils.backend.repository.redis.EndpointStatusRepository;
 
 import java.io.InputStream;
 import java.net.URL;
