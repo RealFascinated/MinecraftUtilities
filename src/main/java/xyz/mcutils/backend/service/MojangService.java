@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import xyz.mcutils.backend.Main;
 import xyz.mcutils.backend.common.Endpoint;
+import xyz.mcutils.backend.common.EnvironmentUtils;
 import xyz.mcutils.backend.common.ExpiringSet;
 import xyz.mcutils.backend.common.WebRequest;
 import xyz.mcutils.backend.config.Config;
@@ -190,7 +191,7 @@ public class MojangService {
     public CachedEndpointStatus getMojangApiStatus() {
         log.info("Getting Mojang API status");
         Optional<CachedEndpointStatus> endpointStatus = mojangEndpointStatusRepository.findById(MOJANG_ENDPOINT_STATUS_KEY);
-        if (endpointStatus.isPresent() && Config.INSTANCE.isProduction()) {
+        if (endpointStatus.isPresent() && EnvironmentUtils.isProduction()) {
             log.info("Got cached Mojang API status");
             return endpointStatus.get();
         }

@@ -6,6 +6,7 @@ import com.influxdb.spring.influx.InfluxDB2AutoConfiguration;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.mcutils.backend.common.EnvironmentUtils;
 import xyz.mcutils.backend.common.Timer;
 import xyz.mcutils.backend.config.Config;
 import xyz.mcutils.backend.repository.mongo.MetricsRepository;
@@ -56,7 +57,7 @@ public class MetricService {
             collectorEnabled.put(metric, metric.isCollector());
         }
 
-        if (Config.INSTANCE.isProduction()) {
+        if (EnvironmentUtils.isProduction()) {
             // Load the metrics from Redis
             loadMetrics();
 

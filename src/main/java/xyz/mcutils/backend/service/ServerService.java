@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.mcutils.backend.common.DNSUtils;
 import xyz.mcutils.backend.common.EnumUtils;
+import xyz.mcutils.backend.common.EnvironmentUtils;
 import xyz.mcutils.backend.config.Config;
 import xyz.mcutils.backend.exception.impl.BadRequestException;
 import xyz.mcutils.backend.exception.impl.ResourceNotFoundException;
@@ -69,7 +70,7 @@ public class ServerService {
 
         // Check if the server is cached
         Optional<CachedMinecraftServer> cached = serverCacheRepository.findById(key);
-        if (cached.isPresent() && Config.INSTANCE.isProduction()) {
+        if (cached.isPresent() && EnvironmentUtils.isProduction()) {
                 log.info("Server {}:{} is cached", hostname, port);
             return cached.get();
         }

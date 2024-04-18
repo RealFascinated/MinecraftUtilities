@@ -23,18 +23,9 @@ public class Config {
     @Value("${public-url}")
     private String webPublicUrl;
 
-    /**
-     * Whether the server is in production mode.
-     */
-    private boolean production = false;
-
     @PostConstruct
     public void onInitialize() {
         INSTANCE = this;
-
-        String environmentProperty = environment.getProperty("ENVIRONMENT", "development");
-        production = environmentProperty.equalsIgnoreCase("production"); // Set the production mode
-        log.info("Server is running in {} mode", production ? "production" : "development");
     }
 
     @Bean

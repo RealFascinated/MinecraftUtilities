@@ -3,10 +3,7 @@ package xyz.mcutils.backend.service;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.mcutils.backend.common.ImageUtils;
-import xyz.mcutils.backend.common.PlayerUtils;
-import xyz.mcutils.backend.common.Tuple;
-import xyz.mcutils.backend.common.UUIDUtils;
+import xyz.mcutils.backend.common.*;
 import xyz.mcutils.backend.config.Config;
 import xyz.mcutils.backend.exception.impl.BadRequestException;
 import xyz.mcutils.backend.exception.impl.MojangAPIRateLimitException;
@@ -67,7 +64,7 @@ public class PlayerService {
         ((UniquePlayerLookupsMetric) metricService.getMetric(UniquePlayerLookupsMetric.class)).addLookup(id); // Add the lookup to the unique player lookups
 
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
-        if (cachedPlayer.isPresent() && Config.INSTANCE.isProduction()) { // Return the cached player if it exists
+        if (cachedPlayer.isPresent() && EnvironmentUtils.isProduction()) { // Return the cached player if it exists
             log.info("Player {} is cached", id);
             return cachedPlayer.get();
         }
@@ -107,7 +104,7 @@ public class PlayerService {
         log.info("Getting UUID from username: {}", username);
         String id = username.toUpperCase();
         Optional<CachedPlayerName> cachedPlayerName = playerNameCacheRepository.findById(id);
-        if (cachedPlayerName.isPresent() && Config.INSTANCE.isProduction()) {
+        if (cachedPlayerName.isPresent() && EnvironmentUtils.isProduction()) {
             return cachedPlayerName.get();
         }
         try {
@@ -157,7 +154,7 @@ public class PlayerService {
         Optional<CachedPlayerSkinPart> cache = playerSkinPartCacheRepository.findById(key);
 
         // The skin part is cached
-        if (cache.isPresent() && Config.INSTANCE.isProduction()) {
+        if (cache.isPresent() && EnvironmentUtils.isProduction()) {
             log.info("Skin part {} for player {} is cached", name, player.getUniqueId());
             return cache.get();
         }
