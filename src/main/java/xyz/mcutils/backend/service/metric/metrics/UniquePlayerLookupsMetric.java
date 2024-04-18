@@ -4,6 +4,7 @@ import xyz.mcutils.backend.service.metric.impl.IntegerMetric;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class UniquePlayerLookupsMetric extends IntegerMetric {
     private List<String> uniqueLookups = new ArrayList<>();
@@ -20,12 +21,11 @@ public class UniquePlayerLookupsMetric extends IntegerMetric {
     /**
      * Adds a lookup to the list of unique lookups.
      *
-     * @param lookup the query that was used to look up a player
+     * @param uuid the query that was used to look up a player
      */
-    public void addLookup(String lookup) {
-        lookup = lookup.toLowerCase();
-        if (!uniqueLookups.contains(lookup)) {
-            uniqueLookups.add(lookup);
+    public void addLookup(UUID uuid) {
+        if (!uniqueLookups.contains(uuid.toString())) {
+            uniqueLookups.add(uuid.toString());
         }
     }
 

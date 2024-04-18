@@ -61,8 +61,6 @@ public class PlayerService {
             uuid = usernameToUuid(id).getUniqueId();
         }
 
-        ((UniquePlayerLookupsMetric) metricService.getMetric(UniquePlayerLookupsMetric.class)).addLookup(id); // Add the lookup to the unique player lookups
-
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
         if (cachedPlayer.isPresent() && EnvironmentUtils.isProduction()) { // Return the cached player if it exists
             log.info("Player {} is cached", id);
@@ -85,6 +83,7 @@ public class PlayerService {
                             mojangProfile.getProperties() // Raw properties
                     )
             );
+            ((UniquePlayerLookupsMetric) metricService.getMetric(UniquePlayerLookupsMetric.class)).addLookup(uuid); // Add the lookup to the unique player lookups
 
             playerCacheRepository.save(player);
             player.getCache().setCached(false);
