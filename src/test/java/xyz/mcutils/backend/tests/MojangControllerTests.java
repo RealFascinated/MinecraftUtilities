@@ -4,6 +4,7 @@ import cc.fascinated.config.TestRedisConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -15,7 +16,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-@SpringBootTest(classes = {TestRedisConfig.class, TestMongoConfig.class})
+@SpringBootTest(classes = {TestRedisConfig.class})
+@DataMongoTest()
+@ExtendWith(SpringExtension.class)
 class MojangControllerTests {
 
     @Autowired
