@@ -83,7 +83,10 @@ public class PlayerService {
                             mojangProfile.getProperties() // Raw properties
                     )
             );
-            ((UniquePlayerLookupsMetric) metricService.getMetric(UniquePlayerLookupsMetric.class)).addLookup(uuid); // Add the lookup to the unique player lookups
+
+            // Add the lookup to the unique player lookups metric
+            ((UniquePlayerLookupsMetric) metricService.getMetric(UniquePlayerLookupsMetric.class))
+                    .addLookup(uuid);
 
             playerCacheRepository.save(player);
             player.getCache().setCached(false);

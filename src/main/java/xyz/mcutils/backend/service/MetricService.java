@@ -125,24 +125,32 @@ public class MetricService {
      * @param metric the metric to save
      */
     private void saveMetric(Metric<?> metric) {
-        metricsRepository.save(metric); // Save the metric to the repository
+        try {
+            metricsRepository.save(metric); // Save the metric to the repository
+        } catch (Exception e) {
+            log.error("Failed to save metric to MongoDB", e);
+        }
     }
 
     /**
      * Push all metrics to InfluxDB.
      */
     private void writeToInflux() {
-        List<Point> points = new ArrayList<>();
-        for (Metric<?> metric : metrics.values()) {
-            if (metric.isCollector()) {
-                metric.collect();
+        try {
+            List<Point> points = new ArrayList<>();
+            for (Metric<?> metric : metrics.values()) {
+                if (metric.isCollector()) {
+                    metric.collect();
+                }
+                Point point = metric.toPoint();
+                if (point != null) {
+                    points.add(point);
+                }
             }
-            Point point = metric.toPoint();
-            if (point != null) {
-                points.add(point);
-            }
+            influxWriteApi.writePoints(points);
+            log.info("Wrote {} metrics to Influx", metrics.size());
+        } catch (Exception e) {
+            log.error("Failed to write metrics to Influx", e);
         }
-        influxWriteApi.writePoints(points);
-        log.info("Wrote {} metrics to Influx", metrics.size());
     }
 }
