@@ -1,8 +1,7 @@
 package xyz.mcutils.backend.model.cache;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import xyz.mcutils.backend.common.CachedResponse;
@@ -12,8 +11,8 @@ import java.util.UUID;
 /**
  * @author Braydon
  */
-@Getter
-@ToString
+@Setter
+@Getter @EqualsAndHashCode(callSuper = false)
 @RedisHash(value = "playerName", timeToLive = 60L * 60L * 6) // 6 hours (in seconds)
 public class CachedPlayerName extends CachedResponse {
     /**

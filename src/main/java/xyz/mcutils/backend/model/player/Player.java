@@ -1,6 +1,7 @@
 package xyz.mcutils.backend.model.player;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import xyz.mcutils.backend.common.Tuple;
@@ -10,7 +11,8 @@ import xyz.mcutils.backend.model.token.MojangProfileToken;
 
 import java.util.UUID;
 
-@Getter @AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
+@Getter @EqualsAndHashCode
 public class Player {
 
     /**

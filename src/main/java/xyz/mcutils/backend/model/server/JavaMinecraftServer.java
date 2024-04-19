@@ -14,7 +14,7 @@ import xyz.mcutils.backend.model.token.JavaServerStatusToken;
 /**
  * @author Braydon
  */
-@Setter @Getter
+@Setter @Getter @EqualsAndHashCode(callSuper = false)
 public final class JavaMinecraftServer extends MinecraftServer {
 
     /**

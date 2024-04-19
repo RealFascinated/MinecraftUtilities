@@ -1,15 +1,11 @@
 package xyz.mcutils.backend.model.cache;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-@Setter
-@Getter
 @AllArgsConstructor
+@Setter @Getter @EqualsAndHashCode
 @RedisHash(value = "playerSkinPart", timeToLive = 60L * 60L) // 1 hour (in seconds)
 public class CachedPlayerSkinPart {
 

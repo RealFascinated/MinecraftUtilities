@@ -31,18 +31,24 @@ public class PlayerController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getPlayer(
             @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id) {
+        CachedPlayer player = playerService.getPlayer(id);
+
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
-                .body(playerService.getPlayer(id));
+                .eTag(String.valueOf(player.hashCode()))
+                .body(player);
     }
 
     @ResponseBody
     @GetMapping(value = "/uuid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CachedPlayerName> getPlayerUuid(
             @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id) {
+        CachedPlayerName player = playerService.usernameToUuid(id);
+
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(6, TimeUnit.HOURS))
-                .body(playerService.usernameToUuid(id));
+                .eTag(String.valueOf(player.hashCode()))
+                .body(player);
     }
 
     @GetMapping(value = "/{part}/{id}")
@@ -61,6 +67,7 @@ public class PlayerController {
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(player.getUsername()))
+                .eTag(String.valueOf(player.hashCode()))
                 .body(playerService.getSkinPart(player, part, overlays, size).getBytes());
     }
 }

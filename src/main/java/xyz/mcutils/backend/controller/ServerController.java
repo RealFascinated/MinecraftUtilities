@@ -12,6 +12,7 @@ import xyz.mcutils.backend.model.cache.CachedMinecraftServer;
 import xyz.mcutils.backend.service.MojangService;
 import xyz.mcutils.backend.service.ServerService;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -34,9 +35,12 @@ public class ServerController {
     public ResponseEntity<CachedMinecraftServer> getServer(
             @Parameter(description = "The platform of the server", example = "java") @PathVariable String platform,
             @Parameter(description = "The hostname and port of the server", example = "aetheria.cc") @PathVariable String hostname) {
+        CachedMinecraftServer server = serverService.getServer(platform, hostname);
+
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(5, TimeUnit.MINUTES))
-                .body(serverService.getServer(platform, hostname));
+                .eTag(String.valueOf(server.hashCode()))
+                .body(server);
     }
 
     @ResponseBody
@@ -46,11 +50,14 @@ public class ServerController {
             @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download) {
         String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
 
+        byte[] favicon = serverService.getServerFavicon(hostname);
+
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(hostname))
-                .body(serverService.getServerFavicon(hostname));
+                .eTag(String.valueOf(Arrays.hashCode(favicon)))
+                .body(favicon);
     }
 
     @ResponseBody
@@ -59,6 +66,7 @@ public class ServerController {
             @Parameter(description = "The hostname of the server", example = "aetheria.cc") @PathVariable String hostname) {
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
+                .eTag(String.valueOf(hostname.hashCode()))
                 .body(Map.of(
                         "blocked", mojangService.isServerBlocked(hostname)
                 ));

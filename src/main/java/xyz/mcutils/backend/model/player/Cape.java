@@ -2,9 +2,11 @@ package xyz.mcutils.backend.model.player;
 
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@Getter @AllArgsConstructor
+@AllArgsConstructor
+@Getter @EqualsAndHashCode
 public class Cape {
 
     /**

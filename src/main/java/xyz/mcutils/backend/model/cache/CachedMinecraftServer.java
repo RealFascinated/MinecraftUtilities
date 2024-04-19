@@ -13,8 +13,7 @@ import java.io.Serializable;
 /**
  * @author Braydon
  */
-@Setter @Getter @ToString
-@NoArgsConstructor
+@Setter @Getter @EqualsAndHashCode(callSuper = false)
 @RedisHash(value = "server", timeToLive = 60L) // 1 minute (in seconds)
 public class CachedMinecraftServer extends CachedResponse implements Serializable {
     /**

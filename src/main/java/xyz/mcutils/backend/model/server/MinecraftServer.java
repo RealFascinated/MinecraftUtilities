@@ -1,10 +1,7 @@
 package xyz.mcutils.backend.model.server;
 
 import io.micrometer.common.lang.NonNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import xyz.mcutils.backend.common.ColorUtils;
 import xyz.mcutils.backend.model.dns.DNSRecord;
 import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
@@ -18,7 +15,7 @@ import java.util.UUID;
  * @author Braydon
  */
 @AllArgsConstructor
-@Getter @Setter
+@Getter @Setter @EqualsAndHashCode
 public class MinecraftServer {
 
     /**

@@ -1,13 +1,10 @@
 package xyz.mcutils.backend.model.dns;
 
 import io.micrometer.common.lang.NonNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Setter @Getter
 @NoArgsConstructor @AllArgsConstructor
+@Setter @Getter @EqualsAndHashCode
 public abstract class DNSRecord {
     /**
      * The type of this record.

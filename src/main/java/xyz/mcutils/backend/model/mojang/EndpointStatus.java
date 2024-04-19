@@ -1,14 +1,11 @@
 package xyz.mcutils.backend.model.mojang;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Map;
 
 @RequiredArgsConstructor
-@Getter @Setter
+@Getter @Setter @EqualsAndHashCode
 public class EndpointStatus {
 
     /**

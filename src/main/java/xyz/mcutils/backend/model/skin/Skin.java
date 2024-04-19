@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @AllArgsConstructor @NoArgsConstructor
-@Getter @Log4j2
+@Getter @Log4j2 @EqualsAndHashCode
 public class Skin {
     /**
      * The URL for the skin
