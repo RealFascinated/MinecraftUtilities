@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-@Service @Log4j2
+@Service @Log4j2(topic = "Metric Service")
 public class MetricService {
     /**
      * The metrics that are registered.

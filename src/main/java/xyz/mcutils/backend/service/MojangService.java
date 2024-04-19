@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-@Service @Log4j2 @Getter
+@Service @Log4j2(topic = "Mojang Service") @Getter
 public class MojangService {
 
     /**

@@ -10,7 +10,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
-@Log4j2
+@Log4j2(topic = "Image Utils")
 public class ImageUtils {
     /**
      * Scale the given image to the provided size.

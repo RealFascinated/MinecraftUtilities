@@ -13,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
-@Log4j2
+@Log4j2(topic = "Main")
 @SpringBootApplication
 public class Main {
     public static final Gson GSON = new GsonBuilder()

@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 
-@Log4j2
+@Log4j2(topic = "Skin Renderer")
 public abstract class SkinRenderer<T extends ISkinPart> {
 
     /**

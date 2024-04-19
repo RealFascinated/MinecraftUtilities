@@ -10,7 +10,7 @@ import xyz.mcutils.backend.model.skin.Skin;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-@AllArgsConstructor @Getter @Log4j2
+@AllArgsConstructor @Getter @Log4j2(topic = "Skin Renderer/Square")
 public class SquareRenderer extends SkinRenderer<ISkinPart.Vanilla> {
     public static final SquareRenderer INSTANCE = new SquareRenderer();
 

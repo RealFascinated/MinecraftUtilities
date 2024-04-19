@@ -14,7 +14,7 @@ import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Getter @Log4j2
+@Getter @Log4j2(topic = "Config")
 @Configuration
 public class Config {
     public static Config INSTANCE;

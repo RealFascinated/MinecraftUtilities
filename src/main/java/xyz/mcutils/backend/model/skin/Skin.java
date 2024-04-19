@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @AllArgsConstructor @NoArgsConstructor
-@Getter @Log4j2 @EqualsAndHashCode
+@Getter @Log4j2(topic = "Skin") @EqualsAndHashCode
 public class Skin {
     /**
      * The URL for the skin

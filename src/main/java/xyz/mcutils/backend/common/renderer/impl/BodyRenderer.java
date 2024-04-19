@@ -11,7 +11,7 @@ import xyz.mcutils.backend.model.skin.Skin;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-@AllArgsConstructor @Getter @Log4j2
+@AllArgsConstructor @Getter @Log4j2(topic = "Skin Renderer/Body")
 public class BodyRenderer extends SkinRenderer<ISkinPart.Custom> {
     public static final BodyRenderer INSTANCE = new BodyRenderer();
 

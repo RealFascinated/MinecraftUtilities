@@ -12,7 +12,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.UUID;
 
-@UtilityClass @Log4j2
+@UtilityClass @Log4j2(topic = "Player Utils")
 public class PlayerUtils {
 
     /**
