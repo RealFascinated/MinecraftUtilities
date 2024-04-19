@@ -59,8 +59,8 @@ public class MojangService {
             new EndpointStatus("Minecraft Libraries", "libraries.minecraft.net"),
             new EndpointStatus("Minecraft Services", "api.minecraftservices.com"),
             new EndpointStatus("Mojang Assets", "assets.mojang.com"),
-            new EndpointStatus("Mojang API", API_ENDPOINT),
-            new EndpointStatus("Mojang Session Server", SESSION_SERVER_ENDPOINT));
+            new EndpointStatus("Mojang API", "api.mojang.com"),
+            new EndpointStatus("Mojang Session Server", "sessionserver.mojang.com"));
 
     @Autowired
     private EndpointStatusRepository mojangEndpointStatusRepository;
@@ -197,7 +197,7 @@ public class MojangService {
                 try {
                     long start = System.currentTimeMillis();
                     InetAddress address = InetAddress.getByName(endpoint.getHostname());
-                    if (address.isReachable((int) TimeUnit.SECONDS.toMillis(2))) { // Check if the endpoint is reachable
+                    if (address.isReachable((int) TimeUnit.SECONDS.toMillis(4))) { // Check if the endpoint is reachable
                         endpoint.setStatus(EndpointStatus.Status.ONLINE);
                         return;
                     }
