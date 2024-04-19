@@ -12,6 +12,7 @@ import xyz.mcutils.backend.common.CachedResponse;
 import xyz.mcutils.backend.model.mojang.EndpointStatus;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Setter @Getter @ToString
 @RedisHash(value = "mojangEndpointStatus", timeToLive = 60L) // 1 minute (in seconds)
@@ -26,12 +27,11 @@ public class CachedEndpointStatus extends CachedResponse implements Serializable
     /**
      * The endpoint cache.
      */
-    @JsonUnwrapped
-    private final EndpointStatus value;
+    private final List<EndpointStatus> endpoints;
 
-    public CachedEndpointStatus(@NonNull String id, EndpointStatus value) {
+    public CachedEndpointStatus(@NonNull String id, List<EndpointStatus> endpoints) {
         super(Cache.defaultCache());
         this.id = id;
-        this.value = value;
+        this.endpoints = endpoints;
     }
 }

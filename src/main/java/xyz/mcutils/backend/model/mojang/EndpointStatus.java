@@ -2,18 +2,33 @@ package xyz.mcutils.backend.model.mojang;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.Map;
 
-@AllArgsConstructor
-@Getter
+@RequiredArgsConstructor
+@Getter @Setter
 public class EndpointStatus {
 
     /**
-     * The list of endpoints and their status.
+     * The name of the service.
      */
-    private final Map<String, Status> endpoints;
+    private final String name;
 
+    /**
+     * The hostname of the service.
+     */
+    private final String hostname;
+
+    /**
+     * The status of the service.
+     */
+    private Status status;
+
+    /**
+     * Statuses for the endpoint.
+     */
     public enum Status {
         /**
          * The service is online and operational.
