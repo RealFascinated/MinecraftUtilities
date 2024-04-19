@@ -23,17 +23,8 @@ spring:
       database: test
       port: 27017
 
-# Disable default metrics
-management:
-  endpoints:
-    web:
-      exposure:
-        exclude:
-          - "*"
-  influx:
-    metrics:
-      export:
-        enabled: false
+# The URL of the API
+public-url: http://localhost
 
 # InfluxDB Configuration
 influx:
@@ -42,10 +33,22 @@ influx:
   org: org
   bucket: bucket
 
+management:
+  # Disable all actuator endpoints
+  endpoints:
+    web:
+      exposure:
+        exclude:
+          - "*"
+  # Disable default metrics
+  influx:
+    metrics:
+      export:
+        enabled: false
+
+# Set the embedded MongoDB version
 de:
   flapdoodle:
     mongodb:
       embedded:
         version: 7.0.8
-
-public-url: http://localhost
