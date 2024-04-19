@@ -28,7 +28,7 @@ public class MojangController {
         CachedEndpointStatus status = mojangService.getMojangApiStatus();
 
         return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.MINUTES))
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.MINUTES).cachePublic())
                 .eTag(String.valueOf(status.hashCode()))
                 .body(status);
     }

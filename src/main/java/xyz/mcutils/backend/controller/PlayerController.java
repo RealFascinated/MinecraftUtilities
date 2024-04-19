@@ -34,7 +34,7 @@ public class PlayerController {
         CachedPlayer player = playerService.getPlayer(id);
 
         return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
                 .eTag(String.valueOf(player.hashCode()))
                 .body(player);
     }
@@ -46,7 +46,7 @@ public class PlayerController {
         CachedPlayerName player = playerService.usernameToUuid(id);
 
         return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(6, TimeUnit.HOURS))
+                .cacheControl(CacheControl.maxAge(6, TimeUnit.HOURS).cachePublic())
                 .eTag(String.valueOf(player.hashCode()))
                 .body(player);
     }
@@ -64,7 +64,7 @@ public class PlayerController {
 
         // Return the part image
         return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(player.getUsername()))
                 .eTag(String.valueOf(player.hashCode()))

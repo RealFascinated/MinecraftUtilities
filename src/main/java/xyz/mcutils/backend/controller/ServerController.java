@@ -38,7 +38,7 @@ public class ServerController {
         CachedMinecraftServer server = serverService.getServer(platform, hostname);
 
         return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(5, TimeUnit.MINUTES))
+                .cacheControl(CacheControl.maxAge(5, TimeUnit.MINUTES).cachePublic())
                 .eTag(String.valueOf(server.hashCode()))
                 .body(server);
     }
@@ -49,11 +49,10 @@ public class ServerController {
             @Parameter(description = "The hostname and port of the server", example = "aetheria.cc") @PathVariable String hostname,
             @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download) {
         String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
-
         byte[] favicon = serverService.getServerFavicon(hostname);
 
         return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(hostname))
                 .eTag(String.valueOf(Arrays.hashCode(favicon)))
@@ -65,7 +64,7 @@ public class ServerController {
     public ResponseEntity<?> getServerBlockedStatus(
             @Parameter(description = "The hostname of the server", example = "aetheria.cc") @PathVariable String hostname) {
         return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
                 .eTag(String.valueOf(hostname.hashCode()))
                 .body(Map.of(
                         "blocked", mojangService.isServerBlocked(hostname)
