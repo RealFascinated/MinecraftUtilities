@@ -191,27 +191,22 @@ public class MojangService {
             return endpointStatus.get();
         }
 
-        List<CompletableFuture<Void>> futures = new ArrayList<>();
-        for (EndpointStatus endpoint : MOJANG_ENDPOINTS) {
-            futures.add(CompletableFuture.runAsync(() -> {
-                try {
-                    long start = System.currentTimeMillis();
-                    InetAddress address = InetAddress.getByName(endpoint.getHostname());
-                    if (address.isReachable((int) TimeUnit.SECONDS.toMillis(4))) { // Check if the endpoint is reachable
-                        endpoint.setStatus(EndpointStatus.Status.ONLINE);
-                        return;
-                    }
-                    // Check if the endpoint took too long to respond
-                    if (System.currentTimeMillis() - start > TimeUnit.SECONDS.toMillis(2)) {
-                        endpoint.setStatus(EndpointStatus.Status.DEGRADED);
-                    }
-                } catch (IOException e) {
-                    endpoint.setStatus(EndpointStatus.Status.OFFLINE);
+        MOJANG_ENDPOINTS.parallelStream().forEach(endpoint -> {
+            try {
+                long start = System.currentTimeMillis();
+                InetAddress address = InetAddress.getByName(endpoint.getHostname());
+                if (address.isReachable((int) TimeUnit.SECONDS.toMillis(4))) { // Check if the endpoint is reachable
+                    endpoint.setStatus(EndpointStatus.Status.ONLINE);
+                    return;
                 }
-            }));
-        }
-
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+                // Check if the endpoint took too long to respond
+                if (System.currentTimeMillis() - start > TimeUnit.SECONDS.toMillis(2)) {
+                    endpoint.setStatus(EndpointStatus.Status.DEGRADED);
+                }
+            } catch (IOException e) {
+                endpoint.setStatus(EndpointStatus.Status.OFFLINE);
+            }
+        });
 
         log.info("Fetched Mojang API status for {} endpoints", MOJANG_ENDPOINTS.size());
         CachedEndpointStatus status = new CachedEndpointStatus(
