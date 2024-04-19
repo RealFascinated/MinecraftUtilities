@@ -100,7 +100,7 @@ public class MojangService {
         log.info("Fetching blocked servers from Mojang");
         try (
                 InputStream inputStream = new URL(FETCH_BLOCKED_SERVERS).openStream();
-                Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8).useDelimiter("\n");
+                Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8).useDelimiter("\n")
         ) {
             List<String> hashes = new ArrayList<>();
             while (scanner.hasNext()) {
@@ -197,7 +197,7 @@ public class MojangService {
                 try {
                     long start = System.currentTimeMillis();
                     InetAddress address = InetAddress.getByName(endpoint.getHostname());
-                    if (address.isReachable(5000)) { // Check if the endpoint is reachable
+                    if (address.isReachable((int) TimeUnit.SECONDS.toMillis(2))) { // Check if the endpoint is reachable
                         endpoint.setStatus(EndpointStatus.Status.ONLINE);
                         return;
                     }
