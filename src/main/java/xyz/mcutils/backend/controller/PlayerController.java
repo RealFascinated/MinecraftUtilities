@@ -35,7 +35,6 @@ public class PlayerController {
 
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
-                .eTag(String.valueOf(player.hashCode()))
                 .body(player);
     }
 
@@ -47,7 +46,6 @@ public class PlayerController {
 
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(6, TimeUnit.HOURS).cachePublic())
-                .eTag(String.valueOf(player.hashCode()))
                 .body(player);
     }
 
@@ -67,7 +65,6 @@ public class PlayerController {
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(player.getUsername()))
-                .eTag(String.valueOf(player.hashCode()))
                 .body(playerService.getSkinPart(player, part, overlays, size).getBytes());
     }
 }

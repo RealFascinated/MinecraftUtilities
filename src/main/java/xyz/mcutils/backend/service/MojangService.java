@@ -11,7 +11,9 @@ import lombok.extern.log4j.Log4j2;
 import net.jodah.expiringmap.ExpirationPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.mcutils.backend.common.*;
+import xyz.mcutils.backend.common.EnvironmentUtils;
+import xyz.mcutils.backend.common.ExpiringSet;
+import xyz.mcutils.backend.common.WebRequest;
 import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
 import xyz.mcutils.backend.model.mojang.EndpointStatus;
 import xyz.mcutils.backend.model.token.MojangProfileToken;
@@ -24,8 +26,6 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.Timer;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 @Service @Log4j2 @Getter

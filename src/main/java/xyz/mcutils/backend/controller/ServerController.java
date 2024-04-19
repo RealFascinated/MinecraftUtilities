@@ -12,7 +12,6 @@ import xyz.mcutils.backend.model.cache.CachedMinecraftServer;
 import xyz.mcutils.backend.service.MojangService;
 import xyz.mcutils.backend.service.ServerService;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +38,6 @@ public class ServerController {
 
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(5, TimeUnit.MINUTES).cachePublic())
-                .eTag(String.valueOf(server.hashCode()))
                 .body(server);
     }
 
@@ -55,7 +53,6 @@ public class ServerController {
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(hostname))
-                .eTag(String.valueOf(Arrays.hashCode(favicon)))
                 .body(favicon);
     }
 
@@ -65,7 +62,6 @@ public class ServerController {
             @Parameter(description = "The hostname of the server", example = "aetheria.cc") @PathVariable String hostname) {
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
-                .eTag(String.valueOf(hostname.hashCode()))
                 .body(Map.of(
                         "blocked", mojangService.isServerBlocked(hostname)
                 ));

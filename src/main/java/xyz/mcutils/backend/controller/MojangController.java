@@ -29,7 +29,6 @@ public class MojangController {
 
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.MINUTES).cachePublic())
-                .eTag(String.valueOf(status.hashCode()))
                 .body(status);
     }
 }

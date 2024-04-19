@@ -1,8 +1,9 @@
 package xyz.mcutils.backend.model.mojang;
 
-import lombok.*;
-
-import java.util.Map;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @RequiredArgsConstructor
 @Getter @Setter @EqualsAndHashCode
