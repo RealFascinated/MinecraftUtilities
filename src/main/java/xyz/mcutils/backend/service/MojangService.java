@@ -195,7 +195,9 @@ public class MojangService {
             try {
                 long start = System.currentTimeMillis();
                 InetAddress address = InetAddress.getByName(endpoint.getHostname());
+                System.out.printf("inataddr %s, %s%n", endpoint.getHostname(), (System.currentTimeMillis() - start) + "ms");
                 if (address.isReachable((int) TimeUnit.SECONDS.toMillis(4))) { // Check if the endpoint is reachable
+                    System.out.printf("isreachable %s, %s%n", endpoint.getHostname(), (System.currentTimeMillis() - start) + "ms");
                     endpoint.setStatus(EndpointStatus.Status.ONLINE);
                     return;
                 }
