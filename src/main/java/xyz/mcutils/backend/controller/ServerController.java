@@ -3,6 +3,7 @@ package xyz.mcutils.backend.controller;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import xyz.mcutils.backend.service.MojangService;
 import xyz.mcutils.backend.service.ServerService;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @Tag(name = "Server Controller", description = "The Server Controller is used to get information about a server.")
@@ -29,10 +31,12 @@ public class ServerController {
 
     @ResponseBody
     @GetMapping(value = "/{platform}/{hostname}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CachedMinecraftServer getServer(
+    public ResponseEntity<CachedMinecraftServer> getServer(
             @Parameter(description = "The platform of the server", example = "java") @PathVariable String platform,
             @Parameter(description = "The hostname and port of the server", example = "aetheria.cc") @PathVariable String hostname) {
-        return serverService.getServer(platform, hostname);
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(5, TimeUnit.MINUTES))
+                .body(serverService.getServer(platform, hostname));
     }
 
     @ResponseBody
@@ -43,6 +47,7 @@ public class ServerController {
         String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
 
         return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(hostname))
                 .body(serverService.getServerFavicon(hostname));
@@ -52,8 +57,10 @@ public class ServerController {
     @GetMapping(value = "/blocked/{hostname}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getServerBlockedStatus(
             @Parameter(description = "The hostname of the server", example = "aetheria.cc") @PathVariable String hostname) {
-        return ResponseEntity.ok(Map.of(
-                "blocked", mojangService.isServerBlocked(hostname)
-        ));
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
+                .body(Map.of(
+                        "blocked", mojangService.isServerBlocked(hostname)
+                ));
     }
 }

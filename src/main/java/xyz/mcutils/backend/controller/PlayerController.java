@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping(value = "/player/")
 public class PlayerController {
 
-    private final CacheControl cacheControl = CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic();
     private final PlayerService playerService;
 
     @Autowired
@@ -33,15 +32,17 @@ public class PlayerController {
     public ResponseEntity<?> getPlayer(
             @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id) {
         return ResponseEntity.ok()
-                .cacheControl(cacheControl)
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
                 .body(playerService.getPlayer(id));
     }
 
     @ResponseBody
     @GetMapping(value = "/uuid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CachedPlayerName getPlayerUuid(
+    public ResponseEntity<CachedPlayerName> getPlayerUuid(
             @Parameter(description = "The UUID or Username of the player", example = "ImFascinated") @PathVariable String id) {
-        return playerService.usernameToUuid(id);
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(6, TimeUnit.HOURS))
+                .body(playerService.usernameToUuid(id));
     }
 
     @GetMapping(value = "/{part}/{id}")
@@ -57,7 +58,7 @@ public class PlayerController {
 
         // Return the part image
         return ResponseEntity.ok()
-                .cacheControl(cacheControl)
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(player.getUsername()))
                 .body(playerService.getSkinPart(player, part, overlays, size).getBytes());
