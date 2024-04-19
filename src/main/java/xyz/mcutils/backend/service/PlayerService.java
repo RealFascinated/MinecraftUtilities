@@ -61,7 +61,7 @@ public class PlayerService {
         }
 
         Optional<CachedPlayer> cachedPlayer = playerCacheRepository.findById(uuid);
-        if (cachedPlayer.isPresent() && EnvironmentUtils.isProduction()) { // Return the cached player if it exists
+        if (cachedPlayer.isPresent() && AppConfig.isProduction()) { // Return the cached player if it exists
             log.info("Player {} is cached", id);
             return cachedPlayer.get();
         }
@@ -105,7 +105,7 @@ public class PlayerService {
         log.info("Getting UUID from username: {}", username);
         String id = username.toUpperCase();
         Optional<CachedPlayerName> cachedPlayerName = playerNameCacheRepository.findById(id);
-        if (cachedPlayerName.isPresent() && EnvironmentUtils.isProduction()) {
+        if (cachedPlayerName.isPresent() && AppConfig.isProduction()) {
             return cachedPlayerName.get();
         }
         try {
@@ -155,7 +155,7 @@ public class PlayerService {
         Optional<CachedPlayerSkinPart> cache = playerSkinPartCacheRepository.findById(key);
 
         // The skin part is cached
-        if (cache.isPresent() && EnvironmentUtils.isProduction()) {
+        if (cache.isPresent() && AppConfig.isProduction()) {
             log.info("Skin part {} for player {} is cached", name, player.getUniqueId());
             return cache.get();
         }

@@ -11,7 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import net.jodah.expiringmap.ExpirationPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.mcutils.backend.common.EnvironmentUtils;
+import xyz.mcutils.backend.common.AppConfig;
 import xyz.mcutils.backend.common.ExpiringSet;
 import xyz.mcutils.backend.common.WebRequest;
 import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
@@ -186,7 +186,7 @@ public class MojangService {
     public CachedEndpointStatus getMojangApiStatus() {
         log.info("Getting Mojang API status");
         Optional<CachedEndpointStatus> endpointStatus = mojangEndpointStatusRepository.findById(MOJANG_ENDPOINT_STATUS_KEY);
-        if (endpointStatus.isPresent() && EnvironmentUtils.isProduction()) {
+        if (endpointStatus.isPresent() && AppConfig.isProduction()) {
             log.info("Got cached Mojang API status");
             return endpointStatus.get();
         }
