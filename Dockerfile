@@ -1,7 +1,8 @@
-FROM maven:3.9.6-sapmachine-17
+FROM maven:3.9.6-eclipse-temurin-17-alpine
 
-RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
-RUN apt update -y && apt install fontconfig && apt install ttf-mscorefonts-installer -y && fc-cache -f
+RUN apk --update --upgrade --no-cache add fontconfig ttf-freefont font-noto terminus-font \
+     && fc-cache -f \
+     && fc-list | sort
 
 # Set the working directory
 WORKDIR /home/container
