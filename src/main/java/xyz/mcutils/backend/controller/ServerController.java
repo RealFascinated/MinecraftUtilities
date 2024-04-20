@@ -67,7 +67,7 @@ public class ServerController {
         CachedMinecraftServer server = serverService.getServer(platform, hostname);
 
         return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
+                .cacheControl(CacheControl.maxAge(5, TimeUnit.MINUTES).cachePublic())
                 .contentType(MediaType.IMAGE_PNG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(hostname))
                 .body(serverService.getServerPreview(server, platform, size));
