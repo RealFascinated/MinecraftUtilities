@@ -7,7 +7,7 @@ import xyz.mcutils.backend.common.AppConfig;
 import xyz.mcutils.backend.common.DNSUtils;
 import xyz.mcutils.backend.common.EnumUtils;
 import xyz.mcutils.backend.common.ImageUtils;
-import xyz.mcutils.backend.common.renderer.impl.misc.ServerPreviewRenderer;
+import xyz.mcutils.backend.common.renderer.impl.server.ServerPreviewRenderer;
 import xyz.mcutils.backend.exception.impl.BadRequestException;
 import xyz.mcutils.backend.exception.impl.ResourceNotFoundException;
 import xyz.mcutils.backend.model.cache.CachedMinecraftServer;

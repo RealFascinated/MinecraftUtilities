@@ -1,4 +1,4 @@
-package xyz.mcutils.backend.common.renderer.impl.misc;
+package xyz.mcutils.backend.common.renderer.impl.server;
 
 import lombok.extern.log4j.Log4j2;
 import xyz.mcutils.backend.Main;
