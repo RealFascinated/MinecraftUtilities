@@ -1,7 +1,5 @@
 FROM maven:3.8.5-openjdk-17-slim
 
-RUN apt install fontconfig-config -y
-
 # Set the working directory
 WORKDIR /home/container
 
@@ -19,4 +17,4 @@ ENV PORT=80
 ENV ENVIRONMENT=production
 
 # Run the jar file
-CMD ["java", "-jar", "target/Minecraft-Utilities.jar"]
+CMD java -jar target/Minecraft-Utilities.jar -Djava.awt.headless=true
