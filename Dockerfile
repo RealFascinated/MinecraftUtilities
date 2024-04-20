@@ -1,5 +1,7 @@
 FROM maven:3.8.5-openjdk-17-slim
 
+RUN apt-get -y --no-install-recommends install libfontconfig1
+
 # Set the working directory
 WORKDIR /home/container
 
