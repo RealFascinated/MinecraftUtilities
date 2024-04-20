@@ -1,4 +1,4 @@
-package xyz.mcutils.backend.common.renderer.impl;
+package xyz.mcutils.backend.common.renderer.impl.skin;
 
 import xyz.mcutils.backend.common.renderer.IsometricSkinRenderer;
 import xyz.mcutils.backend.model.skin.ISkinPart;

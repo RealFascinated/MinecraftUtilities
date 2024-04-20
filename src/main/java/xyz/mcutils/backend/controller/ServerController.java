@@ -57,6 +57,23 @@ public class ServerController {
     }
 
     @ResponseBody
+    @GetMapping(value = "/preview/{platform}/{hostname}", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<?> getServerPreview(
+            @Parameter(description = "The platform of the server", example = "java") @PathVariable String platform,
+            @Parameter(description = "The hostname and port of the server", example = "aetheria.cc") @PathVariable String hostname,
+            @Parameter(description = "Whether to download the image") @RequestParam(required = false, defaultValue = "false") boolean download,
+            @Parameter(description = "The size of the image", example = "1024") @RequestParam(required = false, defaultValue = "1024") int size) {
+        String dispositionHeader = download ? "attachment; filename=%s.png" : "inline; filename=%s.png";
+        CachedMinecraftServer server = serverService.getServer(platform, hostname);
+
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic())
+                .contentType(MediaType.IMAGE_PNG)
+                .header(HttpHeaders.CONTENT_DISPOSITION, dispositionHeader.formatted(hostname))
+                .body(serverService.getServerPreview(server, platform, size));
+    }
+
+    @ResponseBody
     @GetMapping(value = "/blocked/{hostname}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getServerBlockedStatus(
             @Parameter(description = "The hostname of the server", example = "aetheria.cc") @PathVariable String hostname) {

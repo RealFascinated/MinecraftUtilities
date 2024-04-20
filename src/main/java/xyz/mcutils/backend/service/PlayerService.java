@@ -135,12 +135,10 @@ public class PlayerService {
      */
     public CachedPlayerSkinPart getSkinPart(Player player, String partName, boolean renderOverlay, int size) {
         if (size > 512) {
-            log.info("Size {} is too large, setting to 512", size);
-            size = 512;
+            throw new BadRequestException("Size cannot be larger than 512");
         }
         if (size < 32) {
-            log.info("Size {} is too small, setting to 32", size);
-            size = 32;
+            throw new BadRequestException("Size cannot be smaller than 32");
         }
 
         ISkinPart part = ISkinPart.getByName(partName); // The skin part to get

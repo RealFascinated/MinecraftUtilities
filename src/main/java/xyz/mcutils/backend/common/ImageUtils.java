@@ -8,21 +8,23 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Base64;
 
 @Log4j2(topic = "Image Utils")
 public class ImageUtils {
     /**
-     * Scale the given image to the provided size.
+     * Scale the given image to the provided scale.
      *
      * @param image the image to scale
-     * @param size  the size to scale the image to
+     * @param scale  the scale to scale the image to
      * @return the scaled image
      */
-    public static BufferedImage resize(BufferedImage image, double size) {
-        BufferedImage scaled = new BufferedImage((int) (image.getWidth() * size), (int) (image.getHeight() * size), BufferedImage.TYPE_INT_ARGB);
+    public static BufferedImage resize(BufferedImage image, double scale) {
+        BufferedImage scaled = new BufferedImage((int) (image.getWidth() * scale), (int) (image.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = scaled.createGraphics();
-        graphics.drawImage(image, AffineTransform.getScaleInstance(size, size), null);
+        graphics.drawImage(image, AffineTransform.getScaleInstance(scale, scale), null);
         graphics.dispose();
         return scaled;
     }
@@ -54,6 +56,23 @@ public class ImageUtils {
             return outputStream.toByteArray();
         } catch (Exception e) {
             throw new Exception("Failed to convert image to bytes", e);
+        }
+    }
+
+    /**
+     * Convert a base64 string to an image.
+     *
+     * @param base64 the base64 string to convert
+     * @return the image
+     */
+    @SneakyThrows
+    public static BufferedImage base64ToImage(String base64) {
+        String favicon = base64.contains("data:image/png;base64,") ? base64.split(",")[1] : base64;
+
+        try {
+            return ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(favicon)));
+        } catch (Exception e) {
+            throw new Exception("Failed to convert base64 to image", e);
         }
     }
 }

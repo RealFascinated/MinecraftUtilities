@@ -1,4 +1,4 @@
-package xyz.mcutils.backend.common.renderer.impl;
+package xyz.mcutils.backend.common.renderer.impl.skin;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -3,9 +3,9 @@ package xyz.mcutils.backend.model.skin;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import xyz.mcutils.backend.common.renderer.SkinRenderer;
-import xyz.mcutils.backend.common.renderer.impl.BodyRenderer;
-import xyz.mcutils.backend.common.renderer.impl.IsometricHeadRenderer;
-import xyz.mcutils.backend.common.renderer.impl.SquareRenderer;
+import xyz.mcutils.backend.common.renderer.impl.skin.BodyRenderer;
+import xyz.mcutils.backend.common.renderer.impl.skin.IsometricHeadRenderer;
+import xyz.mcutils.backend.common.renderer.impl.skin.SquareRenderer;
 
 import java.awt.image.BufferedImage;
 

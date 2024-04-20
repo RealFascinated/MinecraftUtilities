@@ -3,6 +3,7 @@ package xyz.mcutils.backend.common;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -93,4 +94,20 @@ public final class ColorUtils {
 
         return builder.toString();
     }
+
+    /**
+     * Gets a {@link Color} from a Minecraft color code.
+     *
+     * @param colorCode the color code to get the color from
+     * @return the color
+     */
+    public static Color getMinecraftColor(char colorCode) {
+        String color = COLOR_MAP.getOrDefault(colorCode, null);
+        if (color == null) {
+            System.out.println("Unknown color code: " + colorCode);
+            return Color.WHITE;
+        }
+        return Color.decode(color);
+    }
+
 }
