@@ -1,5 +1,6 @@
 FROM maven:3.9.6-sapmachine-17
 
+RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 RUN apt update -y && apt install ttf-mscorefonts-installer -y && fc-cache -f
 
 # Set the working directory
