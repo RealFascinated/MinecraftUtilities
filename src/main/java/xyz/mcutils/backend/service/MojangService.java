@@ -55,7 +55,6 @@ public class MojangService {
     private static final String MOJANG_ENDPOINT_STATUS_KEY = "mojang";
     private static final List<EndpointStatus> MOJANG_ENDPOINTS = List.of(
             new EndpointStatus("Minecraft Textures", "textures.minecraft.net"),
-            new EndpointStatus("Minecraft Session", "session.minecraft.net"),
             new EndpointStatus("Minecraft Libraries", "libraries.minecraft.net"),
             new EndpointStatus("Minecraft Services", "api.minecraftservices.com"),
             new EndpointStatus("Mojang Assets", "assets.mojang.com"),
