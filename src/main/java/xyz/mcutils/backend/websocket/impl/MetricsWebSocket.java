@@ -1,6 +1,7 @@
 package xyz.mcutils.backend.websocket.impl;
 
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import xyz.mcutils.backend.Main;
@@ -28,6 +29,11 @@ public class MetricsWebSocket extends WebSocket {
                 sendMetrics(session);
             }
         }, interval, interval);
+    }
+
+    @Override
+    public void afterConnectionEstablished(@NotNull WebSocketSession session) {
+        sendMetrics(session); // Send metrics to the client when they connect
     }
 
     /**
