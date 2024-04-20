@@ -59,7 +59,7 @@ class ServerControllerTests {
 
     @Test
     public void ensureServerPreviewLookupSuccess() throws Exception {
-        mockMvc.perform(get("/server/preview/java/" + testServer)
+        mockMvc.perform(get("/server/java/preview/" + testServer)
                 .contentType(MediaType.IMAGE_PNG))
                 .andExpect(status().isOk());
     }
