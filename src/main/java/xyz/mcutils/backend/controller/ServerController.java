@@ -57,7 +57,7 @@ public class ServerController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/preview/{platform}/{hostname}", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value = "/{platform}/preview/{hostname}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<?> getServerPreview(
             @Parameter(description = "The platform of the server", example = "java") @PathVariable String platform,
             @Parameter(description = "The hostname and port of the server", example = "aetheria.cc") @PathVariable String hostname,
