@@ -10,7 +10,10 @@ import xyz.mcutils.backend.model.server.BedrockMinecraftServer;
 import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 /**
  * The {@link MinecraftServerPinger} for pinging

@@ -1,7 +1,7 @@
 package xyz.mcutils.backend.service.metric.metrics;
 
 import xyz.mcutils.backend.service.metric.impl.IntegerMetric;
-import xyz.mcutils.backend.websocket.MetricsWebSocketHandler;
+import xyz.mcutils.backend.websocket.WebSocketManager;
 
 public class ConnectedSocketsMetric extends IntegerMetric {
 
@@ -16,6 +16,6 @@ public class ConnectedSocketsMetric extends IntegerMetric {
 
     @Override
     public void collect() {
-        setValue(MetricsWebSocketHandler.SESSIONS.size());
+        setValue(WebSocketManager.getTotalConnections());
     }
 }

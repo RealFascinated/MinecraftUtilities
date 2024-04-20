@@ -3,7 +3,6 @@ package xyz.mcutils.backend.service.pinger.impl;
 import lombok.extern.log4j.Log4j2;
 import xyz.mcutils.backend.Main;
 import xyz.mcutils.backend.common.JavaMinecraftVersion;
-import xyz.mcutils.backend.common.ServerUtils;
 import xyz.mcutils.backend.common.packet.impl.java.JavaPacketHandshakingInSetProtocol;
 import xyz.mcutils.backend.common.packet.impl.java.JavaPacketStatusInStart;
 import xyz.mcutils.backend.exception.impl.BadRequestException;
