@@ -79,14 +79,21 @@ public class ServerPreviewRenderer extends Renderer<MinecraftServer> {
                 // Move x position to after the drawn text
                 x += textWidth;
                 // Set color based on color code
-                char colorCode = line.charAt(colorIndex + 1);
+                char colorCode = Character.toLowerCase(line.charAt(colorIndex + 1));
 
-                if (colorCode == 'l') {
-                    graphics.setFont(Fonts.MINECRAFT_BOLD);
-                } else {
-                    Color color = ColorUtils.getMinecraftColor(colorCode);
-                    graphics.setColor(color);
-                    graphics.setFont(Fonts.MINECRAFT);
+                // Set the color and font style
+                switch (colorCode) {
+                    case 'l': graphics.setFont(Fonts.MINECRAFT_BOLD);
+                    case 'o': graphics.setFont(Fonts.MINECRAFT_ITALIC);
+                    default: {
+                        try {
+                            Color color = ColorUtils.getMinecraftColor(colorCode);
+                            graphics.setColor(color);
+                            graphics.setFont(Fonts.MINECRAFT);
+                        } catch (Exception ignored) {
+                            // Unknown color, can ignore the error
+                        }
+                    }
                 }
 
                 // Move index to after the color code
