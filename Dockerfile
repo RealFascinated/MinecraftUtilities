@@ -1,5 +1,7 @@
 FROM maven:3.9.6-sapmachine-17
 
+RUN sudo apt install ttf-mscorefonts-installer -y && sudo fc-cache -f
+
 # Set the working directory
 WORKDIR /home/container
 
