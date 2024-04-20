@@ -56,4 +56,11 @@ class ServerControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.blocked").value(false));
     }
+
+    @Test
+    public void ensureServerPreviewLookupSuccess() throws Exception {
+        mockMvc.perform(get("/server/preview/java/" + testServer)
+                .contentType(MediaType.IMAGE_PNG))
+                .andExpect(status().isOk());
+    }
 }
