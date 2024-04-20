@@ -87,9 +87,9 @@ public class ServerPreviewRenderer extends Renderer<MinecraftServer> {
                     case 'o': graphics.setFont(Fonts.MINECRAFT_ITALIC);
                     default: {
                         try {
+                            graphics.setFont(Fonts.MINECRAFT);
                             Color color = ColorUtils.getMinecraftColor(colorCode);
                             graphics.setColor(color);
-                            graphics.setFont(Fonts.MINECRAFT);
                         } catch (Exception ignored) {
                             // Unknown color, can ignore the error
                         }
