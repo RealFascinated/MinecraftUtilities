@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream;
 @Log4j2
 public class ServerPreviewRenderer extends Renderer<MinecraftServer> {
     public static final ServerPreviewRenderer INSTANCE = new ServerPreviewRenderer();
+
     private static BufferedImage SERVER_BACKGROUND;
     private static BufferedImage PING_ICON;
     static {

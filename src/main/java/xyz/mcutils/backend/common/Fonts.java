@@ -1,11 +1,13 @@
 package xyz.mcutils.backend.common;
 
+import lombok.extern.log4j.Log4j2;
 import xyz.mcutils.backend.Main;
 
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
+@Log4j2(topic = "Fonts")
 public class Fonts {
 
     public static final Font MINECRAFT;
@@ -17,7 +19,8 @@ public class Fonts {
             MINECRAFT = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(18f);
             MINECRAFT_BOLD = MINECRAFT.deriveFont(Font.BOLD);
         } catch (FontFormatException | IOException e) {
-            throw new RuntimeException(e);
+            log.error("Failed to load Minecraft font", e);
+            throw new RuntimeException("Failed to load Minecraft font", e);
         }
     }
 }
