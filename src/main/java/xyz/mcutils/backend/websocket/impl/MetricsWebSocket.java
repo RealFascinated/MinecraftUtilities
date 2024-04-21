@@ -32,8 +32,8 @@ public class MetricsWebSocket extends WebSocket {
     }
 
     @Override
-    public void afterConnectionEstablished(@NotNull WebSocketSession session) {
-        sendMetrics(session); // Send metrics to the client when they connect
+    public void onSessionConnect(WebSocketSession session) {
+        sendMetrics(session);
     }
 
     /**
@@ -43,11 +43,11 @@ public class MetricsWebSocket extends WebSocket {
      */
     private void sendMetrics(WebSocketSession session) {
         try {
-            session.sendMessage(new TextMessage(Main.GSON.toJson(Map.of(
+            this.sendMessage(session, Main.GSON.toJson(Map.of(
                     "totalRequests", metricService.getMetric(TotalRequestsMetric.class).getValue(),
                     "uniqueServerLookups", metricService.getMetric(UniqueServerLookupsMetric.class).getValue(),
                     "uniquePlayerLookups", metricService.getMetric(UniquePlayerLookupsMetric.class).getValue()
-            ))));
+            )));
         } catch (Exception e) {
             log.error("An error occurred while sending metrics to the client", e);
         }

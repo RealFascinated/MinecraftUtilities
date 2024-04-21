@@ -40,14 +40,22 @@ public abstract class WebSocket extends TextWebSocketHandler {
         session.sendMessage(new TextMessage(message));
     }
 
+    /**
+     * Called when a session connects to the WebSocket.
+     *
+     * @param session the session that connected
+     */
+    abstract public void onSessionConnect(WebSocketSession session);
+
     @Override
-    public void afterConnectionEstablished(@NotNull WebSocketSession session) throws Exception {
+    public final void afterConnectionEstablished(@NotNull WebSocketSession session) {
         this.sessions.add(session);
         log.info("Connection established: {}", session.getId());
+        this.onSessionConnect(session);
     }
 
     @Override
-    public void afterConnectionClosed(@NotNull WebSocketSession session, @NotNull CloseStatus status) throws Exception {
+    public final void afterConnectionClosed(@NotNull WebSocketSession session, @NotNull CloseStatus status) {
         this.sessions.remove(session);
         log.info("Connection closed: {}", session.getId());
     }
