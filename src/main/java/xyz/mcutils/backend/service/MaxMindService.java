@@ -39,6 +39,10 @@ public class MaxMindService {
 
     public MaxMindService(@Value("${maxmind.license}") String maxMindLicense) {
         this.maxMindLicense = maxMindLicense;
+        if (maxMindLicense.isBlank()) {
+            log.error("The MaxMind license key is not set, please set it in the configuration and try again");
+            System.exit(1);
+        }
 
         File databaseFile = loadDatabase();
         try {
