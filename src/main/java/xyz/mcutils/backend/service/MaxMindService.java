@@ -55,20 +55,20 @@ public class MaxMindService {
     }
 
     /**
-     * Lookup the GeoIP information for the query.
+     * Lookup the GeoIP information for the ip.
      *
-     * @param query The query to lookup
+     * @param ip The query to lookup
      * @return The GeoIP information
      */
-    public static CityResponse lookup(String query) {
+    public static CityResponse lookup(String ip) {
         if (database == null) { // The database isn't loaded, return null
             return null;
         }
         try {
-            return database.city(InetAddress.getByName(query));
+            return database.city(InetAddress.getByName(ip));
         } catch (IOException | GeoIp2Exception e) {
-            log.error("Failed to lookup the GeoIP information for '{}'", query, e);
-            throw new RuntimeException("Failed to lookup the GeoIP information for '%s'".formatted(query));
+            log.error("Failed to lookup the GeoIP information for '{}'", ip, e);
+            throw new RuntimeException("Failed to lookup the IP for '%s'".formatted(ip));
         }
     }
 

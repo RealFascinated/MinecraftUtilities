@@ -58,7 +58,7 @@ public final class BedrockMinecraftServerPinger implements MinecraftServerPinger
                 throw new ResourceNotFoundException("Server '%s' didn't respond to ping".formatted(hostname));
             }
             return BedrockMinecraftServer.create(hostname, ip, port, records,
-                    MinecraftServer.GeoLocation.fromMaxMind(MaxMindService.lookup(hostname)), response); // Return the server
+                    MinecraftServer.GeoLocation.fromMaxMind(MaxMindService.lookup(ip)), response); // Return the server
         } catch (IOException ex ) {
             if (ex instanceof UnknownHostException) {
                 throw new BadRequestException("Unknown hostname '%s'".formatted(hostname));

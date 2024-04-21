@@ -53,7 +53,7 @@ public final class JavaMinecraftServerPinger implements MinecraftServerPinger<Ja
                 packetStatusInStart.process(inputStream, outputStream);
                 JavaServerStatusToken token = Main.GSON.fromJson(packetStatusInStart.getResponse(), JavaServerStatusToken.class);
                 return JavaMinecraftServer.create(hostname, ip, port, records,
-                        MinecraftServer.GeoLocation.fromMaxMind(MaxMindService.lookup(hostname)), token);
+                        MinecraftServer.GeoLocation.fromMaxMind(MaxMindService.lookup(ip)), token);
             }
         } catch (IOException ex) {
             if (ex instanceof UnknownHostException) {
