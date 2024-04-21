@@ -132,9 +132,8 @@
         <!-- Sentry -->
         <dependency>
             <groupId>io.sentry</groupId>
-            <artifactId>sentry</artifactId>
-            <version>1.7.27</version>
-            <scope>compile</scope>
+            <artifactId>sentry-spring-boot-starter-jakarta</artifactId>
+            <version>7.8.0</version>
         </dependency>
 
         <!-- InfluxDB Metrics -->

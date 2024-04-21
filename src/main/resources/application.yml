@@ -23,6 +23,10 @@ spring:
       database: test
       port: 27017
 
+# Sentry Configuration
+sentry:
+  dsn: ""
+
 # The URL of the API
 public-url: http://localhost
 

@@ -2,7 +2,6 @@ package xyz.mcutils.backend;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.sentry.Sentry;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
@@ -34,14 +33,6 @@ public class Main {
         }
         log.info("Found configuration at '{}'", config.getAbsolutePath()); // Log the found config
 
-        // Init Sentry
-        Sentry.init();
-        Sentry.init("https://631d4c96be4d48d1bd1b3ea612cbcee7@glitchtip.fascinated.cc/2");
-
-        try {
-            SpringApplication.run(Main.class, args); // Start the application
-        } catch(Exception ex) {
-            Sentry.capture(ex); // Capture the exception with Sentry
-        }
+        SpringApplication.run(Main.class, args); // Start the application
     }
 }
