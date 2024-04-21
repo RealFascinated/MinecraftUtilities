@@ -191,6 +191,9 @@ public class MinecraftServer {
          * @return the location of the server
          */
         public static GeoLocation fromMaxMind(CityResponse response) {
+            if (response == null) {
+                return null;
+            }
             return new GeoLocation(
                     response.getCountry().getName(),
                     response.getMostSpecificSubdivision().getName(),

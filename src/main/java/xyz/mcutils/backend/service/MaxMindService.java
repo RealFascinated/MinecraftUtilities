@@ -40,8 +40,8 @@ public class MaxMindService {
     public MaxMindService(@Value("${maxmind.license}") String maxMindLicense) {
         this.maxMindLicense = maxMindLicense;
         if (maxMindLicense.isBlank()) {
-            log.error("The MaxMind license key is not set, please set it in the configuration and try again");
-            System.exit(1);
+            log.error("The MaxMind license key is not set, please set it in the configuration and try again, disabling the MaxMind service...");
+            return;
         }
 
         File databaseFile = loadDatabase();
@@ -61,6 +61,9 @@ public class MaxMindService {
      * @return The GeoIP information
      */
     public static CityResponse lookup(String query) {
+        if (database == null) { // The database isn't loaded, return null
+            return null;
+        }
         try {
             return database.city(InetAddress.getByName(query));
         } catch (IOException | GeoIp2Exception e) {
