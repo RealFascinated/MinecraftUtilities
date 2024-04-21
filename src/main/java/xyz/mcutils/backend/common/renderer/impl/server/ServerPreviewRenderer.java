@@ -19,6 +19,7 @@ import java.io.ByteArrayInputStream;
 public class ServerPreviewRenderer extends Renderer<MinecraftServer> {
     public static final ServerPreviewRenderer INSTANCE = new ServerPreviewRenderer();
 
+
     private static BufferedImage SERVER_BACKGROUND;
     private static BufferedImage PING_ICON;
     static {
