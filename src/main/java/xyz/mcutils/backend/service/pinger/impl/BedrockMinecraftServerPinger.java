@@ -7,6 +7,8 @@ import xyz.mcutils.backend.exception.impl.BadRequestException;
 import xyz.mcutils.backend.exception.impl.ResourceNotFoundException;
 import xyz.mcutils.backend.model.dns.DNSRecord;
 import xyz.mcutils.backend.model.server.BedrockMinecraftServer;
+import xyz.mcutils.backend.model.server.MinecraftServer;
+import xyz.mcutils.backend.service.MaxMindService;
 import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
 
 import java.io.IOException;
@@ -55,7 +57,8 @@ public final class BedrockMinecraftServerPinger implements MinecraftServerPinger
             if (response == null) { // No pong response
                 throw new ResourceNotFoundException("Server '%s' didn't respond to ping".formatted(hostname));
             }
-            return BedrockMinecraftServer.create(hostname, ip, port, records, response); // Return the server
+            return BedrockMinecraftServer.create(hostname, ip, port, records,
+                    MinecraftServer.GeoLocation.fromMaxMind(MaxMindService.lookup(hostname)), response); // Return the server
         } catch (IOException ex ) {
             if (ex instanceof UnknownHostException) {
                 throw new BadRequestException("Unknown hostname '%s'".formatted(hostname));

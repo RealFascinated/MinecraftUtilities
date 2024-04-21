@@ -165,6 +165,20 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- GeoIP - IP Lookups -->
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+        <!-- Archive Utilities -->
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-archiver</artifactId>
+            <version>4.9.1</version>
+        </dependency>
+
         <!-- Tests -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

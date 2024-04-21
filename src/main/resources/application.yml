@@ -30,6 +30,11 @@ sentry:
 # The URL of the API
 public-url: http://localhost
 
+# MaxMind Configuration
+# This is used for IP Geolocation
+maxmind:
+  license: ""
+
 # InfluxDB Configuration
 influx:
   url: http://localhost

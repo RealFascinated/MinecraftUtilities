@@ -1,5 +1,6 @@
 package xyz.mcutils.backend.model.server;
 
+import com.maxmind.geoip2.model.CityResponse;
 import io.micrometer.common.lang.NonNull;
 import lombok.*;
 import xyz.mcutils.backend.common.ColorUtils;
@@ -47,6 +48,11 @@ public class MinecraftServer {
      * The players on the server.
      */
     private final Players players;
+
+    /**
+     * The location of the server.
+     */
+    private final GeoLocation location;
 
     /**
      * A platform a Minecraft
@@ -145,6 +151,53 @@ public class MinecraftServer {
              * The name of this player.
              */
             @NonNull private final String name;
+        }
+    }
+
+    /**
+     * The location of the server.
+     */
+    @AllArgsConstructor @Getter
+    public static class GeoLocation {
+        /**
+         * The country of the server.
+         */
+        private final String country;
+
+        /**
+         * The region of the server.
+         */
+        private final String region;
+
+        /**
+         * The city of the server.
+         */
+        private final String city;
+
+        /**
+         * The latitude of the server.
+         */
+        private final double latitude;
+
+        /**
+         * The longitude of the server.
+         */
+        private final double longitude;
+
+        /**
+         * Gets the location of the server from Maxmind.
+         *
+         * @param response the response from Maxmind
+         * @return the location of the server
+         */
+        public static GeoLocation fromMaxMind(CityResponse response) {
+            return new GeoLocation(
+                    response.getCountry().getName(),
+                    response.getMostSpecificSubdivision().getName(),
+                    response.getCity().getName(),
+                    response.getLocation().getLatitude(),
+                    response.getLocation().getLongitude()
+            );
         }
     }
 }

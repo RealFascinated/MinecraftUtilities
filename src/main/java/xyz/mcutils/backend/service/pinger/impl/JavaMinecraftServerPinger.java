@@ -9,7 +9,9 @@ import xyz.mcutils.backend.exception.impl.BadRequestException;
 import xyz.mcutils.backend.exception.impl.ResourceNotFoundException;
 import xyz.mcutils.backend.model.dns.DNSRecord;
 import xyz.mcutils.backend.model.server.JavaMinecraftServer;
+import xyz.mcutils.backend.model.server.MinecraftServer;
 import xyz.mcutils.backend.model.token.JavaServerStatusToken;
+import xyz.mcutils.backend.service.MaxMindService;
 import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
 
 import java.io.DataInputStream;
@@ -24,6 +26,13 @@ import java.net.*;
 public final class JavaMinecraftServerPinger implements MinecraftServerPinger<JavaMinecraftServer> {
     private static final int TIMEOUT = 1500; // The timeout for the socket
 
+    /**
+     * Ping the server with the given hostname and port.
+     *
+     * @param hostname the hostname of the server
+     * @param port     the port of the server
+     * @return the server that was pinged
+     */
     @Override
     public JavaMinecraftServer ping(String hostname, String ip, int port, DNSRecord[] records) {
         log.info("Pinging {}:{}...", hostname, port);
@@ -43,7 +52,8 @@ public final class JavaMinecraftServerPinger implements MinecraftServerPinger<Ja
                 JavaPacketStatusInStart packetStatusInStart = new JavaPacketStatusInStart();
                 packetStatusInStart.process(inputStream, outputStream);
                 JavaServerStatusToken token = Main.GSON.fromJson(packetStatusInStart.getResponse(), JavaServerStatusToken.class);
-                return JavaMinecraftServer.create(hostname, ip, port, records, token);
+                return JavaMinecraftServer.create(hostname, ip, port, records,
+                        MinecraftServer.GeoLocation.fromMaxMind(MaxMindService.lookup(hostname)), token);
             }
         } catch (IOException ex) {
             if (ex instanceof UnknownHostException) {

@@ -29,3 +29,6 @@ git.properties
 pom.xml.versionsBackup
 application.yml
 target/
+
+### MaxMind GeoIP2
+data/

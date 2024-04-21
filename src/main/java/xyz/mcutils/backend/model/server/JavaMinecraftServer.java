@@ -65,10 +65,10 @@ public final class JavaMinecraftServer extends MinecraftServer {
      */
     private boolean mojangBlocked;
 
-    public JavaMinecraftServer(String hostname, String ip, int port, MOTD motd, Players players, DNSRecord[] records,
-                               @NonNull Version version, Favicon favicon, ForgeModInfo modInfo, ForgeData forgeData,
-                               boolean preventsChatReports, boolean enforcesSecureChat, boolean previewsChat) {
-        super(hostname, ip, port, records, motd, players);
+    public JavaMinecraftServer(String hostname, String ip, int port, MOTD motd, Players players, GeoLocation location,
+                               DNSRecord[] records, @NonNull Version version, Favicon favicon, ForgeModInfo modInfo,
+                               ForgeData forgeData, boolean preventsChatReports, boolean enforcesSecureChat, boolean previewsChat) {
+        super(hostname, ip, port, records, motd, players, location);
         this.version = version;
         this.favicon = favicon;
         this.modInfo = modInfo;
@@ -88,7 +88,7 @@ public final class JavaMinecraftServer extends MinecraftServer {
      * @return the Java Minecraft server
      */
     @NonNull
-    public static JavaMinecraftServer create(@NonNull String hostname, String ip, int port, DNSRecord[] records, @NonNull JavaServerStatusToken token) {
+    public static JavaMinecraftServer create(@NonNull String hostname, String ip, int port, DNSRecord[] records, GeoLocation location, @NonNull JavaServerStatusToken token) {
         String motdString = token.getDescription() instanceof String ? (String) token.getDescription() : null;
         if (motdString == null) { // Not a string motd, convert from Json
             motdString = new TextComponent(ComponentSerializer.parse(Main.GSON.toJson(token.getDescription()))).toLegacyText();
@@ -99,6 +99,7 @@ public final class JavaMinecraftServer extends MinecraftServer {
                 port,
                 MinecraftServer.MOTD.create(motdString),
                 token.getPlayers(),
+                location,
                 records,
                 token.getVersion().detailedCopy(),
                 JavaMinecraftServer.Favicon.create(token.getFavicon(), ServerUtils.getAddress(hostname, port)),
