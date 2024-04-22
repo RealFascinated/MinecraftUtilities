@@ -4,6 +4,7 @@ import com.maxmind.geoip2.model.CityResponse;
 import io.micrometer.common.lang.NonNull;
 import lombok.*;
 import xyz.mcutils.backend.common.ColorUtils;
+import xyz.mcutils.backend.config.Config;
 import xyz.mcutils.backend.model.dns.DNSRecord;
 import xyz.mcutils.backend.service.pinger.MinecraftServerPinger;
 import xyz.mcutils.backend.service.pinger.impl.BedrockMinecraftServerPinger;
@@ -101,18 +102,25 @@ public class MinecraftServer {
         private final String[] html;
 
         /**
+         * The URL to the server preview image.
+         */
+        private final String preview;
+
+        /**
          * Create a new MOTD from a raw string.
          *
          * @param raw the raw motd string
          * @return the new motd
          */
         @NonNull
-        public static MOTD create(@NonNull String raw) {
+        public static MOTD create(@NonNull String hostname, @NonNull Platform platform, @NonNull String raw) {
             String[] rawLines = raw.split("\n"); // The raw lines
             return new MOTD(
                     rawLines,
                     Arrays.stream(rawLines).map(ColorUtils::stripColor).toArray(String[]::new),
-                    Arrays.stream(rawLines).map(ColorUtils::toHTML).toArray(String[]::new)
+                    Arrays.stream(rawLines).map(ColorUtils::toHTML).toArray(String[]::new),
+                    Config.INSTANCE.getWebPublicUrl() + "/server/%s/preview/%s".formatted(
+                            platform.name().toLowerCase(),hostname)
             );
         }
     }

@@ -97,7 +97,7 @@ public final class JavaMinecraftServer extends MinecraftServer {
                 hostname,
                 ip,
                 port,
-                MinecraftServer.MOTD.create(motdString),
+                MinecraftServer.MOTD.create(hostname, Platform.JAVA, motdString),
                 token.getPlayers(),
                 location,
                 records,

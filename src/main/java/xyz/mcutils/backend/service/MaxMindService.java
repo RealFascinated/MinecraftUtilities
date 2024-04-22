@@ -68,7 +68,7 @@ public class MaxMindService {
             return database.city(InetAddress.getByName(ip));
         } catch (IOException | GeoIp2Exception e) {
             log.error("Failed to lookup the GeoIP information for '{}'", ip, e);
-            throw new RuntimeException("Failed to lookup the IP for '%s'".formatted(ip));
+            return null;
         }
     }
 
