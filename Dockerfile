@@ -1,4 +1,4 @@
-FROM maven:3.9.6-eclipse-temurin-17-alpine
+FROM maven:3.9.8-eclipse-temurin-17-alpine
 
 RUN apk --update --upgrade --no-cache add fontconfig ttf-freefont font-noto terminus-font \
      && fc-cache -f \
