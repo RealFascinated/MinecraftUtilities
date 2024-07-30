@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
 import xyz.mcutils.backend.service.MojangService;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -27,6 +28,6 @@ public class MojangController {
     public ResponseEntity<?> getStatus() {
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.MINUTES).cachePublic())
-                .body(mojangService.getMojangServerStatus());
+                .body(Map.of("endpoints", mojangService.getMojangServerStatus()));
     }
 }
