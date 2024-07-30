@@ -17,7 +17,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.1</version>
+        <version>3.3.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -133,7 +133,7 @@
         <dependency>
             <groupId>io.sentry</groupId>
             <artifactId>sentry-spring-boot-starter-jakarta</artifactId>
-            <version>7.11.0</version>
+            <version>7.12.1</version>
         </dependency>
 
         <!-- InfluxDB Metrics -->
@@ -194,7 +194,7 @@
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo.spring3x</artifactId>
-            <version>4.15.0</version>
+            <version>4.16.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
