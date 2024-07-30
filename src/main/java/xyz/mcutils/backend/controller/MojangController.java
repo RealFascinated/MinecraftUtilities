@@ -15,8 +15,8 @@ import xyz.mcutils.backend.service.MojangService;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@Tag(name = "Mojang Controller", description = "The Mojang Controller is used to get information about the Mojang APIs.")
 @RequestMapping(value = "/mojang/", produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "Mojang Controller", description = "The Mojang Controller is used to get information about the Mojang APIs.")
 public class MojangController {
 
     @Autowired
@@ -25,12 +25,8 @@ public class MojangController {
     @ResponseBody
     @GetMapping(value = "/status")
     public ResponseEntity<?> getStatus() {
-        CachedEndpointStatus status = mojangService.getMojangApiStatus();
-
-
-
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.MINUTES).cachePublic())
-                .body(status);
+                .body(mojangService.getMojangServerStatus());
     }
 }

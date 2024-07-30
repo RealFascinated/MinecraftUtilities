@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@Tag(name = "Server Controller", description = "The Server Controller is used to get information about a server.")
 @RequestMapping(value = "/server/")
+@Tag(name = "Server Controller", description = "The Server Controller is used to get information about a server.")
 public class ServerController {
 
     private final ServerService serverService;

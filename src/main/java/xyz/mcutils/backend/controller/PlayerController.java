@@ -16,8 +16,8 @@ import xyz.mcutils.backend.service.PlayerService;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@Tag(name = "Player Controller", description = "The Player Controller is used to get information about a player.")
 @RequestMapping(value = "/player/")
+@Tag(name = "Player Controller", description = "The Player Controller is used to get information about a player.")
 public class PlayerController {
 
     private final PlayerService playerService;
