@@ -1,6 +1,7 @@
 package xyz.mcutils.backend.exception;
 
 import io.micrometer.common.lang.NonNull;
+import io.sentry.Sentry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -39,6 +40,7 @@ public final class ExceptionControllerAdvice {
         }
         if (status == null) { // Fallback to 500
             status = HttpStatus.INTERNAL_SERVER_ERROR;
+            Sentry.captureException(ex); // Capture the exception with Sentry
         }
         return new ResponseEntity<>(new ErrorResponse(status, message), status);
     }

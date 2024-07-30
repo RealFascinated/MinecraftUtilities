@@ -3,6 +3,7 @@ package xyz.mcutils.backend.service;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
+import io.sentry.Sentry;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.codehaus.plexus.archiver.tar.TarGZipUnArchiver;
@@ -68,6 +69,7 @@ public class MaxMindService {
             return database.city(InetAddress.getByName(ip));
         } catch (IOException | GeoIp2Exception e) {
             log.error("Failed to lookup the GeoIP information for '{}'", ip, e);
+            Sentry.captureException(e);
             return null;
         }
     }

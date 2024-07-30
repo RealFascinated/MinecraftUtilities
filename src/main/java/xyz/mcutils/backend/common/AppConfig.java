@@ -22,7 +22,7 @@ public final class AppConfig {
     private static boolean isRunningTest = true;
     static {
         try {
-            Class.forName("org.junit.Test");
+            Class.forName("org.junit.jupiter.engine.JupiterTestEngine");
         } catch (ClassNotFoundException e) {
             isRunningTest = false;
         }

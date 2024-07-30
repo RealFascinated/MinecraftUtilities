@@ -24,8 +24,10 @@ public class MojangController {
 
     @ResponseBody
     @GetMapping(value = "/status")
-    public ResponseEntity<CachedEndpointStatus> getStatus() {
+    public ResponseEntity<?> getStatus() {
         CachedEndpointStatus status = mojangService.getMojangApiStatus();
+
+
 
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.MINUTES).cachePublic())

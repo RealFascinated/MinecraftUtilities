@@ -13,16 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.mcutils.backend.common.AppConfig;
 import xyz.mcutils.backend.common.ExpiringSet;
+import xyz.mcutils.backend.common.MojangServer;
 import xyz.mcutils.backend.common.WebRequest;
 import xyz.mcutils.backend.model.cache.CachedEndpointStatus;
-import xyz.mcutils.backend.model.mojang.EndpointStatus;
 import xyz.mcutils.backend.model.token.MojangProfileToken;
 import xyz.mcutils.backend.model.token.MojangUsernameToUuidToken;
 import xyz.mcutils.backend.repository.redis.EndpointStatusRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetAddress;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -48,18 +47,6 @@ public class MojangService {
      * The interval to fetch the blocked servers from Mojang.
      */
     private static final long FETCH_BLOCKED_SERVERS_INTERVAL = TimeUnit.HOURS.toMillis(1L);
-
-    /**
-     * Information about the Mojang API endpoints.
-     */
-    private static final String MOJANG_ENDPOINT_STATUS_KEY = "mojang";
-    private static final List<EndpointStatus> MOJANG_ENDPOINTS = List.of(
-            new EndpointStatus("Minecraft Textures", "textures.minecraft.net"),
-            new EndpointStatus("Minecraft Libraries", "libraries.minecraft.net"),
-            new EndpointStatus("Minecraft Services", "api.minecraftservices.com"),
-            new EndpointStatus("Mojang Assets", "assets.mojang.com"),
-            new EndpointStatus("Mojang API", "api.mojang.com"),
-            new EndpointStatus("Mojang Session Server", "sessionserver.mojang.com"));
 
     @Autowired
     private EndpointStatusRepository mojangEndpointStatusRepository;
@@ -107,6 +94,8 @@ public class MojangService {
             }
             bannedServerHashes = Collections.synchronizedList(hashes);
             log.info("Fetched {} banned server hashes", bannedServerHashes.size());
+        } catch (IOException e) {
+            log.error("Failed to fetch blocked servers from Mojang", e);
         }
     }
 
@@ -184,33 +173,24 @@ public class MojangService {
      */
     public CachedEndpointStatus getMojangApiStatus() {
         log.info("Getting Mojang API status");
-        Optional<CachedEndpointStatus> endpointStatus = mojangEndpointStatusRepository.findById(MOJANG_ENDPOINT_STATUS_KEY);
+        Optional<CachedEndpointStatus> endpointStatus = mojangEndpointStatusRepository.findById("mojang-servers-status");
         if (endpointStatus.isPresent() && AppConfig.isProduction()) {
             log.info("Got cached Mojang API status");
             return endpointStatus.get();
         }
 
-        MOJANG_ENDPOINTS.parallelStream().forEach(endpoint -> {
-            try {
-                long start = System.currentTimeMillis();
-                InetAddress address = InetAddress.getByName(endpoint.getHostname());
-                if (address.isReachable((int) TimeUnit.SECONDS.toMillis(4))) { // Check if the endpoint is reachable
-                    endpoint.setStatus(EndpointStatus.Status.ONLINE);
-                    return;
-                }
-                // Check if the endpoint took too long to respond
-                if (System.currentTimeMillis() - start > TimeUnit.SECONDS.toMillis(2)) {
-                    endpoint.setStatus(EndpointStatus.Status.DEGRADED);
-                }
-            } catch (IOException e) {
-                endpoint.setStatus(EndpointStatus.Status.OFFLINE);
-            }
+        Map<MojangServer, MojangServer.Status> mojangServers = new HashMap<>();
+        Arrays.stream(MojangServer.values()).parallel().forEach(server -> {
+            log.info("Pinging {}...", server.getEndpoint());
+            MojangServer.Status status = server.getStatus(); // Retrieve the server status
+            log.info("Retrieved status of {}: {}", server.getEndpoint(), status.name());
+            mojangServers.put(server, status); // Cache the server status
         });
 
-        log.info("Fetched Mojang API status for {} endpoints", MOJANG_ENDPOINTS.size());
+        log.info("Fetched Mojang API status for {} endpoints", mojangServers.size());
         CachedEndpointStatus status = new CachedEndpointStatus(
-                MOJANG_ENDPOINT_STATUS_KEY,
-                MOJANG_ENDPOINTS
+                "mojang-servers-status",
+                mojangServers
         );
         mojangEndpointStatusRepository.save(status);
         status.getCache().setCached(false);
