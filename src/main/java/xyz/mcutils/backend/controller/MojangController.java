@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping(value = "/mojang/", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Mojang Controller", description = "The Mojang Controller is used to get information about the Mojang APIs.")
 public class MojangController {
-
     @Autowired
     private MojangService mojangService;
 

@@ -24,7 +24,7 @@ public enum MojangServer {
     LIBRARIES("Libraries Server", "https://libraries.minecraft.net"),
     SERVICES("Minecraft Services", "https://api.minecraftservices.com");
 
-    private static final long STATUS_TIMEOUT = TimeUnit.SECONDS.toMillis(4);
+    private static final long STATUS_TIMEOUT = TimeUnit.SECONDS.toMillis(10);
 
     /**
      * The name of this server.
@@ -58,7 +58,7 @@ public enum MojangServer {
             ex.printStackTrace();
         } catch (IOException ignored) {
             // We can safely ignore any errors, we're simply checking
-            // if the host is reachable, if it's not, it's offline.
+            // if the host is reachable, if it's not, then it's offline.
         }
         return Status.OFFLINE;
     }
